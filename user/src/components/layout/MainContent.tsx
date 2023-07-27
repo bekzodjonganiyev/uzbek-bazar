@@ -1,14 +1,14 @@
 import { Outlet } from "react-router-dom";
-import { CustomHeader } from "../header";
-import Footer from "../footer";
+
+import { Header, Footer } from "@/components";
 
 function MainContent(): JSX.Element {
   return (
-    <div>
-      <CustomHeader />
-      <div>
+    <div className="flex flex-col h-screen">
+      <Header />
+      <main className="flex-auto">
         <Outlet />
-      </div>
+      </main>
       <Footer />
     </div>
   );

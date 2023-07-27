@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { DownIcon } from "../../assets/icons";
+import { DownIcon } from "@/assets/icons";
 
 type Props = {
   title: string;
@@ -12,7 +12,7 @@ const List = ({ title, items }: Props): ReactElement => {
     <div className="xs:w-full md:w-1/3 mt-3">
       <div
         className="flex justify-between items-center cursor-pointer"
-        onClick={() => setShow(!show)}
+        onClick={() => { setShow(!show); console.log("first render") }}
       >
         <h2 className="text-black-900 font-space-grotesk font-medium text-xs leading-6">
           {title}

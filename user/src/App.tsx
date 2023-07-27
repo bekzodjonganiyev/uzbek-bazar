@@ -1,7 +1,6 @@
-import "./App.css";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import MainContent from "./components/layout/MainContent";
+import MainContent from "@/components/layout/MainContent";
 
 function App(): JSX.Element {
   return (
