@@ -1,19 +1,11 @@
 import React from "react"
-import { HamburgerIcon } from "@/assets/icons"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "../ui/navigation-menu"
 import { Link } from "react-router-dom"
+import { ChevronRight } from "lucide-react"
+
+import { HamburgerIcon } from "@/assets/icons"
+import { SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
+import { CustomListShower } from "@/components/common"
 
 import { cn } from "@/lib/utils"
 
@@ -23,72 +15,150 @@ export const SiderOpener = () => (
   </SheetTrigger>
 )
 
-export const SiderBody = () => (
-  <SheetContent >
-    <div className="grid gap-4 py-4 border border-red-400 mt-10">
-      <div className="grid grid-cols-4 items-center gap-4">
-        <Label htmlFor="name" className="text-right">
-          Name
-        </Label>
-        <Input id="name" value="Pedro Duarte" className="col-span-3" />
-      </div>
-      <div className="grid grid-cols-4 items-center gap-4">
-        <Label htmlFor="username" className="text-right">
-          Username
-        </Label>
-        <Input id="username" value="@peduarte" className="col-span-3" />
-      </div>
+export const SiderBody = () => {
+  const footerLinks = [
+    { title: "list 1", items: ["salom", "alik"] },
+    { title: "list 2", items: ["salom", "alik"] },
+    { title: "list 3", items: ["salom", "alik"] },
+  ];
+
+  return <SheetContent >
+    <div className="mt-10">
+      {footerLinks.map((e, ind) => (
+        <CustomListShower key={ind} title={e.title} items={e.items} />
+      ))}
     </div>
   </SheetContent>
-)
+}
 
 export const Menu = () => {
-  const components: { title: string; href: string; description: string }[] = [
+  const a = [
     {
-      title: "Alert Dialog",
-      href: "/docs/primitives/alert-dialog",
-      description:
-        "A modal dialog that interrupts the user with important content and expects a response.",
+      title1: "Turkumlar",
+      link1: "jsjsjs",
+      submenu1: true,
+      items1: [
+        {
+          title2: "eeieidjdfjdj",
+          link2: "dssddskd",
+          submenu2: false,
+          items2: [
+            {
+              title3: "dsd",
+              link3: "ewew",
+              submenu3: false
+            },
+            {
+              title3: "dsd",
+              link3: "ewew",
+              submenu3: false
+            }
+          ]
+        },
+        {
+          title2: "eeieidjdfjdj",
+          link2: "dssddskd",
+          submenu2: true,
+          items2: [
+            {
+              title3: "dsd",
+              link3: "ewew",
+              submenu: false
+            },
+            {
+              title3: "dsd",
+              link3: "ewew",
+              submenu: false
+            }
+          ]
+        }
+      ]
     },
     {
-      title: "Hover Card",
-      href: "/docs/primitives/hover-card",
-      description:
-        "For sighted users to preview content available behind a link.",
+      title1: "Do'konlar",
+      link1: "jsjsjs",
+      submenu1: true,
+      items1: [
+        {
+          title2: "eeieidjdfjdj",
+          link2: "dssddskd",
+          submenu2: true,
+          items2: [
+            {
+              title3: "dsd",
+              link3: "ewew"
+            },
+            {
+              title3: "dsd",
+              link3: "ewew"
+            }
+          ]
+        },
+        {
+          title2: "eeieidjdfjdj",
+          link2: "dssddskd",
+          submenu2: false,
+          items2: [
+            {
+              title3: "dsd",
+              link3: "ewew"
+            },
+            {
+              title3: "dsd",
+              link3: "ewew"
+            }
+          ]
+        }
+      ]
     },
     {
-      title: "Progress",
-      href: "/docs/primitives/progress",
-      description:
-        "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-    },
-    {
-      title: "Scroll-area",
-      href: "/docs/primitives/scroll-area",
-      description: "Visually or semantically separates content.",
-    },
-    {
-      title: "Tabs",
-      href: "/docs/primitives/tabs",
-      description:
-        "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-    },
-    {
-      title: "Tooltip",
-      href: "/docs/primitives/tooltip",
-      description:
-        "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-    },
+      title1: "jdjd",
+      link1: "jsjsjs",
+      submenu1: false,
+      items1: [
+        {
+          title2: "eeieidjdfjdj",
+          link2: "dssddskd",
+          submenu2: true,
+          items2: [
+            {
+              title3: "dsd",
+              link3: "ewew"
+            },
+            {
+              title3: "dsd",
+              link3: "ewew"
+            }
+          ]
+        },
+        {
+          title2: "eeieidjdfjdj",
+          link2: "dssddskd",
+          submenu2: true,
+          items2: [
+            {
+              title3: "dsd",
+              link3: "ewew"
+            },
+            {
+              title3: "dsd",
+              link3: "ewew"
+            }
+          ]
+        }
+      ]
+    }
   ]
 
-  let arr: {title: string, child: boolean, items: {title: string}[]}[]
-
+  interface ListItemProps {
+    icon?: React.ReactNode;
+  }
   const ListItem = React.forwardRef<
     React.ElementRef<"a">,
-    React.ComponentPropsWithoutRef<"a">
-  >(({ className, title, children, ...props }, ref) => {
+    ListItemProps & React.ComponentPropsWithoutRef<"a">
+  >(({ className, title, children, icon, ...props }, ref) => {
     return (
-      <li>
+      <li >
         <NavigationMenuLink asChild>
           <a
             ref={ref}
@@ -98,7 +168,7 @@ export const Menu = () => {
             )}
             {...props}
           >
-            <div className="text-sm font-medium leading-none">{title}</div>
+            <div className="text-sm font-medium leading-none flex items-center">{title}{icon}</div>
             <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
               {children}
             </p>
@@ -112,62 +182,50 @@ export const Menu = () => {
   return (
     <NavigationMenu className="md:block hidden">
       <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Katalog</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <a
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href="/"
-                  >
-
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      shadcn/ui
-                    </div>
-                    <p className="text-sm leading-tight text-muted-foreground">
-                      Beautifully designed components built with Radix UI and
-                      Tailwind CSS.
-                    </p>
-                  </a>
-                </NavigationMenuLink>
-              </li>
-              <ListItem href="/docs" title="Introduction">
-                Re-usable components built using Radix UI and Tailwind CSS.
-              </ListItem>
-              <ListItem href="/docs/installation" title="Installation">
-                How to install dependencies and structure your app.
-              </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Typography">
-                Styles for headings, paragraphs, lists...etc
-              </ListItem>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Do'konlar</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link to="/docs" >
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Top mahsulotlar
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
+        {
+          a.map((item1, idx) => (
+            <React.Fragment key={idx}>
+              {
+                !item1.submenu1
+                  ? <NavigationMenuItem className="">
+                    <Link to="/docs" >
+                      <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                        Top mahsulotlar
+                      </NavigationMenuLink>
+                    </Link>
+                  </NavigationMenuItem>
+                  : <NavigationMenuItem>
+                    <NavigationMenuTrigger>{item1.title1}</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="p-4 w-96">
+                        {
+                          item1.items1.map(item2 => (
+                            !item2.submenu2
+                              ? <ListItem
+                                className=""
+                                key={item2.title2}
+                                title={item2.title2}
+                                href={item2.title2}
+                              />
+                              : <>
+                                {
+                                  <ListItem
+                                    icon={<ChevronRight className="relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180" />}
+                                    key={item2.title2}
+                                    title={item2.title2}
+                                    href={item2.title2}
+                                  />
+                                }
+                              </>
+                          ))
+                        }
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+              }
+            </React.Fragment>
+          ))
+        }
       </NavigationMenuList>
     </NavigationMenu>
   )
