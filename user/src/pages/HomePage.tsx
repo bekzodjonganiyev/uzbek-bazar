@@ -1,12 +1,4 @@
 import { ReactElement } from "react";
-import { HomePageComponent } from "@/components/home";
-import { Button } from "@/components/ui/button"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
 
 const HomePage = (): ReactElement => {
   return (

@@ -9,22 +9,22 @@ type Props = {
 export const CustomListShower = ({ title, items }: Props): ReactElement => {
   const [show, setShow] = useState<boolean>();
   return (
-    <div className="xs:w-full md:w-1/3 mt-3">
+    <div className="xs:w-full md:w-1/3 mt-3 border">
       <div
-        className="flex justify-between items-center cursor-pointer"
+        className="flex items-center cursor-pointer"
         onClick={() => { setShow(!show); console.log("first render") }}
       >
-        <h2 className="text-black-900 font-space-grotesk font-medium text-xs leading-6">
+        <h2 className="text-black-900 font-space-grotesk font-bold text-sm leading-6">
           {title}
         </h2>
         <div className="block md:hidden">
           <DownIcon />
         </div>
       </div>
-      <div className={`items ${show ? "block md:block" : "hidden md:block"}`}>
+      <div className={`${show ? "block md:block" : "hidden md:block"} h-0`}>
         {items.map((e, ind) => (
           <span
-            className="block text-text-blue font-inter text-base font-normal leading-6"
+            className="block font-inter text-base font-normal leading-6"
             key={ind}
           >
             {e}

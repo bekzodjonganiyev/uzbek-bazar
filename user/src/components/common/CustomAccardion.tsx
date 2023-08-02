@@ -6,24 +6,28 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Link } from "react-router-dom"
 
 interface Props {
-    items: {title:string, value:string, content:string[]}[],
+    items: { title: string, value: string, content: string[] }[],
+    className: string
 }
 
-export const CustomAccardion = ({ items }: Props): ReactElement => {
+export const CustomAccardion = ({ items, className }: Props): ReactElement => {
     return (
-        <Accordion type="single" collapsible>
+        <Accordion type="multiple" className={className}>
             {
                 items.map((item, idx) => (
                     <AccordionItem key={idx} value={item.value}>
                         <AccordionTrigger>{item.title}</AccordionTrigger>
                         <AccordionContent>
-                            {
-                                item.content.map((link, idx) => (
-                                    <a key={idx} href={link}>{link}</a>
-                                ))
-                            }
+                            <div className="flex flex-col gap-2">
+                                {
+                                    item.content.map((link, idx) => (
+                                        <Link key={idx} to={link}>{link}</Link>
+                                    ))
+                                }
+                            </div>
                         </AccordionContent>
                     </AccordionItem>
                 ))

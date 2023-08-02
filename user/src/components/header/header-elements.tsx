@@ -5,7 +5,7 @@ import { ChevronRight } from "lucide-react"
 import { HamburgerIcon } from "@/assets/icons"
 import { SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
-import { CustomListShower } from "@/components/common"
+import { CustomAccardion } from "@/components/common"
 
 import { cn } from "@/lib/utils"
 
@@ -17,16 +17,14 @@ export const SiderOpener = () => (
 
 export const SiderBody = () => {
   const footerLinks = [
-    { title: "list 1", items: ["salom", "alik"] },
-    { title: "list 2", items: ["salom", "alik"] },
-    { title: "list 3", items: ["salom", "alik"] },
+    { title: "Foydalanuvchilarga", value: "list 1", content: ["salom", "alik"] },
+    { title: "Tadbirkorlarga", value: "list 2", content: ["salom", "alik"] },
+    { title: "Kompaniya", value: "list 3", content: ["salom", "alik"] },
   ];
 
   return <SheetContent >
     <div className="mt-10">
-      {footerLinks.map((e, ind) => (
-        <CustomListShower key={ind} title={e.title} items={e.items} />
-      ))}
+      <CustomAccardion items={footerLinks} className=""/>
     </div>
   </SheetContent>
 }

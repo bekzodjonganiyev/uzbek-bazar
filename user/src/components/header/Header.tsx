@@ -1,6 +1,3 @@
-import { useState } from "react"
-
-
 import { Sheet } from "../ui/sheet"
 import { CustomSelect } from "@/components/common"
 import { SiderOpener, SiderBody, Menu } from "./header-elements"
@@ -20,10 +17,6 @@ export const Header = (): JSX.Element => {
     { label: "RUB", value: "rub" },
     { label: "USD", value: "usd" }
   ]
-
-
-
-  const [open, setOpen] = useState<boolean>(false)
 
   return (
     <header className="w-full">

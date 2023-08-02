@@ -1,21 +1,13 @@
 import { ReactElement } from "react";
-import {
-  FacebookIcon,
-  InstaIcon,
-  LogoIcon,
-  MailIcon,
-  UzFlagIcon,
-  RuFlagIcon,
-  EnFlagIcon
-} from "@/assets/icons";
-import List from "./List";
-import { CustomSelect } from "@/components/common";
+import { FacebookIcon, InstaIcon, LogoIcon, MailIcon, UzFlagIcon, RuFlagIcon, EnFlagIcon } from "@/assets/icons";
+import { CustomSelect, CustomAccardion } from "@/components/common";
+import { Link } from "react-router-dom";
 
 export const Footer = (): ReactElement => {
   const footerLinks = [
-    { title: "list 1", items: ["salom", "alik"] },
-    { title: "list 2", items: ["salom", "alik"] },
-    { title: "list 3", items: ["salom", "alik"] },
+    { title: "Foydalanuvchilarga", value: "list 1", content: ["salom", "alik"] },
+    { title: "Tadbirkorlarga", value: "list 2", content: ["salom", "alik"] },
+    { title: "Kompaniya", value: "list 3", content: ["salom", "alik"] },
   ];
 
   const languages = [
@@ -31,14 +23,14 @@ export const Footer = (): ReactElement => {
   ]
 
   return (
-    <footer className="w-full mb-1">
-      <div className="container border border-red-300">
-        <div className="w-full flex flex-col md:flex-row justify-between">
+    <footer className="w-full bg-footer pt-16 pb-3">
+      <div className="container">
+        <div className="w-full flex flex-col lg:flex-row justify-between">
 
           {/* begin::LOGOS AND SOCIALS */}
-          <div className="w-1/2">
+          <div className="md:w-1/2">
             <LogoIcon />
-            <span className="text-black-600 font-inter text-base font-normal leading-6 block my-6">
+            <span className="text-base font-normal leading-6 block my-6">
               Phosf luorescently engage worldwide method process shopping.
             </span>
             <div className="space-x-7 hidden md:flex">
@@ -50,15 +42,27 @@ export const Footer = (): ReactElement => {
           {/* end::LOGOS AND SOCIALS */}
 
           {/* begin::LINKS */}
-          <div className="w-full md:w-1/2 flex flex-col md:flex-row justify-between">
-            {footerLinks.map((e, ind) => (
-              <List key={ind} title={e.title} items={e.items} />
-            ))}
+          <div className="max-md:mb-5">
+            <div className="lg:flex gap-28 hidden">
+              {
+                footerLinks.map(item => (
+                  <ul>
+                    <h2 className="text-base font-medium">{item.title}</h2>
+                    {
+                      item.content.map(subItem => (
+                        <li><Link to={subItem}>{subItem}</Link></li>
+                      ))
+                    }
+                  </ul>
+                ))
+              }
+            </div>
+            <CustomAccardion items={footerLinks} className="lg:hidden" />
           </div>
           {/* end::LINKS */}
         </div>
 
-        <hr className="hidden md:block my-3 border-2" />
+        <hr className="hidden md:block my-3 border" />
 
         <div className="xs:flex-col-reverse md:flex justify-between items-center">
           <h2 className="flex justify-center">
