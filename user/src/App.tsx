@@ -7,7 +7,7 @@ function App(): JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route path="" element={<MainContent />}>
-          <Route path="" element={<HomePage />} />
+          <Route index element={<HomePage />} />
         </Route>
       </Routes>
     </BrowserRouter>

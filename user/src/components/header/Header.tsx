@@ -21,7 +21,7 @@ export const Header = (): JSX.Element => {
   return (
     <header className="w-full">
       <Sheet>
-        <div className="container border border-red-300 flex flex-col max-md:py-2">
+        <div className="container flex flex-col max-md:py-2">
 
           {/* begin::TOP HEADER */}
           <div className="md:flex hidden justify-between items-center">
@@ -56,7 +56,7 @@ export const Header = (): JSX.Element => {
           {/* end::TOP HEADER */}
 
           {/* begin::MAIN HEADER */}
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center py-2">
             {/* |---LOGO---| */}
             <div>UZEKBAZAR</div>
 

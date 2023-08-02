@@ -1,0 +1,23 @@
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  content: "";
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  background-color: white;
+  background-position: center;
+  background-size: 30px;
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.swiper-button-prev {
+  background-image: url("./navigation-icons/prev.svg");
+}
+
+.swiper-button-next {
+  background-image: url("./navigation-icons/next.svg");
+}
