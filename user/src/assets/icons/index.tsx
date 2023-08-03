@@ -134,12 +134,17 @@ export const PrevItemIcon = (): ReactElement => {
   );
 };
 
-export const NextItemIcon = (): ReactElement => {
+type NextItemIconProps = {
+  width?: number,
+  height?: number,
+}
+
+export const NextItemIcon = ({ width = 32, height = 32 }: NextItemIconProps): ReactElement => {
   return (
     <svg
       className="cursor-pointer"
-      width="32"
-      height="32"
+      width={width}
+      height={height}
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
