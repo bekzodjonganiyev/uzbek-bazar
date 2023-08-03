@@ -5,19 +5,21 @@ type Props = {
     link: {label: string, href: string},
     img: string
     titlePosition?: "top" | "bottom"
-    className?: string 
+    wrapperClassName?: string,
+    imgClassName?: string,
+    className?: string,
 }
 
-export const ShowCaseCard = ({title, link, img, titlePosition, className}: Props): ReactElement => {
+export const ShowCaseCard = ({title, link, img, titlePosition, className, imgClassName}: Props): ReactElement => {
   return (
-    <div className={`bg-footer p-4 flex ${titlePosition === "top" ? " items-start" : "items-end"} ${className}`}>
+    <div className={`bg-[#f5f5f5] p-4 flex justify-between gap-10 ${titlePosition === "top" ? " items-start" : "items-end"} ${className}`}>
       <div>
-        <p>{title}</p>
-        <a href={link.href}>{link.label}</a>
+        <p className='text-2xl font-bold'>{title}</p>
+        <a className='border-b-2 border-black font-medium' href={link.href}>{link.label}</a>
       </div>
-      <div className='flex-1'>
-        <div>
-          <img src={img} alt={title} />
+      <div className=''>
+        <div className={imgClassName}>
+          <img className='object-cover' src={img} alt={title} />
         </div>
       </div>
     </div>
