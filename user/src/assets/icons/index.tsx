@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 
+
 export const LogoIcon = (): ReactElement => {
   return (
     <svg
@@ -524,12 +525,12 @@ export const ColumnsIcon = ({
     count == 5
       ? five
       : count == 4
-      ? four
-      : count == 3
-      ? three
-      : count == 2
-      ? twoVertical
-      : twoHorizontal;
+        ? four
+        : count == 3
+          ? three
+          : count == 2
+            ? twoVertical
+            : twoHorizontal;
   return (
     <svg
       className="cursor-pointer"
