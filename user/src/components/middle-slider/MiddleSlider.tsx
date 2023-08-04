@@ -16,21 +16,21 @@ import middleSwiperCardsIcon1 from '../../assets/middleSwiperCardsIcon1.png';
 import middleSwiperCardsStar from '../../assets/middleSwiperCardsStar.png';
 
 
-
-export function MiddleSlider() {
-
-    interface Props {
-        items: { title: string, value: string, content: string[] }[],
-        className: string
-    }
-
+interface Props {
+    img: string,
+    name: string,
+    ranking: 1 | 2 | 3 | 4 | 5,
+    productName: string,
+    desc: string
+}
+export function MiddleSlider({img, name, ranking, desc, productName}: Props) {
 
     return (
         <>
-            <div className='middleSliderWrapper'>
-                <div>
+            <div className='middleSliderWrapper shadow-lg'>
+                {/* <div>
                     <h3>Mijozlar fikri</h3>
-                </div>
+                </div> */}
                 <Swiper
                     slidesPerView={3}
                     spaceBetween={30}
@@ -46,20 +46,20 @@ export function MiddleSlider() {
                 >
                     <SwiperSlide>
                         <div className='middleSlideCardHeader'>
-                            <img src={middleSwiperCardsIcon1} alt='Avatar' />
+                            <img src={img} alt='Avatar' />
                             <div className='middleSwiperCardsHeading'>
                                 <h4>
-                                    John F.
+                                    {name}
                                 </h4>
-                                <div className='middleSwiperCardsStars'>
+                                <div className='middleSwiperCardsStar'>
                                     <img src={middleSwiperCardsStar} alt='star' />
                                 </div>
                             </div>
                         </div>
                         <div className='middleSlideCardBody'>
-                            <h5>Product name</h5>
+                            <h5>{productName}</h5>
                             <p>
-                                “Omg! These are adorable. Very comfortable while and fashionable. Brilliant customer support helping with sizing and again with tracking”
+                                {desc}
                             </p>
                         </div>
                     </SwiperSlide>
