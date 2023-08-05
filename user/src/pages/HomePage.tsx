@@ -1,8 +1,7 @@
 import { ReactElement } from "react";
 
-import { Carusel } from "@/components";
+import { Carusel, ProductCard, ShowCaseCard } from "@/components";
 import { HomePageComponent } from "@/components/any";
-import { ShowCaseCard } from "@/components/common";
 
 import img1 from "@/assets/images/3.png"
 import img2 from "@/assets/images/2.png"
@@ -16,7 +15,24 @@ const HomePage = (): ReactElement => {
   return (
     <div className="container">
       <Carusel />
-      <HomePageComponent />
+
+      <br />
+      <br />
+
+      <ProductCard 
+          key={1}
+          img="https://images.uzum.uz/ccojiir5a95unf11rchg/t_product_540_high.jpg#1691243110247" 
+          price="$300"
+          oldPrice="$400"
+          discount="-40%"
+          productName="Oka bu palto"
+          newBadge
+          // rating
+      />
+
+      <br />
+      <br />
+
       <div className="flex max-md:flex-col gap-10 mb-10">
         <ShowCaseCard
           key={a[0].title}
