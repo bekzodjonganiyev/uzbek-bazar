@@ -1,6 +1,6 @@
 import { ReactElement, useState } from 'react'
 import { LazyLoadImage } from "react-lazy-load-image-component"
-import { Rating } from "react-simple-star-rating"
+// import { Rating } from "react-simple-star-rating"
 
 import { Button } from "@/components/ui/button"
 
