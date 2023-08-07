@@ -12,7 +12,7 @@ type Props = {
 
 export const ShowCaseCard = ({title, link, img, titlePosition, className, imgClassName}: Props): ReactElement => {
   return (
-    <div className={`bg-[#f5f5f5] p-4 flex justify-between gap-10 ${titlePosition === "top" ? " items-start" : "items-end"} ${className}`}>
+    <div className={`bg-card-bg p-4 flex justify-between gap-10 ${titlePosition === "top" ? " items-start" : "items-end"} ${className}`}>
       <div>
         <p className='text-2xl font-bold'>{title}</p>
         <a className='border-b-2 border-black font-medium' href={link.href}>{link.label}</a>
