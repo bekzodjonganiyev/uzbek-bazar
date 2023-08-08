@@ -11,12 +11,16 @@ type Logos = {
     logo: string,
     name: string,
     link: string
-}[]
+}[] | null
 
 export const LikedBrands = (props: Props): ReactElement => {
     const [logos, setLogos] = useState<Logos>()
 
-    const fetchBrendLogos = () => { }
+    const fetchBrendLogos = () => { 
+        setLogos(null) 
+        console.log(logos)
+        console.log(props)
+    }
 
     useEffect(() => {
         fetchBrendLogos()

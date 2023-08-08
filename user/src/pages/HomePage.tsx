@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 
-import { Carusel, ProductCard, ShowCaseCard, LikedBrands } from "@/components";
+import { Carusel, /**ProductCard,*/ ShowCaseCard, LikedBrands } from "@/components";
 import { HomePageComponent } from "@/components/any";
 
 import img1 from "@/assets/images/3.png"
@@ -13,48 +13,48 @@ const HomePage = (): ReactElement => {
     { title: "Coats", link: { label: "Explore", href: "kun.uz" }, img: img2 }
   ]
 
-  const b = [
-    { 
-      id: 1, 
-      img: "https://images.uzum.uz/ccojiir5a95unf11rchg/t_product_540_high.jpg#1691243110247", 
-      price: "$300", 
-      oldPice: null,
-      newBadge: true,
-      rating: false,
-      discount: null,
-      productName: "Malqa Pullover"
-    },
-    { 
-      id: 2, 
-      img: "https://images.uzum.uz/ccojiir5a95unf11rchg/t_product_540_high.jpg#1691243110247", 
-      price: "$300", 
-      oldPice: "$330",
-      newBadge: true,
-      rating: false,
-      discount: null,
-      productName: "Malqa Pullover"
-    },
-    { 
-      id: 3, 
-      img: "https://images.uzum.uz/ccojiir5a95unf11rchg/t_product_540_high.jpg#1691243110247", 
-      price: "$300", 
-      oldPice: null,
-      newBadge: false,
-      rating: false,
-      discount: "-40%",
-      productName: "Malqa Pullover"
-    },
-    { 
-      id: 4, 
-      img: "https://images.uzum.uz/ccojiir5a95unf11rchg/t_product_540_high.jpg#1691243110247", 
-      price: "$300", 
-      oldPice: "$330",
-      newBadge: false,
-      rating: false,
-      discount: "-40%",
-      productName: "Malqa Pullover Malqa Pullover Malqa Pullover Malqa Pullover" 
-    },
-  ]
+  // const b = [
+  //   { 
+  //     id: 1, 
+  //     img: "https://images.uzum.uz/ccojiir5a95unf11rchg/t_product_540_high.jpg#1691243110247", 
+  //     price: "$300", 
+  //     oldPice: null,
+  //     newBadge: true,
+  //     rating: false,
+  //     discount: null,
+  //     productName: "Malqa Pullover"
+  //   },
+  //   { 
+  //     id: 2, 
+  //     img: "https://images.uzum.uz/ccojiir5a95unf11rchg/t_product_540_high.jpg#1691243110247", 
+  //     price: "$300", 
+  //     oldPice: "$330",
+  //     newBadge: true,
+  //     rating: false,
+  //     discount: null,
+  //     productName: "Malqa Pullover"
+  //   },
+  //   { 
+  //     id: 3, 
+  //     img: "https://images.uzum.uz/ccojiir5a95unf11rchg/t_product_540_high.jpg#1691243110247", 
+  //     price: "$300", 
+  //     oldPice: null,
+  //     newBadge: false,
+  //     rating: false,
+  //     discount: "-40%",
+  //     productName: "Malqa Pullover"
+  //   },
+  //   { 
+  //     id: 4, 
+  //     img: "https://images.uzum.uz/ccojiir5a95unf11rchg/t_product_540_high.jpg#1691243110247", 
+  //     price: "$300", 
+  //     oldPice: "$330",
+  //     newBadge: false,
+  //     rating: false,
+  //     discount: "-40%",
+  //     productName: "Malqa Pullover Malqa Pullover Malqa Pullover Malqa Pullover" 
+  //   },
+  // ]
 
   return (
     <div className="container">
