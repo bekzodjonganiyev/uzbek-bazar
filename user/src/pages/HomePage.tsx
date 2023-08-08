@@ -63,7 +63,7 @@ const HomePage = (): ReactElement => {
       <br />
       <br />
 
-      <div className="grid grid-cols-4 max-md:grid-cols-1 gap-10">
+      {/* <div className="grid grid-cols-4 max-md:grid-cols-1 gap-10">
         {
           b.map(item => (
             <ProductCard
@@ -78,7 +78,7 @@ const HomePage = (): ReactElement => {
             />
           ))
         }
-      </div>
+      </div> */}
 
       <br />
       <br />

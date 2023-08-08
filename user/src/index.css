@@ -78,3 +78,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+.clg-r{
+  border: 1px solid red;
+}
+
+.clg-g{
+  border: 1px solid green;
+}
+
+.clg-b{
+  border: 1px solid blue;
+}
+
+body{
+  min-width: 320px !important;
+}
