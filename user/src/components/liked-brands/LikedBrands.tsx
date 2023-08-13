@@ -16,15 +16,15 @@ type Logos = {
 export const LikedBrands = (props: Props): ReactElement => {
     const [logos, setLogos] = useState<Logos>()
 
-    const fetchBrendLogos = () => { 
-        setLogos(null) 
-        console.log(logos)
-        console.log(props)
-    }
+    // const fetchBrendLogos = () => { 
+    //     setLogos(null) 
+    //     console.log(logos)
+    //     console.log(props)
+    // }
 
-    useEffect(() => {
-        fetchBrendLogos()
-    }, [])
+    // useEffect(() => {
+    //     fetchBrendLogos()
+    // }, [])
 
     return (
         <div className='p-10 flex md:flex-row flex-col items-start bg-card-bg max-md:gap-y-10'>

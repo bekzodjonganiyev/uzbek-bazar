@@ -1,13 +1,17 @@
 import { ReactElement, useState } from 'react'
 import { LazyLoadImage } from "react-lazy-load-image-component"
-// import { Rating } from "react-simple-star-rating"
+import { useSelector } from "react-redux"
 
 import { Button } from "@/components/ui/button"
 
 import placeholderImg from "@/assets/images/placeholder.png"
 import { EyeIcon, LikeIcon, OppositeIcon } from '@/assets/icons'
 
+import { useAppDispatch, RootState } from "@/redux"
+import { setId, deleteId } from "@/redux/action/test"
+
 type Props = {
+    id: number,
     img: string,
     productName: string,
     price: string,
@@ -19,6 +23,8 @@ type Props = {
 }
 
 export const ProductCard = (props: Props): ReactElement => {
+    const dispatch = useAppDispatch()
+    const test = useSelector((state: RootState) => state.test)
     const [showAction, setShowAction] = useState<boolean>(false)
 
     const onHover = () => {
@@ -30,7 +36,11 @@ export const ProductCard = (props: Props): ReactElement => {
     }
 
     const onLike = () => {
-        console.log(props, "onLike")
+        if (!test.includes(props.id)){
+            dispatch(setId(props.id))
+        } else (
+            dispatch(deleteId(props.id))
+        )
     }
 
     const onComparison = () => {
@@ -40,6 +50,7 @@ export const ProductCard = (props: Props): ReactElement => {
     const onCart = () => {
         console.log(props, "onCart")
     }
+
     return (
         <div className='relative md:w-64 w-52 rounded-md' onMouseEnter={() => onHover()} onMouseLeave={() => onLeave()}>
 
@@ -93,7 +104,7 @@ export const ProductCard = (props: Props): ReactElement => {
                 ? <div className='absolute w-full h-full top-0 left-0'>
                     <div className='relative w-full h-full z-50'>
                         <div className='flex flex-col absolute right-3 top-20'>
-                            <Button variant={'outline'} size={'icon'} className="rounded-none" onClick={() => onLike()}><LikeIcon /></Button>
+                            <Button variant={'outline'} size={'icon'} className={`rounded-none ${test.includes(props.id) ? "bg-black" : ""}`} onClick={() => onLike()}><LikeIcon color={`${test.includes(props.id) ? "white" : "#121212"}`} /></Button>
                             <Button variant={'outline'} size={'icon'} className="rounded-none" onClick={() => alert("Id")}><EyeIcon /></Button>
                             <Button variant={'outline'} size={'icon'} className="rounded-none" onClick={() => onComparison()}><OppositeIcon /></Button>
                         </div>
