@@ -8,7 +8,8 @@ import placeholderImg from "@/assets/images/placeholder.png"
 import { EyeIcon, LikeIcon, OppositeIcon } from '@/assets/icons'
 
 import { useAppDispatch, RootState } from "@/redux"
-import { setId, deleteId } from "@/redux/action/test"
+import { ProductCardActions } from "@/redux/actions"
+const { setCartId, deleteCartId, setCompareId,  deleteCompareId,  setWishlistId, deleteWishlistId } = new ProductCardActions()
 
 type Props = {
     id: number,
@@ -24,7 +25,7 @@ type Props = {
 
 export const ProductCard = (props: Props): ReactElement => {
     const dispatch = useAppDispatch()
-    const test = useSelector((state: RootState) => state.test)
+    const product = useSelector((state: RootState) => state.product)
     const [showAction, setShowAction] = useState<boolean>(false)
 
     const onHover = () => {
@@ -36,19 +37,27 @@ export const ProductCard = (props: Props): ReactElement => {
     }
 
     const onLike = () => {
-        if (!test.includes(props.id)){
-            dispatch(setId(props.id))
+        if (!product?.wishlist.includes(props.id)){
+            dispatch(setWishlistId(props.id))
         } else (
-            dispatch(deleteId(props.id))
+            dispatch(deleteWishlistId(props.id))
         )
     }
 
     const onComparison = () => {
-        console.log(props, "onComparison")
+        if (!product?.compare.includes(props.id)){
+            dispatch(setCompareId(props.id))
+        } else (
+            dispatch(deleteCompareId(props.id))
+        )
     }
 
     const onCart = () => {
-        console.log(props, "onCart")
+        if (!product?.cart.includes(props.id)){
+            dispatch(setCartId(props.id))
+        } else (
+            dispatch(deleteCartId(props.id))
+        )
     }
 
     return (
@@ -104,14 +113,15 @@ export const ProductCard = (props: Props): ReactElement => {
                 ? <div className='absolute w-full h-full top-0 left-0'>
                     <div className='relative w-full h-full z-50'>
                         <div className='flex flex-col absolute right-3 top-20'>
-                            <Button variant={'outline'} size={'icon'} className={`rounded-none ${test.includes(props.id) ? "bg-black" : ""}`} onClick={() => onLike()}><LikeIcon color={`${test.includes(props.id) ? "white" : "#121212"}`} /></Button>
+                            {/* TODO - `test.includes(props.id)` ning o'rniga optimalroq yechim kerak */}
+                            <Button variant={'outline'} size={'icon'} className={`rounded-none ${product?.wishlist.includes(props.id) ? "bg-black" : ""}`} onClick={() => onLike()}><LikeIcon color={`${product?.wishlist.includes(props.id) ? "white" : "#121212"}`} /></Button>
                             <Button variant={'outline'} size={'icon'} className="rounded-none" onClick={() => alert("Id")}><EyeIcon /></Button>
-                            <Button variant={'outline'} size={'icon'} className="rounded-none" onClick={() => onComparison()}><OppositeIcon /></Button>
+                            <Button variant={'outline'} size={'icon'} className={`rounded-none ${product?.compare.includes(props.id) ? "bg-black" : ""}`} onClick={() => onComparison()}><OppositeIcon color={`${product?.compare.includes(props.id) ? "white" : "#121212"}`} /></Button>
                         </div>
                         <Button 
                             size={'sm'} 
                             variant={'outline'} 
-                            className={`absolute ${props.rating ? "bottom-24" : "bottom-[75px]"} left-1/2 -translate-x-1/2 rounded-none w-[90%]`}
+                            className={`absolute md:top-80 top-60 left-1/2 -translate-x-1/2 rounded-none w-[90%]`}
                             onClick={() => onCart()}
                         >Savatchaga</Button>
                     </div>

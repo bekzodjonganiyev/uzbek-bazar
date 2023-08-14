@@ -174,11 +174,11 @@ export const NextItemIcon = ({ width = 32, height = 32 }: NextItemIconProps): Re
   );
 };
 
-type LikeIconProps = {
+type IconProps = {
   color: string
 }
 
-export const LikeIcon = (props: LikeIconProps): ReactElement => {
+export const LikeIcon = (props: IconProps): ReactElement => {
   return (
     <svg
       className="cursor-pointer"
@@ -227,7 +227,7 @@ export const EyeIcon = (): ReactElement => {
   );
 };
 
-export const OppositeIcon = (): ReactElement => {
+export const OppositeIcon = (props: IconProps): ReactElement => {
   return (
     <svg
       className="cursor-pointer"
@@ -240,28 +240,28 @@ export const OppositeIcon = (): ReactElement => {
       <g clipPath="url(#clip0_176_42195)">
         <path
           d="M16 4L20 8L16 12"
-          stroke="#121212"
+         stroke={props.color}
           strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M10 8H20"
-          stroke="#121212"
+         stroke={props.color}
           strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M8 12L4 16L8 20"
-          stroke="#121212"
+         stroke={props.color}
           strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M4 16H13"
-          stroke="#121212"
+         stroke={props.color}
           strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
