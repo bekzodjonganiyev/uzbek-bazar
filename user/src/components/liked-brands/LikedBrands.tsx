@@ -1,20 +1,20 @@
-import { ReactElement, useState, useEffect } from 'react'
+import { ReactElement, /*useState, useEffect*/ } from 'react'
 import { Link } from 'react-router-dom'
 
 import { NextItemIcon } from '@/assets/icons'
 
-type Props = {
-    home?: boolean,
-}
+// type Props = {
+//     home?: boolean,
+// }
 
-type Logos = {
-    logo: string,
-    name: string,
-    link: string
-}[] | null
+// type Logos = {
+//     logo: string,
+//     name: string,
+//     link: string
+// }[] | null
 
-export const LikedBrands = (props: Props): ReactElement => {
-    const [logos, setLogos] = useState<Logos>()
+export const LikedBrands = (/*props: Props*/): ReactElement => {
+    // const [logos, setLogos] = useState<Logos>()
 
     // const fetchBrendLogos = () => { 
     //     setLogos(null) 

@@ -1,7 +1,6 @@
 import { ReactElement } from "react";
 
 import { Carusel, ProductCard, ShowCaseCard, LikedBrands } from "@/components";
-import { HomePageComponent } from "@/components/any";
 
 import img1 from "@/assets/images/3.png"
 import img2 from "@/assets/images/2.png"
