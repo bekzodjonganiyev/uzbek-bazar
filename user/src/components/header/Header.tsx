@@ -1,11 +1,19 @@
-import { Sheet } from "../ui/sheet"
-import { CustomSelect } from "@/components/common"
-import { SiderOpener, SiderBody, Menu } from "./header-elements"
+import { useSelector } from "react-redux"
 
-import { EnFlagIcon, HumanIcon, PhoneIcon, RuFlagIcon, SearchIcon, ShopCardIcon, UzFlagIcon } from "@/assets/icons"
+import { Sheet, SheetTrigger } from "../ui/sheet"
+import { CustomSelect, CustomSheetContent } from "@/components/common"
+import { SiderBody, Menu } from "./header-elements"
+
+import { EnFlagIcon, HamburgerIcon, HumanIcon, PhoneIcon, RuFlagIcon, SearchIcon, ShopCardIcon, UzFlagIcon } from "@/assets/icons"
+
+import { useAppDispatch, RootState } from "@/redux"
+import { setSheetContent } from "@/redux/actions"
 
 
 export const Header = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+  const sheetContent = useSelector((state: RootState) => state.sheetContent)
+
   const languages = [
     { label: "UZB", value: "uz", icon: <UzFlagIcon /> },
     { label: "RUS", value: "ru", icon: <RuFlagIcon /> },
@@ -21,6 +29,12 @@ export const Header = (): JSX.Element => {
   return (
     <header className="w-full">
       <Sheet>
+        {/* begin::CUSTOM SHEET CONTENT */}
+        <CustomSheetContent side={sheetContent.side}>
+          {sheetContent.children}
+        </CustomSheetContent>
+        {/* end::CUSTOM SHEET CONTENT */}
+
         <div className="container flex flex-col max-md:py-2">
 
           {/* begin::TOP HEADER */}
@@ -61,24 +75,26 @@ export const Header = (): JSX.Element => {
             <div>UZEKBAZAR</div>
 
             {/* |---MENU---| */}
-            <SiderBody />
             <Menu />
 
             {/* |---BUTTONS---| */}
             <div className="flex gap-2 items-center">
-              <button className="max-md:hidden ">
+              <SheetTrigger className="max-md:hidden" onClick={() => dispatch(setSheetContent("top", <p>xxx</p>))}>
                 <SearchIcon />
-              </button>
-              <button className="max-md:hidden ">
+              </SheetTrigger>
+
+              <button className="max-md:hidden">
                 <HumanIcon />
               </button>
-              <button className="flex md:gap-1 items-center ">
+
+              <SheetTrigger className="flex md:gap-1 items-center " onClick={() => dispatch(setSheetContent("right", <p>savatcha</p>))}>
                 <ShopCardIcon />
                 <p className="bg-black rounded-full text-white text-xs md:w-6 w-5 md:h-6 h-5 flex items-center justify-center">{2}</p>
-              </button>
-              <div className="md:hidden flex items-center justify-center">
-                <SiderOpener />
-              </div>
+              </SheetTrigger>
+
+              <SheetTrigger className="md:hidden flex items-center justify-center" onClick={() => dispatch(setSheetContent("right", <SiderBody />))}>
+                <HamburgerIcon />
+              </SheetTrigger>
             </div>
           </div>
           {/* end::MAIN HEADER */}

@@ -2,18 +2,10 @@ import React from "react"
 import { Link } from "react-router-dom"
 import { ChevronRight } from "lucide-react"
 
-import { HamburgerIcon } from "@/assets/icons"
-import { SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
 import { CustomAccardion } from "@/components/common"
 
 import { cn } from "@/lib/utils"
-
-export const SiderOpener = () => (
-  <SheetTrigger>
-    <HamburgerIcon />
-  </SheetTrigger>
-)
 
 export const SiderBody = () => {
   const footerLinks = [
@@ -22,11 +14,9 @@ export const SiderBody = () => {
     { title: "Kompaniya", value: "list 3", content: ["salom", "alik"] },
   ];
 
-  return <SheetContent >
-    <div className="mt-10">
-      <CustomAccardion items={footerLinks} className=""/>
-    </div>
-  </SheetContent>
+  return <div className="mt-10">
+    <CustomAccardion items={footerLinks} className="" />
+  </div>
 }
 
 export const Menu = () => {
