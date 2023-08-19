@@ -7,16 +7,6 @@ interface Props {
 }
 
 export const CustomSheetContent = (props: Props): ReactElement => {
-    console.log(props)
-    return (
-        <SheetContent side={props.side}>
-            {props.children}
-        </SheetContent>
-    )
-}
-
-export const CustomSheetTrigger = (props: Props): ReactElement => {
-    console.log(props)
     return (
         <SheetContent side={props.side}>
             {props.children}

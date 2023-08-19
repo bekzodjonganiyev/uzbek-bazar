@@ -1,5 +1,7 @@
 import { ReactElement } from "react";
 
+import { cn } from "@/lib/utils"
+
 export const LogoIcon = (): ReactElement => {
   return (
     <svg
@@ -39,10 +41,13 @@ export const PhoneIcon = (): ReactElement => {
   );
 };
 
-export const SearchIcon = (): ReactElement => {
+interface SerachIconProps {
+  className?: string
+}
+export const SearchIcon = (props: SerachIconProps): ReactElement => {
   return (
     <svg
-      className="cursor-pointer"
+      className={cn("cursor-pointer", props.className)}
       width="28"
       height="28"
       viewBox="0 0 28 28"

@@ -1,10 +1,11 @@
 import { useSelector } from "react-redux"
 
-import { Sheet, SheetTrigger } from "../ui/sheet"
-import { CustomSelect, CustomSheetContent } from "@/components/common"
-import { SiderBody, Menu } from "./header-elements"
-
+import { Sheet, SheetTrigger } from "@/components/ui/sheet"
 import { EnFlagIcon, HamburgerIcon, HumanIcon, PhoneIcon, RuFlagIcon, SearchIcon, ShopCardIcon, UzFlagIcon } from "@/assets/icons"
+import { CustomSelect, CustomSheetContent } from "@/components/common"
+import { CartSheet, MobileMenuSheet, SearchSheet } from "@/components/sheet-contents"
+
+import { Menu } from "./header-elements"
 
 import { useAppDispatch, RootState } from "@/redux"
 import { setSheetContent } from "@/redux/actions"
@@ -13,6 +14,7 @@ import { setSheetContent } from "@/redux/actions"
 export const Header = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const sheetContent = useSelector((state: RootState) => state.sheetContent)
+  const cart = useSelector((state: RootState) => state.product.cart)
 
   const languages = [
     { label: "UZB", value: "uz", icon: <UzFlagIcon /> },
@@ -79,7 +81,7 @@ export const Header = (): JSX.Element => {
 
             {/* |---BUTTONS---| */}
             <div className="flex gap-2 items-center">
-              <SheetTrigger className="max-md:hidden" onClick={() => dispatch(setSheetContent("top", <p>xxx</p>))}>
+              <SheetTrigger className="max-md:hidden" onClick={() => dispatch(setSheetContent("top", <SearchSheet />))}>
                 <SearchIcon />
               </SheetTrigger>
 
@@ -87,12 +89,12 @@ export const Header = (): JSX.Element => {
                 <HumanIcon />
               </button>
 
-              <SheetTrigger className="flex md:gap-1 items-center " onClick={() => dispatch(setSheetContent("right", <p>savatcha</p>))}>
+              <SheetTrigger className="flex md:gap-1 items-center " onClick={() => dispatch(setSheetContent("right", <CartSheet />))}>
                 <ShopCardIcon />
-                <p className="bg-black rounded-full text-white text-xs md:w-6 w-5 md:h-6 h-5 flex items-center justify-center">{2}</p>
+                <p className="bg-black rounded-full text-white text-xs md:w-6 w-5 md:h-6 h-5 flex items-center justify-center">{cart.length}</p>
               </SheetTrigger>
 
-              <SheetTrigger className="md:hidden flex items-center justify-center" onClick={() => dispatch(setSheetContent("right", <SiderBody />))}>
+              <SheetTrigger className="md:hidden flex items-center justify-center" onClick={() => dispatch(setSheetContent("right", <MobileMenuSheet />))}>
                 <HamburgerIcon />
               </SheetTrigger>
             </div>
