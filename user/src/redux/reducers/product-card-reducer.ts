@@ -14,9 +14,9 @@ interface IAction {
 }
 
 const initialState: IProductCard = {
-  wishlist: [0],
-  cart: [0],
-  compare: [0],
+  wishlist: [],
+  cart: [],
+  compare: [],
   time: 0,
   alert: false,
 };

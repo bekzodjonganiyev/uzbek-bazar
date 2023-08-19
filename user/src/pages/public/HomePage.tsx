@@ -5,7 +5,7 @@ import { Carusel, ProductCard, ShowCaseCard, LikedBrands } from "@/components";
 import img1 from "@/assets/images/3.png"
 import img2 from "@/assets/images/2.png"
 
-const HomePage = (): ReactElement => {
+export const HomePage = (): ReactElement => {
   const a = [
     { title: "Coats", link: { label: "Explore", href: "kun.uz" }, img: img1 },
     { title: "Coats", link: { label: "Explore", href: "kun.uz" }, img: img2 },
@@ -64,7 +64,6 @@ const HomePage = (): ReactElement => {
       productName: "Malqa Pullover"
     },
   ]
-
   return (
     <div className="container">
       <Carusel />
@@ -130,4 +129,3 @@ const HomePage = (): ReactElement => {
     </div>
   );
 };
-export default HomePage;
