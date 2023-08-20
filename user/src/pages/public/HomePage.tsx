@@ -65,7 +65,7 @@ export const HomePage = (): ReactElement => {
     },
   ]
   return (
-    <div className="container">
+    <div className="">
       <Carusel />
       <br />
       <br />
