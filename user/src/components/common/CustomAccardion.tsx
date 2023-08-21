@@ -9,7 +9,7 @@ import {
 import { Link } from "react-router-dom"
 
 interface Props {
-    items: { title: string, value: string, content: string[] }[],
+    items: { title: string, value: string, content: {link: string, title: string}[] }[],
     className: string
 }
 
@@ -23,8 +23,8 @@ export const CustomAccardion = ({ items, className }: Props): ReactElement => {
                         <AccordionContent>
                             <div className="flex flex-col gap-2">
                                 {
-                                    item.content.map((link, idx) => (
-                                        <Link key={idx} to={link}>{link}</Link>
+                                    item.content.map((item, idx) => (
+                                        <Link key={idx} to={item.link}>{item.title}</Link>
                                     ))
                                 }
                             </div>

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
 
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
-import { EnFlagIcon, HamburgerIcon, HumanIcon, PhoneIcon, RuFlagIcon, SearchIcon, ShopCardIcon, UzFlagIcon } from "@/assets/icons"
+import { EnFlagIcon, HamburgerIcon, HumanIcon, PhoneIcon, RuFlagIcon, SearchIcon, ShopCardIcon, UzFlagIcon, LogoIcon } from "@/assets/icons"
 import { CustomSelect, CustomSheetContent } from "@/components/common"
 import { CartSheet, MobileMenuSheet, SearchSheet } from "@/components/sheet-contents"
 
@@ -9,6 +9,7 @@ import { Menu } from "./header-elements"
 
 import { useAppDispatch, RootState } from "@/redux"
 import { setSheetContent } from "@/redux/actions"
+import { Link } from "react-router-dom"
 
 
 export const Header = (): JSX.Element => {
@@ -74,7 +75,7 @@ export const Header = (): JSX.Element => {
           {/* begin::MAIN HEADER */}
           <div className="flex justify-between items-center py-2">
             {/* |---LOGO---| */}
-            <div>UZEKBAZAR</div>
+            <div><Link to="/"><LogoIcon /></Link></div>
 
             {/* |---MENU---| */}
             <Menu />

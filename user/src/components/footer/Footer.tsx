@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 
 export const Footer = (): ReactElement => {
   const footerLinks = [
-    { title: "Foydalanuvchilarga", value: "list 1", content: ["salom", "alik"] },
-    { title: "Tadbirkorlarga", value: "list 2", content: ["salom", "alik"] },
-    { title: "Kompaniya", value: "list 3", content: ["salom", "alik"] },
+    { title: "Foydalanuvchilarga", value: "list 1", content: [{link: "/contact-us", title: "Biz bilan bog’lanish"}, {link: "/faq", title: "Savol-javoblar"}] },
+    { title: "Tadbirkorlarga", value: "list 2", content: [{link: "/sell-with-us", title: "Biz bilan soting"}, {link: "sellers.uzbekbazar.uz", title: "Sotuvchi kabinetiga kirish"}] },
+    { title: "Kompaniya", value: "list 3", content: [{link: "/about-us", title: "Biz haqimizda"}, {link: "/pravicy-policy", title: "Maxfiylik kelishuvi"},  {link: "/user-policy", title: "Foydalanuvchi kelishuvi"}] },
   ];
 
   const languages = [
@@ -43,14 +43,14 @@ export const Footer = (): ReactElement => {
 
           {/* begin::LINKS */}
           <div className="max-md:mb-5">
-            <div className="lg:flex gap-28 hidden">
+            <div className="lg:flex xl:gap-20 gap-10 hidden">
               {
                 footerLinks.map(item => (
                   <ul>
-                    <h2 className="text-base font-medium">{item.title}</h2>
+                    <h2 className="text-base font-semibold mb-1">{item.title}</h2>
                     {
                       item.content.map(subItem => (
-                        <li><Link to={subItem}>{subItem}</Link></li>
+                        <li className="mb-3 leading-4"><Link to={subItem.link}>{subItem.title}</Link></li>
                       ))
                     }
                   </ul>

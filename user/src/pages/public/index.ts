@@ -4,7 +4,8 @@ import { lazy} from "react"
 const Home = lazy(() => import("./Home").then(module => ({default: module.Home})))
 
 const TopProducts = lazy(() => import("./top-products/TopProducts").then(module => ({default: module.TopProducts})))
-// category will make
+const ProductList = lazy(() => import("./product/ProductList").then(module => ({default: module.ProductList})))
+const ProductView = lazy(() => import("./product/ProductView").then(module => ({default: module.ProductView})))
 // brends will make
 
 const Cart = lazy(() => import("./cart/Cart").then(module => ({default: module.Cart})))
@@ -23,6 +24,8 @@ const SellerDetails = lazy(() => import("./seller/SellerDetails").then(module =>
 export {
     Home,
     TopProducts,
+    ProductList,
+    ProductView,
     Compare,
     Favourite,
     SellWithUs,
