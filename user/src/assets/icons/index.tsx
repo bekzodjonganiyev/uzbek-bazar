@@ -843,9 +843,14 @@ export const RuFlagIcon = (): ReactElement => {
   );
 };
 
-export const DownIcon = (): ReactElement => {
+type DownIconProps = {
+  rotate?: string
+}
+
+export const DownIcon = (props: DownIconProps): ReactElement => {
   return (
     <svg
+      className={props.rotate}
       width="20"
       height="20"
       viewBox="0 0 20 20"

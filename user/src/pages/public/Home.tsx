@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-
+import { AxiosError, AxiosResponse } from "axios";
 import { Carusel, ProductCard, ShowCaseCard, LikedBrands } from "@/components";
 
 import { useFetch } from "@/utils/api"
@@ -8,8 +8,8 @@ import { products, showCase } from "@/utils/mocks"
 
 export const Home = (): ReactElement => {
 
-  const productArr = useFetch(["products"], "products/")
-  console.log(productArr.data)
+  const productArr = useFetch<AxiosResponse, AxiosError>(["products"], "products/")
+  console.log(productArr.data?.data.results)
 
   return (
     <div className="">

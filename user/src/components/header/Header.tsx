@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { useSelector } from "react-redux"
 
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
@@ -12,22 +13,28 @@ import { setSheetContent } from "@/redux/actions"
 import { Link } from "react-router-dom"
 
 
+const languages = [
+  { label: "UZB", value: "uz", icon: <UzFlagIcon /> },
+  { label: "RUS", value: "ru", icon: <RuFlagIcon /> },
+  { label: "ENG", value: "en", icon: <EnFlagIcon /> }
+]
+
+const currencys = [
+  { label: "UZS", value: "usz" },
+  { label: "RUB", value: "rub" },
+  { label: "USD", value: "usd" }
+]
+
 export const Header = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const sheetContent = useSelector((state: RootState) => state.sheetContent)
   const cart = useSelector((state: RootState) => state.product.cart)
 
-  const languages = [
-    { label: "UZB", value: "uz", icon: <UzFlagIcon /> },
-    { label: "RUS", value: "ru", icon: <RuFlagIcon /> },
-    { label: "ENG", value: "en", icon: <EnFlagIcon /> }
-  ]
+  const [open, setOpen] = useState<boolean>(false)
 
-  const currencys = [
-    { label: "UZS", value: "usz" },
-    { label: "RUB", value: "rub" },
-    { label: "USD", value: "usd" }
-  ]
+  // if (!open) {
+  //   window.addEventListener("click", () => setOpen(false))
+  // }
 
   return (
     <header className="w-full">
@@ -73,12 +80,21 @@ export const Header = (): JSX.Element => {
           {/* end::TOP HEADER */}
 
           {/* begin::MAIN HEADER */}
-          <div className="flex justify-between items-center py-2">
+          <div className="flex justify-between items-center relative py-2">
             {/* |---LOGO---| */}
             <div><Link to="/"><LogoIcon /></Link></div>
 
             {/* |---MENU---| */}
-            <Menu />
+            <div>
+              <ul className="flex gap-10">
+                <li className="cursor-pointer bg-orange-200 p-3" onClick={() => setOpen(!open)}>Katalog</li>
+                <li className="cursor-pointer bg-orange-200 p-3">2</li>
+                <li className="cursor-pointer bg-orange-200 p-3">2</li>
+              </ul>
+            </div>
+            <div className={`absolute top-full duration-300 bg-card-bg p-5 w-full shadow-2xl ${open ? "opacity-1 z-50" : "opacity-0 -z-50"}`}>
+              <Menu />
+            </div>
 
             {/* |---BUTTONS---| */}
             <div className="flex gap-2 items-center">
