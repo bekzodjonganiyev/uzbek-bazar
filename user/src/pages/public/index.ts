@@ -1,7 +1,7 @@
 import { lazy} from "react"
 
 // TODO - make one function for lazy import 
-const HomePage = lazy(() => import("./HomePage").then(module => ({default: module.HomePage})))
+const Home = lazy(() => import("./Home").then(module => ({default: module.Home})))
 
 const TopProducts = lazy(() => import("./top-products/TopProducts").then(module => ({default: module.TopProducts})))
 // category will make
@@ -21,7 +21,7 @@ const Sellers = lazy(() => import("./seller/Sellers").then(module => ({default: 
 const SellerDetails = lazy(() => import("./seller/SellerDetails").then(module => ({default: module.SellerDetails})))
 
 export {
-    HomePage,
+    Home,
     TopProducts,
     Compare,
     Favourite,

@@ -1,7 +1,7 @@
 import { Suspense } from "react"
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 
-import { HomePage, Cart, AboutUs, Compare, ContactUs, Faq, Favourite, FourZeroFour, SellWithUs, SellerDetails, Sellers, TopProducts } from "@/pages/public";
+import { Home, Cart, AboutUs, Compare, ContactUs, Faq, Favourite, FourZeroFour, SellWithUs, SellerDetails, Sellers, TopProducts } from "@/pages/public";
 import { MainContent } from "@/components/layout/MainContent";
 import { PageLoader } from "@/components/loaders";
 
@@ -11,7 +11,7 @@ function App(): JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Suspense fallback={<PageLoader />}><MainContent /></Suspense>}>
-          <Route index element={<HomePage />} />
+          <Route index element={<Home />} />
           <Route path="/sellers" element={<Sellers />} />
           <Route path="/sellers/:id" element={<SellerDetails />} />
 

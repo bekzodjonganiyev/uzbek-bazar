@@ -14,10 +14,10 @@ export const http = axios.create({
 });
 
 export function useFetch<T>(key: (string | number)[], url: string) {
-  const data = useQuery<T>({
+  const obj = useQuery<T>({
     queryKey: key,
     queryFn: () => http.get(url),
   });
-
-  return data;
+  
+  return obj
 }
