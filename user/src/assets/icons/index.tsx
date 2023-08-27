@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 
 import { cn } from "@/lib/utils"
+import { type } from "os";
 
 export const LogoIcon = (): ReactElement => {
   return (
@@ -42,7 +43,8 @@ export const PhoneIcon = (): ReactElement => {
 };
 
 interface SerachIconProps {
-  className?: string
+  className?: string,
+  click?: () => void
 }
 export const SearchIcon = (props: SerachIconProps): ReactElement => {
   return (
@@ -53,6 +55,7 @@ export const SearchIcon = (props: SerachIconProps): ReactElement => {
       viewBox="0 0 28 28"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      onClick={() => props.click}
     >
       <path
         fillRule="evenodd"
@@ -471,12 +474,17 @@ export const HamburgerIcon = (): ReactElement => {
   );
 };
 
-export const CancelIcon = (): ReactElement => {
+type CancelIconProps = {
+  width: number,
+  height: number
+}
+
+export const CancelIcon = (props:CancelIconProps): ReactElement => {
   return (
     <svg
       className="cursor-pointer"
-      width="24"
-      height="24"
+      width={props.width}
+      height={props.height}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -514,11 +522,13 @@ export const FilterIcon = (): ReactElement => {
 type ColumnsIconProps = {
   count?: number;
   active?: boolean;
+  classNames?: string
 };
 
 export const ColumnsIcon = ({
   count,
   active,
+  classNames
 }: ColumnsIconProps): ReactElement => {
   const five =
     "M3.75 3C4.16421 3 4.5 3.33579 4.5 3.75V19.75C4.5 20.1642 4.16421 20.5 3.75 20.5C3.33579 20.5 3 20.1642 3 19.75V3.75C3 3.33579 3.33579 3 3.75 3ZM7.75 3C8.16421 3 8.5 3.33579 8.5 3.75V19.75C8.5 20.1642 8.16421 20.5 7.75 20.5C7.33579 20.5 7 20.1642 7 19.75V3.75C7 3.33579 7.33579 3 7.75 3ZM12.5 3.75C12.5 3.33579 12.1642 3 11.75 3C11.3358 3 11 3.33579 11 3.75V19.75C11 20.1642 11.3358 20.5 11.75 20.5C12.1642 20.5 12.5 20.1642 12.5 19.75V3.75ZM15.75 3C16.1642 3 16.5 3.33579 16.5 3.75V19.75C16.5 20.1642 16.1642 20.5 15.75 20.5C15.3358 20.5 15 20.1642 15 19.75V3.75C15 3.33579 15.3358 3 15.75 3ZM20.5 3.75C20.5 3.33579 20.1642 3 19.75 3C19.3358 3 19 3.33579 19 3.75V19.75C19 20.1642 19.3358 20.5 19.75 20.5C20.1642 20.5 20.5 20.1642 20.5 19.75V3.75Z";
@@ -546,7 +556,7 @@ export const ColumnsIcon = ({
       : twoHorizontal;
   return (
     <svg
-      className="cursor-pointer"
+      className={`cursor-pointer ${classNames}`}
       width="24"
       height="24"
       viewBox="0 0 24 24"

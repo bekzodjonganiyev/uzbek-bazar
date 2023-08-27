@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
@@ -10,7 +11,6 @@ import { Menu } from "./header-elements"
 
 import { useAppDispatch, RootState } from "@/redux"
 import { setSheetContent } from "@/redux/actions"
-import { Link } from "react-router-dom"
 
 
 const languages = [
@@ -31,10 +31,6 @@ export const Header = (): JSX.Element => {
   const cart = useSelector((state: RootState) => state.product.cart)
 
   const [open, setOpen] = useState<boolean>(false)
-
-  // if (!open) {
-  //   window.addEventListener("click", () => setOpen(false))
-  // }
 
   return (
     <header className="w-full">
@@ -85,16 +81,14 @@ export const Header = (): JSX.Element => {
             <div><Link to="/"><LogoIcon /></Link></div>
 
             {/* |---MENU---| */}
-            <div>
+            <div className="md:block hidden">
               <ul className="flex gap-10">
-                <li className="cursor-pointer bg-orange-200 p-3" onClick={() => setOpen(!open)}>Katalog</li>
-                <li className="cursor-pointer bg-orange-200 p-3">2</li>
-                <li className="cursor-pointer bg-orange-200 p-3">2</li>
+                <li className="cursor-pointer" onClick={() => setOpen(!open)}>Katalog</li>
+                <li className=""><Link to="sellers" className="w-full h-full">Do'konlar</Link></li>
+                <li className=""><Link to="top-products" className="w-full h-full block">Top mahsulotlar</Link></li>
               </ul>
             </div>
-            <div className={`absolute top-full duration-300 bg-card-bg p-5 w-full shadow-2xl ${open ? "opacity-1 z-50" : "opacity-0 -z-50"}`}>
-              <Menu />
-            </div>
+            <Menu open={open} close={() => setOpen(!open)} />
 
             {/* |---BUTTONS---| */}
             <div className="flex gap-2 items-center">

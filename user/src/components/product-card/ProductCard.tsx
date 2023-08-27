@@ -19,7 +19,6 @@ type Props = {
     price: string,
     oldPrice?: string | null,
     rating?: boolean,
-    ratingValue?: number
     newBadge?: boolean,
     discount?: string | null
 }
@@ -63,23 +62,23 @@ export const ProductCard = (props: Props): ReactElement => {
 
     return (
 
-        <div className='relative md:w-64 w-52 rounded-md' onMouseEnter={() => onHover()} onMouseLeave={() => onLeave()}>
+        <div className='relative md:w-64 sm:w-52 w-36 rounded-md' onMouseEnter={() => onHover()} onMouseLeave={() => onLeave()}>
 
             {/* |---POSITION ABSOLUTE ELEMENTS---| */}
             {
                 props.newBadge
-                    ? <span className='absolute font-medium px-3 py-1 bg-white rounded left-2 top-2'>NEW</span>
+                    ? <span className='absolute font-medium px-3 py-1 bg-white rounded left-2 top-2 md:text-sm text-xs'>NEW</span>
                     : null
             }
 
             {
                 props.discount
-                    ? <span className={`absolute font-medium px-3 py-1 bg-green-400 text-white rounded left-2 ${props.newBadge ? "top-12" : "top-2"}`}>{props.discount}</span>
+                    ? <span className={`absolute font-medium px-3 py-1 bg-green-400 text-white rounded left-2 md:text-sm text-xs ${props.newBadge ? "top-12" : "top-2"}`}>{props.discount}</span>
                     : null
             }
 
             {/* |---IMAGE---| */}
-            <div className='w-full md:h-96 h-72'>
+            <div className='w-full md:h-96 sm:h-72 h-64'>
                 <LazyLoadImage
                     src={props.img}
                     alt={props.productName}
@@ -96,14 +95,14 @@ export const ProductCard = (props: Props): ReactElement => {
             {/* TODO - `props.rating` bilan bog'liq condition larni optimize qilaman */}
             <div className={`${props.rating ? "text-left" : "text-center"} py-2 font-semibold`}>
                 {
-                    props.rating ? <div className='flex'>rating</div> : null
+                    props.rating ? <div className='flex'>{props.rating}</div> : null
                 }
-                <h3 className={`${props.rating ? "text-left" : "text-center"} line-clamp-1`}>{props.productName}</h3>
+                <h3 className={`md:text-sm text-xs ${props.rating ? "text-left" : "text-center"} line-clamp-1`}>{props.productName}</h3>
                 <div className={`${props.rating ? "" : "justify-center"} flex gap-2`}>
-                    <p>{props.price}</p>
+                    <p className='md:text-sm text-xs'>{props.price}</p>
                     {
                         props.oldPrice
-                            ? <del className='text-stone-300 font-thin'>{props.oldPrice}</del>
+                            ? <del className='text-stone-300 font-thin md:text-sm text-xs'>{props.oldPrice}</del>
                             : null
                     }
                 </div>
@@ -112,7 +111,7 @@ export const ProductCard = (props: Props): ReactElement => {
             {/* |---HOVERABLE ELEMENTS---| */}
             {
                 showAction
-                    ? <div className='absolute w-full h-full top-0 left-0 z-50'>
+                    ? <div className='absolute w-full h-full top-0 left-0 z-50 md:block hidden'>
                         <div className='relative w-full h-full z-50'>
                             <div className='flex flex-col absolute right-3 top-20'>
                                 {/* TODO - `test.includes(props.id)` ning o'rniga optimalroq yechim kerak */}

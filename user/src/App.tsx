@@ -5,8 +5,9 @@ import { Home, Cart, AboutUs, Compare, ContactUs, Faq, Favourite, FourZeroFour, 
 import { MainContent } from "@/components/layout/MainContent";
 import { PageLoader } from "@/components/loaders";
 
-function App(): JSX.Element {
 
+function App(): JSX.Element {
+    
   return (
     <BrowserRouter>
       <Routes>

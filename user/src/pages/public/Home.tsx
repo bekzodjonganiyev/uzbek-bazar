@@ -7,9 +7,7 @@ import { products, showCase } from "@/utils/mocks"
 
 
 export const Home = (): ReactElement => {
-
   const productArr = useFetch<AxiosResponse, AxiosError>(["products"], "products/")
-  console.log(productArr.data?.data.results)
 
   return (
     <div className="">
