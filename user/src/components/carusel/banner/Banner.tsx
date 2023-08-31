@@ -49,7 +49,7 @@ export const Carusel = (): ReactElement => {
     ]
 
     return (
-        <div>
+        <div className="banner">
             <Swiper
                 spaceBetween={30}
                 centeredSlides={true}
