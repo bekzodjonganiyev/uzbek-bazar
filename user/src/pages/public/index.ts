@@ -11,6 +11,7 @@ const ProductView = lazy(() => import("./product/ProductView").then(module => ({
 const Cart = lazy(() => import("./cart/Cart").then(module => ({default: module.Cart})))
 const Compare = lazy(() => import("./compare/Compare").then(module => ({default: module.Compare})))
 const Favourite = lazy(() => import("./favourite/Favourite").then(module => ({default: module.Favourite})))
+const Checkout = lazy(() => import("./checkout/Checkout").then(module => ({default: module.Checkout})))
 
 const SellWithUs = lazy(() => import("./sell-with-us/SellWithUs").then(module => ({default: module.SellWithUs})))
 const ContactUs = lazy(() => import("./contact-us/ContactUs").then(module => ({default: module.ContactUs})))
@@ -35,5 +36,6 @@ export {
     FourZeroFour,
     Sellers,
     SellerDetails, 
-    Cart
+    Cart,
+    Checkout
 }

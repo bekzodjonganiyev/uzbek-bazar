@@ -13,7 +13,7 @@ export const http = axios.create({
   },
 });
 
-export function useFetch<T, A>(key: (string | number | undefined)[], url: string, enb?: boolean) {
+export function useFetch<T, A>(key: (string | number | null | undefined)[], url: string, enb?: boolean) {
   const obj = useQuery<T, A>({
     queryKey: key,
     queryFn: () => http.get(url),

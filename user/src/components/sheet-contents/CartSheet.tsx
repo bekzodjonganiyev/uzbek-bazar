@@ -46,7 +46,7 @@ export const CartSheet = (props: Props):ReactElement  => {
         <div className='rounded-lg sm:border-2 border border-[#CBCBCB] sm:p-3 p-2 w-full'>
             <p className='font-bold sm:text-lg text-sm mb-3'>Jami</p>
             <p className='font-medium flex justify-between mb-3 max-sm:text-xs'><span>{cart.length} ta maxsulot narxi</span> <span>$240.00</span></p>
-            <SheetClose className='w-full'><Button size={'lg'} className='w-full max-sm:text-xs' onClick={() => navigate("/cart")}>Buyurtma berish</Button></SheetClose>
+            <SheetClose className='w-full'><Button size={'lg'} className='w-full max-sm:text-xs' onClick={() => navigate("/checkout")}>Buyurtma berish</Button></SheetClose>
         </div>
 
         <Link to="/cart" className='border-b-2 border-black w-fit font-medium'><SheetClose>Savatni ko’rish</SheetClose></Link>

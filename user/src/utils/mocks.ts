@@ -186,3 +186,9 @@ export const categories = [
   //   ],
   // },
 ];
+
+export const currencys = [
+  { label: "UZS", value: "usz" },
+  { label: "RUB", value: "rub" },
+  { label: "USD", value: "usd" },
+];

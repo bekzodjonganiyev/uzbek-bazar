@@ -1,13 +1,15 @@
-import { ReactElement, useState, useEffect, Suspense } from 'react'
+import { ReactElement, useState, useEffect } from 'react'
 import { useSearchParams } from "react-router-dom"
 import { AxiosResponse, AxiosError } from "axios"
 
 import { Button } from '@/components/ui/button'
 import { CancelIcon, ColumnsIcon, FilterIcon } from '@/assets/icons'
+import { CustomSelect } from '@/components/common'
+import { ProductCard } from '@/components'
 
 import { useFetch } from '@/utils/api'
-import { ProductCard } from '@/components'
-import { CustomSelect } from '@/components/common'
+import { currencys } from "@/utils/mocks"
+
 
 type Props = {}
 
@@ -17,12 +19,6 @@ export const ProductList = (props: Props): ReactElement => {
 
     const searchValue = searchParams.get("category")
     const productsByCaregory = useFetch<AxiosResponse, AxiosError>(["product-list-by-cetegory", searchValue], `products?category_slug=${searchValue}`)
-
-    const currencys = [
-        { label: "UZS", value: "usz" },
-        { label: "RUB", value: "rub" },
-        { label: "USD", value: "usd" }
-    ]
 
     useEffect(() => {
         console.log(searchValue)
