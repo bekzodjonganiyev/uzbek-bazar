@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { SheetHeader, SheetTitle, SheetClose } from "@/components/ui/sheet"
 import { Button } from '@/components/ui/button'
 
-import { ProductCartItem } from "@/components/product-card/ProductCartItem" 
+import { ProductCartItem } from "@/components" 
 
 import { RootState, useAppDispatch } from "@/redux"
 import { ProductCardActions } from "@/redux/actions"

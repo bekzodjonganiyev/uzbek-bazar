@@ -120,21 +120,21 @@ export const PrevItemIcon = (): ReactElement => {
       <path
         d="M6.6665 16H25.3332"
         stroke="#121212"
-        strokeWidth="1.5"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M6.6665 16L14.6665 24"
         stroke="#121212"
-        strokeWidth="1.5"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M6.6665 16L14.6665 8"
         stroke="#121212"
-        strokeWidth="1.5"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

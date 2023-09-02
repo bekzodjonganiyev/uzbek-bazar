@@ -9,10 +9,13 @@ import 'swiper/css/thumbs';
 
 import "./product-carusel.css"
 
-type Props = {}
+type Props = {
+}
 
 export const ProductCarusel = (props: Props) => {
     const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
+
+    // console.log(props.images, "images from carusel")
     return (
         <div className='product-carusel flex gap-5'>
             {/*  @Swiper dan foydalanganda @div ga o'rab qo'ysak ko'p muammolarni oldi olinadi. */}
@@ -31,6 +34,14 @@ export const ProductCarusel = (props: Props) => {
                     className="thumbs"
                     direction='vertical'
                 >
+                    
+                    {/* {
+                        props.images?.map((item) => (
+                            <SwiperSlide key={item.id}>
+                                <img src={API_URL + item.file} alt='' loading='lazy' />
+                            </SwiperSlide>
+                        ))
+                    } */}
                     <SwiperSlide>
                         <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
                     </SwiperSlide>
@@ -72,6 +83,13 @@ export const ProductCarusel = (props: Props) => {
                     className="product-image xl:w-[500px] lg:w-[400px] md:w-[300px] w-72"
                     direction='horizontal'
                 >
+                    {/* {
+                        props.images?.map((item) => (
+                            <SwiperSlide key={item.id}>
+                                <img src={item.file} alt='' loading='lazy' />
+                            </SwiperSlide>
+                        ))
+                    } */}
                     <SwiperSlide>
                         <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
                     </SwiperSlide>
