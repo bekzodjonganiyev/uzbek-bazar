@@ -1,8 +1,8 @@
 import { ReactElement } from 'react'
 
-type Props = {}
+// type Props = {}
 
-export const Favourite = (props: Props): ReactElement => {
+export const Favourite = (/*props: Props*/): ReactElement => {
     return (
         <div>Favourite</div>
     )

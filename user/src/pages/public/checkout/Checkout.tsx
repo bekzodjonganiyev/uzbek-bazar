@@ -1,8 +1,8 @@
-import React from 'react'
+import { ReactElement } from 'react'
 
-type Props = {}
+// type Props = {}
 
-export const Checkout = (props: Props) => {
+export const Checkout = (/*props: Props*/): ReactElement => {
   return (
     <div className='py-10 w-[90%] mx-auto'>
       <h1 className='text-3xl font-medium text-center mb-10'>Buyurtmani rasmiylashtirish</h1>

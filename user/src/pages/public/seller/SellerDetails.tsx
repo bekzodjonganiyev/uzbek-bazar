@@ -1,13 +1,13 @@
 import { ReactElement } from 'react'
-import { useParams } from 'react-router-dom'
+// import { useParams } from 'react-router-dom'
 import { ProductList } from '..'
 import { Rating } from 'react-simple-star-rating'
 import { FacebookIcon, GlobeIcon, InstaIcon, MailIcon, PhoneIcon } from '@/assets/icons'
 
-type Props = {}
+// type Props = {}
 
-export const SellerDetails = (props: Props): ReactElement => {
-    const { id } = useParams()
+export const SellerDetails = (/*props: Props*/): ReactElement => {
+    // const { id } = useParams()
 
     return (
         <div className='py-10'>

@@ -1,4 +1,4 @@
-import { ReactElement, useState, useEffect } from 'react'
+import { ReactElement, /*/useState,*/ useEffect } from 'react'
 import { useSearchParams } from "react-router-dom"
 import { AxiosResponse, AxiosError } from "axios"
 
@@ -11,11 +11,11 @@ import { useFetch } from '@/utils/api'
 import { currencys } from "@/utils/mocks"
 
 
-type Props = {}
+// type Props = {}
 
-export const ProductList = (props: Props): ReactElement => {
-    let [searchParams, setSearchParams] = useSearchParams();
-    const [filter, setFilter] = useState<boolean>(true)
+export const ProductList = (/*props: Props*/): ReactElement => {
+    let [searchParams] = useSearchParams();
+    // const [filter, setFilter] = useState<boolean>(true)
 
     const searchValue = searchParams.get("category")
     const productsByCaregory = useFetch<AxiosResponse, AxiosError>(["product-list-by-cetegory", searchValue], `products?category_slug=${searchValue}`)

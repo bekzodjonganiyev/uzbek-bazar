@@ -1,13 +1,13 @@
 import { ReactElement } from "react";
-import { AxiosError, AxiosResponse } from "axios";
+// import { AxiosError, AxiosResponse } from "axios";
 import { Carusel, ProductCard, ShowCaseCard, LikedBrands } from "@/components";
 
-import { useFetch } from "@/utils/api"
+// import { useFetch } from "@/utils/api"
 import { products, showCase } from "@/utils/mocks"
 
 
 export const Home = (): ReactElement => {
-  const productArr = useFetch<AxiosResponse, AxiosError>(["products"], "products/")
+  // const productArr = useFetch<AxiosResponse, AxiosError>(["products"], "products/")
 
   return (
     <div className="">

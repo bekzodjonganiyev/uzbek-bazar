@@ -1,9 +1,9 @@
 import { ReactElement, useEffect, useState } from 'react'
 import { Rings } from "react-loader-spinner";
 
-type Props = {}
+// type Props = {}
 
-export const PageLoader = (props: Props): ReactElement => {
+export const PageLoader = (/*props: Props*/): ReactElement => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {

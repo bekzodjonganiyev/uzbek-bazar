@@ -17,9 +17,9 @@ import { ProductCard, ProductCarusel, ProductReview } from '@/components'
 
 import { useFetch } from "@/utils/api"
 
-type Props = {}
+// type Props = {}
 
-export const ProductView = (props: Props): ReactElement => {
+export const ProductView = (/*props: Props*/): ReactElement => {
     const { id } = useParams()
     const productById = useFetch<AxiosResponse, AxiosError>(["product-by-id", id], `products/${id}`)
 

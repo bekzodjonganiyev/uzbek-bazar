@@ -3,11 +3,11 @@ import { ReactElement, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { DeleteIcon } from '@/assets/icons'
 
-type Props = {
+// type Props = {
 
-}
+// }
 
-export const Cart = (props: Props): ReactElement => {
+export const Cart = (/*props: Props*/): ReactElement => {
 
   const [count, setCount] = useState<number>(1)
 

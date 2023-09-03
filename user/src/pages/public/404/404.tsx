@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { NotFoundIcon } from "@/assets/icons"
 
-type Props = {}
+// type Props = {}
 
-export const FourZeroFour = (props: Props): ReactElement => {
+export const FourZeroFour = (/*props: Props*/): ReactElement => {
     const navigate = useNavigate()
     return (
         <div className='w-full h-full flex items-center justify-center'>

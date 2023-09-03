@@ -8,9 +8,9 @@ import { ProductReview as CustomerReview } from '@/components'
 
 import sallerBgImage from "@/assets/images/sellers-bg.png"
 
-type Props = {}
+// type Props = {}
 
-export const SellWithUs = (props: Props): ReactElement => {
+export const SellWithUs = (/*props: Props*/): ReactElement => {
     const [searchTerm, setSearchTerm] = useState("")
 
     const a = [1, 2, 3, 4, 5]

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 
@@ -9,10 +9,10 @@ import 'swiper/css/thumbs';
 
 import "./product-carusel.css"
 
-type Props = {
-}
+// type Props = {
+// }
 
-export const ProductCarusel = (props: Props) => {
+export const ProductCarusel = (/*props: Props*/) => {
     const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
 
     // console.log(props.images, "images from carusel")

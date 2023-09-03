@@ -1,9 +1,9 @@
 import { ReactElement } from 'react'
 import { SheetHeader, SheetTitle } from "@/components/ui/sheet"
 
-interface Props {}
+// interface Props {}
 
-export const MobileMenuSheet = (props: Props):ReactElement  => {
+export const MobileMenuSheet = (/*props: Props*/):ReactElement  => {
   return (
     <aside>
         <SheetHeader>

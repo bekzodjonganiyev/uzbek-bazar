@@ -10,9 +10,9 @@ import sallerBgImage from "@/assets/images/sellers-bg.png"
 import { currencys } from "@/utils/mocks"
 import { SellerCard } from '@/components'
 
-type Props = {}
+// type Props = {}
 
-export const Sellers = (props: Props): ReactElement => {
+export const Sellers = (/*props: Props*/): ReactElement => {
     const [searchTerm, setSearchTerm] = useState("")
 
     const sellers = [1,2,3,4,5,6,7,8,9]

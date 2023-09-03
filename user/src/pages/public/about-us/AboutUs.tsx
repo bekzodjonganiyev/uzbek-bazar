@@ -1,8 +1,8 @@
 import { ReactElement } from 'react'
 
-type Props = {}
+// type Props = {}
 
-export const AboutUs = (props: Props): ReactElement => {
+export const AboutUs = (/*props: Props*/): ReactElement => {
     return (
         <div>AboutUs</div>
     )

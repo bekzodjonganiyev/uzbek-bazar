@@ -7,17 +7,17 @@ import { Button } from '@/components/ui/button'
 
 import { ProductCartItem } from "@/components" 
 
-import { RootState, useAppDispatch } from "@/redux"
-import { ProductCardActions } from "@/redux/actions"
-const { deleteCartId } = new ProductCardActions()
+import { RootState, /* useAppDispatch*/ } from "@/redux"
+// import { ProductCardActions } from "@/redux/actions"
+// const { deleteCartId } = new ProductCardActions()
 
 import { products } from "@/utils/mocks"
 
-interface Props {}
+// interface Props {}
 
-export const CartSheet = (props: Props):ReactElement  => {
+export const CartSheet = (/*props: Props*/):ReactElement  => {
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+//   const dispatch = useAppDispatch()
   const product = useSelector((state: RootState) => state.product)
   const cart = product.cart
   

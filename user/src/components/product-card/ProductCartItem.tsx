@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from 'react'
+import { ReactElement, useState } from 'react'
 
 import { Button } from "@/components/ui/button"
 import { DeleteIcon } from '@/assets/icons'

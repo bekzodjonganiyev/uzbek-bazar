@@ -1,8 +1,8 @@
 import { ReactElement } from 'react'
 
-type Props = {}
+// type Props = {}
 
-export const Compare = (props: Props): ReactElement => {
+export const Compare = (/*props: Props*/): ReactElement => {
     return (
         <div>Compare</div>
     )
