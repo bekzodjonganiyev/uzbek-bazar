@@ -45,12 +45,12 @@ export const Footer = (): ReactElement => {
           <div className="max-md:mb-5">
             <div className="lg:flex xl:gap-20 gap-10 hidden">
               {
-                footerLinks.map(item => (
-                  <ul>
+                footerLinks.map((item, id )=> (
+                  <ul key={id}>
                     <h2 className="text-base font-semibold mb-1">{item.title}</h2>
                     {
-                      item.content.map(subItem => (
-                        <li className="mb-3 leading-4"><Link to={subItem.link}>{subItem.title}</Link></li>
+                      item.content.map((subItem, id) => (
+                        <li className="mb-3 leading-4" key={id}><Link to={subItem.link}>{subItem.title}</Link></li>
                       ))
                     }
                   </ul>

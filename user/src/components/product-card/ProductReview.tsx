@@ -6,11 +6,13 @@ type Props = {
     img: string,
     name: string,
     date: string,
-    rating: number,
+    rating?: number,
     desc: string
 }
 
 export const ProductReview = (props: Props): ReactElement => {
+
+    console.log(props)
     return (
         <div className='flex flex-col gap-4 border-b mt-10 pb-5'>
             <div className='flex items-center gap-5'>
@@ -22,14 +24,18 @@ export const ProductReview = (props: Props): ReactElement => {
 
                 {/* NAME, RATING AND DATE */}
                 <div className='flex flex-col'>
-                    <p><b>{props.name}</b> <span>{props.date}</span></p>
-                    <Rating
-                        initialValue={2}
-                        onClick={function noRefCheck() { }}
-                        readonly
-                        className='star-svg'
-                        size={20}
-                    />
+                    <p className={`${props.rating ? "" : "flex flex-col"}`}><b>{props.name}</b> <span>{props.date}</span></p>
+                    {
+                        props.rating
+                            ? <Rating
+                                initialValue={props.rating}
+                                onClick={function noRefCheck() { }}
+                                readonly
+                                className='star-svg'
+                                size={20}
+                            />
+                            : null
+                    }
                 </div>
             </div>
             <div>

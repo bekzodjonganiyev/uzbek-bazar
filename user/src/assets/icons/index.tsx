@@ -1,7 +1,6 @@
 import { ReactElement } from "react";
 
 import { cn } from "@/lib/utils"
-import { type } from "os";
 
 export const LogoIcon = (): ReactElement => {
   return (
@@ -21,10 +20,14 @@ export const LogoIcon = (): ReactElement => {
   );
 };
 
-export const PhoneIcon = (): ReactElement => {
+interface PhoneIconProps {
+  className?: string,
+  click?: () => void
+}
+export const PhoneIcon = (props: PhoneIconProps): ReactElement => {
   return (
     <svg
-      className="cursor-pointer"
+      className={`cursor-pointer ${props.className}`}
       width="20"
       height="20"
       viewBox="0 0 20 20"

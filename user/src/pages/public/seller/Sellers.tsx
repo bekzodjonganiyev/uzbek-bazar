@@ -69,7 +69,7 @@ export const Sellers = (props: Props): ReactElement => {
                         />
                     ))
                 }
-            </div>
+            </div>            
         </div>
     )
 }
