@@ -41,21 +41,23 @@ export const Cart = (/*props: Props*/): ReactElement => {
           {
             products.map((i: any) => (
               <tr key={i} className='text-left border-b'>
+                
+                {/* -----<TD>PRODUCT NAME</TD>----- */}
                 <td className='py-5'>
                   <div className='flex items-center gap-2'>
-                    {/* IMAGE */}
+                    {/* image */}
                     <div className='w-20 h-32'>
                       <img src="https://images.uzum.uz/ccojiir5a95unf11rchg/t_product_540_high.jpg#1691243110247" alt="" className='w-full h-full object-cover' />
                     </div>
 
                     <div className='flex flex-col items-start gap-3'>
-                      {/* PRODUCT NAME AND INFO */}
+                      {/*product name and info */}
                       <div className='flex flex-col gap-1'>
                         <h3 className='sm:text-base text-sm font-semibold line-clamp-1'>Palto</h3>
                         <p className='sm:text-sm text-xs'>Size: 2xl, Color: qizil</p>
                       </div>
 
-                      {/* DELETE */}
+                      {/* delete */}
                       <Button variant={'outline'} className='border-none p-0 m-0 h-fit'>
                         <span className='flex items-end gap-1'>
                           <DeleteIcon /> <p>O'chirish</p>
@@ -64,6 +66,8 @@ export const Cart = (/*props: Props*/): ReactElement => {
                     </div>
                   </div>
                 </td>
+
+                {/* -----<TD>COUNTER</TD>----- */}
                 <td className='py-5'>
                   {/* INCREESE AND DECREESE */}
                   <div className='rounded-md border flex items-center justify-between w-24 py-1'>
@@ -71,9 +75,12 @@ export const Cart = (/*props: Props*/): ReactElement => {
                     <p className='font-medium'>{count}</p>
                     <Button variant={'outline'} size={'icon'} disabled={count >= 10} onClick={() => increese()} className='border-none text-2xl font-extrabold p-0 m-0 h-8 w-8'>+</Button>
                   </div>
-
                 </td>
+
+                {/* -----<TD>PRICE</TD>----- */}
                 <td className='py-5'>$80.0</td>
+
+                {/* -----<TD>TOTAL PRICE</TD>----- */}
                 <td className='py-5'>$80.0</td>
               </tr>
             ))

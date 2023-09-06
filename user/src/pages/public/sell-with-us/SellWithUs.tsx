@@ -28,7 +28,8 @@ export const SellWithUs = (/*props: Props*/): ReactElement => {
 
             <div className='flex items-start justify-between gap-20 mt-10 max-md:flex-col'>
                 {/* -----BENEFIT OF SELL WITH US----- */}
-                {/* <div className='w-10/12' dangerouslySetInnerHTML={{ __html: "" }} /> */}
+
+                {/* TODO - <div className='w-10/12' dangerouslySetInnerHTML={{ __html: "" }} /> */}
 
                 <div className='md:w-8/12'>
                     <div className=' mb-10'>
@@ -110,8 +111,8 @@ export const SellWithUs = (/*props: Props*/): ReactElement => {
             </div>
 
             {/* -----FAQ---- */}
-            <div className='w-[50%] mx-auto mt-10'>
-                <h2 className='text-2xl font-medium'>Ko’p beriladigan savollar</h2>
+            <div className='md:w-[50%] mx-auto mt-10'>
+                <h2 className='md:text-2xl text-sm font-medium'>Ko’p beriladigan savollar</h2>
                 <Accordion type="single" collapsible>
                     {
                         a.map((i: any) => (
