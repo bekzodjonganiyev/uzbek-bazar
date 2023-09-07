@@ -2,6 +2,7 @@ import { ReactElement, useState } from 'react'
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { useSelector } from "react-redux"
 import { Link } from 'react-router-dom'
+import { Rating } from 'react-simple-star-rating'
 
 import { Button } from "@/components/ui/button"
 
@@ -18,7 +19,7 @@ type Props = {
     productName: string,
     price: string,
     oldPrice?: string | null,
-    rating?: boolean,
+    rating?: number,
     newBadge?: boolean,
     discount?: string | null
 }
@@ -95,7 +96,9 @@ export const ProductCard = (props: Props): ReactElement => {
             {/* TODO - `props.rating` bilan bog'liq condition larni optimize qilaman */}
             <div className={`${props.rating ? "text-left" : "text-center"} py-2 font-semibold`}>
                 {
-                    props.rating ? <div className='flex'>{props.rating}</div> : null
+                    props.rating 
+                    ? <Rating initialValue={props.rating ?? 2} size={20} readonly/>                                                         
+                    : null
                 }
                 <h3 className={`md:text-sm text-xs ${props.rating ? "text-left" : "text-center"} line-clamp-1`}>{props.productName}</h3>
                 <div className={`${props.rating ? "" : "justify-center"} flex gap-2`}>

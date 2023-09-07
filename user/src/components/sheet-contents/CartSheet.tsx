@@ -22,7 +22,7 @@ export const CartSheet = (/*props: Props*/):ReactElement  => {
   const cart = product.cart
   
   return (
-    <aside className='flex flex-col sm:gap-3 gap-2 items-center'>
+    <aside className='flex flex-col sm:gap-3 items-center justify-between h-full'>
         <SheetHeader>
             <SheetTitle className='sm:text-2xl text-lg font-semibold'>Savatcha</SheetTitle>
         </SheetHeader>

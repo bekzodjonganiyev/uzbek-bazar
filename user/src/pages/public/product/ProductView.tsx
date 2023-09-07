@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom"
 import { AxiosResponse, AxiosError } from "axios"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination, Navigation } from 'swiper/modules';
+import { Rating } from 'react-simple-star-rating'
 
 import 'swiper/css';
 import 'swiper/css/free-mode';
@@ -46,7 +47,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
                     <div className='flex flex-col gap-5 md:w-1/2 mx-auto'>
                         <h1 className='text-2xl font-bold line-clamp-1'>{productById.data?.data.name}</h1>
                         <p className='line-camp-2 overflow-x-scroll scrollbar-thin scrollbar-thumb-black'>{productById.data?.data.desc}</p>
-                        <p>rating</p>
+                        <Rating initialValue={productById.data?.data.rating ?? 2} size={20} readonly/>                                                         
                         <p className='flex gap-2'>
                             <span>{productById.data?.data.price}</span>
                             <span className='line-through'>{productById.data?.data.price}</span>
