@@ -65,9 +65,9 @@ export const products = [
 ];
 
 export const showCase = [
-  { title: "Coats", link: { label: "Explore", href: "kun.uz" }, img: img1 },
-  { title: "Coats", link: { label: "Explore", href: "kun.uz" }, img: img2 },
-  { title: "Coats", link: { label: "Explore", href: "kun.uz" }, img: img2 },
+  { title: "Coats", type: "coats", link: { label: "Explore", href: "kun.uz" }, img: img1 },
+  { title: "Coats", type: "purses", link: { label: "Explore", href: "kun.uz" }, img: img2 },
+  { title: "Coats", type: "accessories", link: { label: "Explore", href: "kun.uz" }, img: img2 },
 ];
 export const categories = [
   {

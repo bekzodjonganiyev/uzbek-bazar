@@ -1,7 +1,11 @@
 import { ReactElement, /*useState, useEffect*/ } from 'react'
+import { AxiosError, AxiosResponse } from "axios";
 import { Link } from 'react-router-dom'
 
 import { NextItemIcon } from '@/assets/icons'
+
+import { useFetch } from "@/utils/api";
+
 
 // type Props = {
 //     home?: boolean,
@@ -14,17 +18,7 @@ import { NextItemIcon } from '@/assets/icons'
 // }[] | null
 
 export const LikedBrands = (/*props: Props*/): ReactElement => {
-    // const [logos, setLogos] = useState<Logos>()
-
-    // const fetchBrendLogos = () => { 
-    //     setLogos(null) 
-    //     console.log(logos)
-    //     console.log(props)
-    // }
-
-    // useEffect(() => {
-    //     fetchBrendLogos()
-    // }, [])
+    const logos = useFetch<AxiosResponse, AxiosError>(["brands"], "brands/")
 
     return (
         <div className='p-10 flex md:flex-row flex-col items-start bg-card-bg max-md:gap-y-10'>
@@ -36,20 +30,20 @@ export const LikedBrands = (/*props: Props*/): ReactElement => {
                 </Link>
             </div>
             <div className='md:w-1/2 w-full grid lg:grid-cols-3 grid-cols-2 gap-5 min-w-44'>
-                {/* {
-                    logos?.map(item => (
-                        <a href={item.link} target="_blank">
-                            <img src={item.logo} alt={item.name} />
+                {
+                    logos.data?.data.results?.slice(0,6).map((item: any) => (
+                        <a href={item.link} target="_blank" key={item.id}>
+                            <img src={item.icon} alt={item.name} />
                         </a>
                     ))
-                } */}
+                }
 
-                <span className=''>{Nike}</span>
+                {/* <span className=''>{Nike}</span>
                 <span className=''>{Hush}</span>
                 <span className=''>{Puma}</span>
                 <span className=''>{Shoei}</span>
                 <span className=''>{Mars}</span>
-                <span className=''>{Suprame}</span>
+                <span className=''>{Suprame}</span> */}
 
             </div>
         </div>

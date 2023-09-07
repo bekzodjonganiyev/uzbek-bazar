@@ -3,7 +3,7 @@ import { lazy} from "react"
 // TODO - make one function for lazy import 
 const Home = lazy(() => import("./Home").then(module => ({default: module.Home})))
 
-const TopProducts = lazy(() => import("./top-products/TopProducts").then(module => ({default: module.TopProducts})))
+const TopProducts = lazy(() => import("./product/TopProducts").then(module => ({default: module.TopProducts})))
 const ProductList = lazy(() => import("./product/ProductList").then(module => ({default: module.ProductList})))
 const ProductView = lazy(() => import("./product/ProductView").then(module => ({default: module.ProductView})))
 // brends will make

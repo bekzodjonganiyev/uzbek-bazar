@@ -20,7 +20,7 @@ export const SellerDetails = (/*props: Props*/): ReactElement => {
                             initialValue={2}
                             onClick={function noRefCheck() { }}
                             readonly
-                            className='star-svg -mt-2'
+                            className='-mt-2'
                             size={20}
                         />
                         <p>{new Date().getUTCFullYear()} dan beri UZBEKBAZAR sotuvchisi</p>
