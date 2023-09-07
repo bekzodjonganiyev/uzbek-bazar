@@ -112,7 +112,7 @@ export const SellWithUs = (/*props: Props*/): ReactElement => {
 
             {/* -----FAQ---- */}
             <div className='md:w-[50%] mx-auto mt-10'>
-                <h2 className='md:text-2xl text-sm font-medium'>Ko’p beriladigan savollar</h2>
+                <h2 className='text-2xl font-medium'>Ko’p beriladigan savollar</h2>
                 <Accordion type="single" collapsible>
                     {
                         a.map((i: any) => (
