@@ -4,8 +4,8 @@ import { AxiosResponse, AxiosError } from "axios"
 
 import { Button } from '@/components/ui/button'
 import { CancelIcon, ColumnsIcon, FilterIcon } from '@/assets/icons'
-import { CustomSelect } from '@/components/common'
-import { ProductCard } from '@/components'
+import { CustomSelect, CustomSuspanse } from '@/components/common'
+import { ProductCard, ProductSkeleton } from '@/components'
 
 import { useFetch } from '@/utils/api'
 import { currencys } from "@/utils/mocks"
@@ -35,14 +35,6 @@ export const ProductList = (/*props: Props*/): ReactElement => {
                     {/* -----FILTER HEADER----- */}
                     <div className='flex items-center justify-between'>
                         <h2 className='text-xl font-medium'>Filterlar</h2>
-                        {/* <Button
-                            className='border-none p-0'
-                            size={'icon'}
-                            variant={'outline'}
-                            onClick={() => setFilter(false)}
-                        >
-                            <CancelIcon width={18} height={18} />
-                        </Button> */}
                     </div>
                 </div>
                 {/* end:FILTER */}
@@ -57,12 +49,6 @@ export const ProductList = (/*props: Props*/): ReactElement => {
 
                             {/* Filter, sort and ui-change buttons */}
                             <div className='flex items-center gap-3'>
-                                <Button
-                                    variant={'outline'}
-                                    className='border-none max-md:hidden'
-                                >
-                                    <span className='flex gap-2'><p>Filter</p> <FilterIcon /></span>
-                                </Button>
                                 <CustomSelect
                                     items={currencys}
                                     changeHandler={(e) => console.log(e)}
@@ -119,29 +105,34 @@ export const ProductList = (/*props: Props*/): ReactElement => {
                     </div>
 
                     {/* ----PRDUCTS---- */}
-                    {
-                        productsByCaregory.isLoading
-                            ? "Loading"
-                            : productsByCaregory.isError
-                                ? productsByCaregory.error.message
-                                : <div className={`flex flex-wrap gap-2`}>
-                                    {
-                                        productsByCaregory.data?.data.results.map((item: any) => (
-                                            <ProductCard
-                                                key={Number(item.id)}
-                                                id={+item.id}
-                                                img={item.photo}
-                                                price={item.price}
-                                                oldPrice={item.oldPice}
-                                                discount={item.discount}
-                                                productName={item.name}
-                                                newBadge={item.newBadge}
-                                                rating={item.rating}
-                                            />
-                                        ))
-                                    }
-                                </div>
-                    }
+                    <CustomSuspanse
+                        loading={productsByCaregory.isLoading}
+                        loadingFallback={
+                            <div className='flex flex-wrap justify-between gap-10 py-10'>
+                                <ProductSkeleton limit={12} />
+                            </div>
+                        }
+                        error={productsByCaregory.isError}
+                        errorFallback={"Error"}
+                    >
+                        <div className={`flex flex-wrap gap-5 justify-between`}>
+                            {
+                                productsByCaregory.data?.data.results.map((item: any) => (
+                                    <ProductCard
+                                        key={Number(item.id)}
+                                        id={+item.id}
+                                        img={item.photo}
+                                        price={item.price}
+                                        oldPrice={item.oldPice}
+                                        discount={item.discount}
+                                        productName={item.name}
+                                        newBadge={item.newBadge}
+                                        rating={item.rating}
+                                    />
+                                ))
+                            }
+                        </div>
+                    </CustomSuspanse>
                 </div>
                 {/* end:FILTERED PRODUCTS */}
             </div>

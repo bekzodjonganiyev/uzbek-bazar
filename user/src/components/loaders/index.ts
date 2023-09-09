@@ -1,2 +1,2 @@
 export * from "./PageLoader"
-export * from "./SkeletonLoader"
+export * from "./ProductSkeleton"

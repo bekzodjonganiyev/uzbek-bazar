@@ -15,6 +15,7 @@ import { NextItemIcon } from "@/assets/icons";
 import { CustomSuspanse } from "@/components/common"
 
 import { useFetch } from "@/utils/api"
+import { InfinitySpin } from "react-loader-spinner";
 
 
 export const Carusel = (): ReactElement => {
@@ -25,7 +26,14 @@ export const Carusel = (): ReactElement => {
     return (
         <CustomSuspanse
             loading={banner.isLoading}
-            loadingFallback={<div className="w-full h-[500px] max-xl:h-[500px] max-lg:h-[400px] max-md:h-[300px] max-sm:h-fit text-black flex max-md:flex-col"></div>}
+            loadingFallback={
+                <div className="w-full h-[500px] max-xl:h-[500px] max-lg:h-[400px] max-md:h-[300px] max-sm:h-fit text-black flex max-md:flex-col items-center justify-center">
+                    <InfinitySpin
+                        width='200'
+                        color="#4fa94d"
+                    />
+                </div>
+            }
             error={banner.isError}
             errorFallback={"Error"}
         >

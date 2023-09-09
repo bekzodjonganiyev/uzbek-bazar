@@ -1,9 +1,8 @@
 import { ReactElement } from 'react'
 import { AxiosError, AxiosResponse } from "axios";
 
-import { ProductCard } from '@/components';
+import { ProductCard, ProductSkeleton } from '@/components';
 import { CustomSuspanse } from '@/components/common';
-import { SkeletonLoader } from '@/components/loaders';
 
 import { useFetch } from "@/utils/api";
 
@@ -15,7 +14,10 @@ export const TopProducts = (/*props: Props*/): ReactElement => {
     return (
         <CustomSuspanse
             loading={topProducts.isLoading}
-            loadingFallback={<SkeletonLoader />}
+            loadingFallback={
+            <div className='flex flex-wrap justify-between gap-10 py-10'>
+                <ProductSkeleton limit={12} />
+            </div>}
             error={topProducts.isError}
             errorFallback={"Error"}
         >

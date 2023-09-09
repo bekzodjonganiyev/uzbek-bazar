@@ -47,7 +47,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
                     <div className='flex flex-col gap-5 md:w-1/2 mx-auto'>
                         <h1 className='text-2xl font-bold line-clamp-1'>{productById.data?.data.name}</h1>
                         <p className='line-camp-2 overflow-x-scroll scrollbar-thin scrollbar-thumb-black'>{productById.data?.data.desc}</p>
-                        <Rating initialValue={productById.data?.data.rating ?? 2} size={20} readonly/>                                                         
+                        <Rating initialValue={productById.data?.data.rating ?? 2} size={20} readonly />
                         <p className='flex gap-2'>
                             <span>{productById.data?.data.price}</span>
                             <span className='line-through'>{productById.data?.data.price}</span>
@@ -62,12 +62,16 @@ export const ProductView = (/*props: Props*/): ReactElement => {
                             <div className='space-x-1'>
                                 {
                                     productById.data?.data.variables.map((item: any) => (
-                                        <button
-                                            style={{ backgroundColor: item.color }}
-                                            className={`p-5 rounded-full border-black ${color.id === item.id ? "border-2" : ""}`}
-                                            onClick={() => setColor({ color: item.color, id: item.id })}
-                                        >
-                                        </button>
+                                        <div className='border inline w-7 h-7 p-4'>
+                                            <button
+                                                style={{ backgroundColor: item.color }}
+                                                className={`p-4 w-6 h-6 rounded-full border-black ${color.id === item.id ? "border-2" : ""}`}
+                                                onClick={() => setColor({ color: item.color, id: item.id })}
+                                            >
+                                                {/* <i className='p-5 rounded-full border w-5 h-5'>
+                                            </i> */}
+                                            </button>
+                                        </div>
                                     ))
                                 }
                             </div>
