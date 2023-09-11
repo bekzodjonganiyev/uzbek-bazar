@@ -81,10 +81,10 @@ export const ProductCard = (props: Props): ReactElement => {
             {/* |---IMAGE---| */}
             <div className='w-full md:h-96 sm:h-72 h-64'>
                 <LazyLoadImage
-                    src={props.img}
+                    src={props.img ?? placeholderImg}
                     alt={props.productName}
-                    placeholderSrc={placeholderImg}
-                    effect={'opacity'}
+                    // placeholderSrc={placeholderImg}
+                    // effect={'blur'}
                     height="100%"
                     width="100%"
                     className='h-full w-full object-cover'

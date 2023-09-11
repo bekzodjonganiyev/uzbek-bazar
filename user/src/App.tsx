@@ -17,7 +17,7 @@ function App(): JSX.Element {
           <Route path="/seller/details/:id" element={<SellerDetails />} />
 
           <Route path="/top-products" element={<TopProducts />} />
-          <Route path="/katalog/category?" element={<ProductList />} />
+          <Route path="/katalog" element={<ProductList />} />
           <Route path="/product/details/:id" element={<ProductView />} />
 
           <Route path="/cart" element={<Cart />} />

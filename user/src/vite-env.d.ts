@@ -1,4 +1,5 @@
 /// <reference types="vite/client" />
+declare module 'react-range-slider-input';
 
 interface ImportMetaEnv {
     readonly VITE_APP_MODE: 'development' | 'staging' | 'production';

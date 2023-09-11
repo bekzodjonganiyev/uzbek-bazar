@@ -56,7 +56,10 @@ export const Menu = (props: Props) => {
               subCategories.map(i => (
                 <div>
                   <Link
-                    to={`/katalog/?category=${i.slug}`}
+                    to={{
+                      pathname: `/katalog`,
+                      search: `?category_slug=${i.slug}`
+                    }}
                     className="leading-[18px] mb-3 text-lg font-medium"
                     onClick={() => { props.close() }}
                   >
@@ -67,7 +70,10 @@ export const Menu = (props: Props) => {
                         ? i?.subcategories?.map((category: any) => (
                           <li>
                             <Link
-                              to={`/katalog/?category=${category.slug}`}
+                              to={{
+                                pathname: `/katalog`,
+                                search: `?category_slug=${category.slug}`
+                              }}
                               onClick={() => { props.close() }}>{category.name}
                             </Link>
                           </li>
