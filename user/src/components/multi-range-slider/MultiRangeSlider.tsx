@@ -28,7 +28,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({
     const minValRef = useRef<HTMLInputElement>(null);
     const maxValRef = useRef<HTMLInputElement>(null);
     const range = useRef<HTMLDivElement>(null);
-
+    
     // Convert to percentage
     const getPercent = useCallback(
         (value: number) => {
@@ -90,7 +90,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({
                     "thumb--zindex-5": minVal > max - 100
                 })}
                 onFocus={() => setStartEvt(true)}
-                // onto
+                // onTouchEnd={() => setStartEvt(true)}
             />
             <input
                 type="range"
@@ -105,7 +105,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({
                 }}
                 className="thumb thumb--zindex-4"
                 onFocus={() => setStartEvt(true)}
-
+                // onTouchEnd={() => setStartEvt(true)}
             />
 
             <div className="slider">

@@ -43,9 +43,6 @@ export const SearchSheet = (): ReactElement => {
         return () => clearTimeout(delayDebounceFn)
     }, [searchTerm])
 
-    console.log(searchedCategoryData)
-
-
     return (
         <nav>
             <LogoIcon />
@@ -84,7 +81,11 @@ export const SearchSheet = (): ReactElement => {
                                 ? ""
                                 : searchedCategoryData?.data?.map((item: any) => (
                                     <Link
-                                        to={`/katalog?category=${item.slug}`}
+                                        key={item.id}
+                                        to={{
+                                            pathname: `/catalog/${item.slug}`,
+                                        }}
+                                        state={{ category_id: item.id }}
                                         className='py-2 px-4 rounded-lg bg-stone-100'
                                     >
                                         <SheetClose>🚧 {item.name}</SheetClose>
@@ -99,7 +100,7 @@ export const SearchSheet = (): ReactElement => {
                             searchedProductData?.data?.length === 0
                                 ? ""
                                 : searchedProductData?.data?.map((item: any) => (
-                                    <Link to={`product/details/${item.id}`}>
+                                    <Link to={`product/details/${item.id}`} key={item.id}>
                                         <SheetClose className='w-full'>
                                             <div className='flex items-center gap-5 p-2 hover:bg-stone-100 rounded-md cursor-pointer'>
                                                 <div className='w-11 h-12'>

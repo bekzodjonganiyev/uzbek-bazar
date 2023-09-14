@@ -57,9 +57,9 @@ export const Menu = (props: Props) => {
                 <div>
                   <Link
                     to={{
-                      pathname: `/katalog`,
-                      search: `?category_slug=${i.slug}`
+                      pathname: `/catalog/${i.slug}`,
                     }}
+                    state={{ category_id: i.id }}
                     className="leading-[18px] mb-3 text-lg font-medium"
                     onClick={() => { props.close() }}
                   >
@@ -71,9 +71,9 @@ export const Menu = (props: Props) => {
                           <li>
                             <Link
                               to={{
-                                pathname: `/katalog`,
-                                search: `?category_slug=${category.slug}`
+                                pathname: `/catalog/${category.slug}`,
                               }}
+                              state={{ category_id: category.id }}
                               onClick={() => { props.close() }}>{category.name}
                             </Link>
                           </li>

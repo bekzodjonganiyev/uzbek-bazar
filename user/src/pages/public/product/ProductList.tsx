@@ -1,8 +1,8 @@
-import { ReactElement, useCallback, useEffect, useState } from 'react'
-import { useSearchParams, useNavigate, useLocation } from "react-router-dom"
+import { ReactElement, useState } from 'react'
+import {  useParams } from "react-router-dom"
 import { AxiosResponse, AxiosError } from "axios"
-import RangeSlider from "react-range-slider-input"
 import "react-range-slider-input/dist/style.css";
+import "./product-view.css"
 
 import { Button } from '@/components/ui/button'
 import { CancelIcon, ColumnsIcon, FilterIcon } from '@/assets/icons'
@@ -13,50 +13,33 @@ import { useFetch } from '@/utils/api'
 import { currencys } from "@/utils/mocks"
 
 
-// import MultiRangeSlider from '@/components/multi-range-slider/MultiRangeSlider'
+import MultiRangeSlider from '@/components/multi-range-slider/MultiRangeSlider'
 
-
-// type Props = {}
 const a = [1, 2, 3, 4, 5, 6]
+// type Props = {}
 
 export const ProductList = (/*props: Props*/): ReactElement => {
-    let [searchParams, setSearchParams] = useSearchParams();
-    const navigate = useNavigate()
-    const location = useLocation()
+    const { category } = useParams()
 
-    const [cost, setCost] = useState<{ minVal: number, maxVal: number }>({minVal: 25, maxVal:100})
-    const [b, setA] = useState<any>()
-    // const [filter, setFilter] = useState<{hasFilter: boolean, filters: Object, values: string}>({ hasFilter: false, filters: {}, values: "" })
+    const [minPrice, setMinPrice] = useState<number>()
+    const [maxPrice, setMaxPrice] = useState<number>()
 
-    const searchValue = searchParams.get("category")
+    // TODO - productlar filter qilinganda route ga yozishin kerak, professional ishlash konikmasi bu
     const productsByCaregory = useFetch<AxiosResponse, AxiosError>(
-        ["product-list-by-cetegory", location.search],
-        `products${location.search}`)
+        ["product-list-by-cetegory", category, maxPrice, minPrice],
+        `products/?category_slug=${category}&min_price=${minPrice ?? ""}&max_price=${maxPrice ?? ""}`,
+    )
+    const categoryDetails = useFetch<AxiosResponse, AxiosError>(["categories-by-slug", category], `categories/${category}`,)
 
-    // ----Get min and max price---- // 
-    // const priseArr = productsByCaregory.isFetched ? productsByCaregory.data?.data.results.map((item: any) => item.price) : []
-    // let minValue: number = priseArr[0];
-    // let maxValue: number = priseArr[0];
+    // const categoryDetails2 = useFetch<AxiosResponse, AxiosError>(
+    //     ["category-parents", categoryDetails.data?.data.parent],
+    //     `categories/${categoryDetails.data?.data.parent}`,
+    //     categoryDetails.isFetched ? true : false
+    // )
 
-    // for (let i = 1; i < priseArr.length; i++) {
-    //     if (priseArr[i] < minValue) {
-    //         minValue = priseArr[i];
-    //     }
-    //     if (priseArr[i] > maxValue) {
-    //         maxValue = priseArr[i];
-    //     }
-    // }
-    // ----Get min and max price---- //
-
-    console.log("render")
-    console.log(location)
-    // for (let p of searchParams.entries()) {
-    //     setA(`?${p[0]=p[1]}`)
-    //     console.log(p);
-    //   }
     return (
         <div className='py-5'>
-            <h1 className='text-2xl font-medium text-center mb-5'>{searchValue}</h1>
+            <h1 className='text-2xl font-medium text-center mb-5'>{category}</h1>
 
             <div className='flex items-start gap-10 relative'>
 
@@ -66,13 +49,13 @@ export const ProductList = (/*props: Props*/): ReactElement => {
                     <h2 className='text-2xl font-medium'>Filter</h2>
 
                     <CustomSuspanse
-                        loading={productsByCaregory.isLoading && !productsByCaregory.isPaused}
+                        loading={categoryDetails.isLoading && !categoryDetails.isPaused}
                         loadingFallback={
                             <div className='flex flex-wrap justify-between gap-10 py-10'>
                                 <FiltersSkeleton limit={12} />
                             </div>
                         }
-                        error={productsByCaregory.isError || productsByCaregory.isPaused}
+                        error={categoryDetails.isError || categoryDetails.isPaused}
                         errorFallback={"Error"}
                     >
                         {/* By Kategory  */}
@@ -80,8 +63,8 @@ export const ProductList = (/*props: Props*/): ReactElement => {
                             <h3 className='uppercase font-medium mb-2'>Kategoriyalar</h3>
                             <div className='flex flex-col gap-1'>
                                 {
-                                    a.map((i: any) => (
-                                        <p key={i} className=''>Kategory - {i}</p>
+                                    categoryDetails.data?.data?.subcategories.map((i: any) => (
+                                        <p key={i} className=''>{i.name}</p>
                                     ))
                                 }
                             </div>
@@ -114,24 +97,27 @@ export const ProductList = (/*props: Props*/): ReactElement => {
                         {/* By Coast */}
                         <div className='mb-10'>
                             <h3 className='uppercase font-medium mb-2'>Narx</h3>
-                            {/* <MultiRangeSlider
-                                min={cost?.minVal}
-                                max={cost?.maxVal}
+
+                            {
                                 // TODO - MultiRangeSlider render bolganda ProductList ham render bolyapti buni optimze qilish kerak
-                                // setRangeValue={setCost}
-                                setRangeValue={(min: number, max: number) => {
-                                    setCost({minVal: min, maxVal: max})
-                                    setSearchParams(params => {
-                                        params.set("min_price", `${min}`)
-                                        params.set("max_price", `${max}`)
-                                        return params
-                                    })
+                                categoryDetails.data?.data.price
+                                    ? <MultiRangeSlider
+                                        min={categoryDetails.data?.data.price.min - 1}
+                                        max={categoryDetails.data?.data.price.max + 1}
 
-
-
-                                }}
-                            /> */}
-                            <RangeSlider  />
+                                        // setRangeValue={() => {}}
+                                        setRangeValue={(min: number, max: number) => {
+                                            setMinPrice(min)
+                                            setMaxPrice(max)
+                                            // setSearchParams(params => {
+                                            //     params.set("min_price", `${min}`)
+                                            //     params.set("max_price", `${max}`)
+                                            //     return params
+                                            // })
+                                        }}
+                                    />
+                                    : null
+                            }
                         </div>
 
                         {/* By Style */}

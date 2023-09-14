@@ -13,19 +13,19 @@ export const Home = (): ReactElement => {
   const productArr = useFetch<AxiosResponse, AxiosError>(["products", tabs.title], `products/?type=${tabs.title}`)
   const page = useFetch<AxiosResponse, AxiosError>(["page"], `banners/`)
 
-  console.log(productArr.data?.data.results)
   return (
     <CustomSuspanse
         loading={page.isLoading}
         loadingFallback={<PageLoader />}
-        error={productArr.isError}
-        errorFallback={productArr.error?.message}
+        error={page.isError}
+        errorFallback={page.error?.message}
     >
       <div className="">
         <Carusel />
         <br />
         <br />
 
+        {/* TODO - static categorylarni backdan olib kelishim kerak. */}
         <div className="flex max-md:flex-col gap-10 mb-10">
           <ShowCaseCard
             key={showCase[0].title}

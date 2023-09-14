@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { AxiosError, AxiosResponse } from "axios";
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
@@ -63,11 +63,10 @@ export const Carusel = (): ReactElement => {
                                                 size={"lg"}
                                                 variant={"secondary"}
                                                 className="bg-white text-black rounded-none"
-                                                onClick={() => navigate(`katalog?category=${item.type}`)}
                                             >
-                                                <span className="flex items-center gap-2">
+                                                <Link to={`catalog/${item.type}`} state={{category_id: item.id}} className="flex items-center gap-2 w-full h-full">
                                                     <p>See Collection</p><NextItemIcon width={20} height={20} />
-                                                </span>
+                                                </Link>
                                             </Button>
                                         </div>
                                     </div>
