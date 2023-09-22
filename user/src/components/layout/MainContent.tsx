@@ -1,5 +1,7 @@
 import { Outlet } from "react-router-dom";
 
+import { Toaster } from "@/components/ui/toaster"
+
 import { Header, Footer } from "@/components";
 
 export const MainContent = ():JSX.Element => {
@@ -9,6 +11,7 @@ export const MainContent = ():JSX.Element => {
       <main className="flex-auto container">
         <Outlet />
       </main>
+      <Toaster />
       <Footer />
     </div>
   );

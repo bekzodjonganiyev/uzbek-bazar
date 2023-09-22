@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 
 export const API_URL =
   import.meta.env.APP_MODE === "production"
@@ -13,12 +13,24 @@ export const http = axios.create({
   },
 });
 
-export function useFetch<T, A>(key: (string | number | null | undefined)[], url: string, enb?: boolean) {
+export function useFetch<T, A>(
+  key: (string | number | null | undefined)[],
+  url: string,
+  enb?: boolean
+) {
   const obj = useQuery<T, A>({
     queryKey: key,
     queryFn: () => http.get(url),
-    enabled: enb
+    enabled: enb,
   });
-  
-  return obj
+
+  return obj;
 }
+
+// export function useMutate<T, A>(keys: (string | number | null | undefined)[], mutateFn: Promise<any>, data: any) {
+//   const obj = useMutation<T, A>({
+//     mutationKey: keys,
+//     mutationFn: (data) => mutateFn
+//   })
+//   return obj
+// }

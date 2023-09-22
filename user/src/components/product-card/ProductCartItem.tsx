@@ -37,7 +37,7 @@ export const ProductCartItem = (props: Props): ReactElement => {
                 <div className='flex flex-col items- justify-between gap-2 w-[60%]'>
                     {/* PRODUCT NAME AND INFO */}
                     <div className='flex flex-col gap-0'>
-                        <h3 className='sm:text-base text-sm font-semibold line-clamp-1'>{props.productName}</h3>
+                        <h3 className='sm:text-base text-sm font-semibold line-clamp-2'>{props.productName}</h3>
                         <p className='sm:text-sm text-xs'>Size: {props.info.size}, Color: {props.info.color}</p>
                     </div>
 

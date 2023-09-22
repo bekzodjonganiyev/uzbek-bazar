@@ -7,6 +7,9 @@ import './index.css'
 
 import App from './App'
 import { store } from '@/redux'
+import { setAllCarts } from "@/redux/actions/cart-action";
+
+store.dispatch(setAllCarts(1,2,""))
 
 const queryClient = new QueryClient({
   defaultOptions: {
