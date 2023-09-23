@@ -7,7 +7,6 @@ import { CustomSuspanse } from "@/components/common";
 import { useFetch } from "@/utils/api";
 import { showCase } from "@/utils/mocks"
 
-
 export const Home = (): ReactElement => {
   const [tabs, setTabs] = useState<{ title: string, id: number | undefined }>({ title: "", id: 1 })
   const productArr = useFetch<AxiosResponse, AxiosError>(["products", tabs.title], `products/?type=${tabs.title}`)
@@ -28,7 +27,7 @@ export const Home = (): ReactElement => {
         {/* TODO - static categorylarni backdan olib kelishim kerak. */}
         <div className="flex max-md:flex-col gap-10 mb-10">
           <ShowCaseCard
-            key={showCase[0].title}
+            // key={showCase[0].title}
             type={showCase[0].type}
             title={showCase[0].title}
             img={showCase[0].img}
@@ -38,7 +37,7 @@ export const Home = (): ReactElement => {
           />
           <div className="md:w-1/2 flex flex-col gap-y-10">
             <ShowCaseCard
-              key={showCase[1].title}
+              // key={showCase[1].title}
               type={showCase[1].type}
               title={showCase[1].title}
               img={showCase[1].img}
@@ -48,7 +47,7 @@ export const Home = (): ReactElement => {
               imgClassName=""
             />
             <ShowCaseCard
-              key={showCase[2].title}
+              // key={showCase[2].title}
               type={showCase[2].type}
               title={showCase[2].title}
               img={showCase[2].img}

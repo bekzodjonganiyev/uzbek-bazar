@@ -8,7 +8,11 @@ export interface ICart {
 
 interface IAction {
   type: string;
-  payload: { ids: { id: number; cartId: number }; cartId: number; extra: any };
+  payload: { 
+    ids: { id: number; cartId: number }; 
+    cartId: number; 
+    extra: any 
+  };
 }
 
 const initialState: ICart = {
@@ -28,28 +32,30 @@ export const cartReducer = (state = initialState, action: IAction) => {
       };
 
       localStorage.setItem("carts", JSON.stringify(obj));
-      // const carts: ICart = JSON.parse(localStorage.getItem("carts"))
-      // console.log(carts, "carts")
-      // console.log(obj, "obj")
-
 
       return obj;
     }
     case CART.DEL: {
       const arr = [...state.ids];
-      const filteredArr = arr.filter((item) => item.id !== action.payload.ids.id);
+      const filteredArr = arr.filter(
+        (item) => item.id !== action.payload.ids.id
+      );
 
       const arr1 = [...state.cartIds];
-      const filteredArr1 = arr1.filter((item) => item !== action.payload.cartId);
+      const filteredArr1 = arr1.filter(
+        (item) => item !== action.payload.cartId
+      );
 
-      const obj = {...state, ids: filteredArr, cartIds: filteredArr1}
+      const obj = { ...state, ids: filteredArr, cartIds: filteredArr1 };
 
       localStorage.setItem("carts", JSON.stringify(obj));
 
-      return { ...state, ids: filteredArr };
+      return obj
     }
-    case CART.SET_ALL: {
-      const carts: ICart = JSON.parse(localStorage.getItem("carts"))
+    case CART.SET_STORE: {
+      const carts: ICart = JSON.parse(localStorage.getItem("carts"));
+      if(!carts)
+        return initialState;
       return carts
     }
     default:

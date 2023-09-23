@@ -1,17 +1,22 @@
-import { ReactElement, useState } from 'react'
+import { ReactElement } from 'react'
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { useSelector } from "react-redux"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Rating } from 'react-simple-star-rating'
+import { useMutation } from '@tanstack/react-query'
 
 import { Button } from "@/components/ui/button"
+import { useToast } from "@/components/ui/use-toast"
+import { ToastAction } from "@/components/ui/toast"
 
 import placeholderImg from "@/assets/images/placeholder.png"
-import { EyeIcon, LikeIcon, OppositeIcon } from '@/assets/icons'
+import { CartIcon, EyeIcon, LikeIcon } from '@/assets/icons'
 
 import { useAppDispatch, RootState } from "@/redux"
-import { ProductCardActions } from "@/redux/actions"
-const { setCartId, deleteCartId, setCompareId, deleteCompareId, setWishlistId, deleteWishlistId } = new ProductCardActions()
+import { setCartId, deleteCartId } from "@/redux/actions/cart-action"
+import { setWishlistId, deleteWishlistId } from "@/redux/actions/wishlist-action"
+import { http } from '@/utils/api'
+import { getMachineId } from "@/utils/getSeesionId"
 
 type Props = {
     id: number,
@@ -25,45 +30,106 @@ type Props = {
 }
 
 export const ProductCard = (props: Props): ReactElement => {
+    const navigate = useNavigate()
+    const { toast } = useToast()
+
     const dispatch = useAppDispatch()
-    const product = useSelector((state: RootState) => state.product)
-    const [showAction, setShowAction] = useState<boolean>(false)
+    const cart = useSelector((state: RootState) => state.cart)
+    const productIdsForCart = cart?.ids.map((i) => i.id)
 
-    const onHover = () => {
-        setShowAction(true)
-    }
+    const wishlist = useSelector((state: RootState) => state.wishlist)
+    const productIdsForWishlist = wishlist?.ids.map((i) => i.id)
 
-    const onLeave = () => {
-        setShowAction(false)
-    }
+    const createMutation = useMutation({
+        mutationFn: (variables: { url: string, data: any }) => http.post(variables.url, variables.data),
+        onSuccess: (data) => {
+            const url = data.config.url?.split("/")[0]
+            toast({
+                description: url === "carts" ? "Maxsulot savatga qo'shildi" : "Maxsulot sevimlilarga qo'shildi",
+                variant: "success",
+                action: <ToastAction
+                    className="bg-white text-black text-xs font-bold"
+                    altText="Try again"
+                    onClick={() => navigate(`${url === "carts" ? "/cart" : "/favourites"}`)}
+                >
+                    {url === "carts" ? "Savatga o'tish" : "Sevimlilarga o'tish"}
+                </ToastAction>,
+            })
+        },
+        onError: (err) => console.log(err)
+    })
+
+    const deleteMutation = useMutation({
+        mutationFn: (variables: { url: string, data: any }) => http.delete(variables.url, variables.data),
+        onSuccess: (data) => {
+            const url = data.config.url?.split("/")[0]
+            toast({
+                description: url === "carts" ? "Maxsulot savatdan o'chirildi" : "Maxsulot sevimlilardan o'chirildi",
+                variant: "danger",
+            })
+        },
+        onError: (err) => console.log(err)
+    })
 
     const onLike = () => {
-        if (!product?.wishlist.includes(props.id)) {
-            dispatch(setWishlistId(props.id))
-        } else (
-            dispatch(deleteWishlistId(props.id))
-        )
-    }
+        if (!productIdsForWishlist.includes(props.id)) {
+            createMutation.mutateAsync({
+                url: "favorites/",
+                data: {
+                    session_id: getMachineId(), // TODO - login qilinganda null ketadi
+                    product: props.id,
+                    user: null
+                }
+            })
+                .then(({ data }) => {
+                    console.log(data)
+                    dispatch(setWishlistId(props.id, data.id, ""))
+                })
 
-    const onComparison = () => {
-        if (!product?.compare.includes(props.id)) {
-            dispatch(setCompareId(props.id))
-        } else (
-            dispatch(deleteCompareId(props.id))
-        )
+        } else {
+            const temp: any = wishlist.ids.find(item => item.id === props.id) // { id: <id>, wishlistId: <wishlistId> }
+
+            deleteMutation.mutateAsync({
+                url: `favorites/${temp.wishlistId}`,
+                data: {}
+            })
+                .then(() => {
+                    dispatch(deleteWishlistId(props.id, temp.wishlistId, ""))
+                })
+        }
     }
 
     const onCart = () => {
-        if (!product?.cart.includes(props.id)) {
-            dispatch(setCartId(props.id))
-        } else (
-            dispatch(deleteCartId(props.id))
-        )
+        if (!productIdsForCart.includes(props.id)) {
+            createMutation.mutateAsync({
+                url: "carts/",
+                data: {
+                    session_id: getMachineId(), // TODO - login qilinganda null ketadi
+                    quantity: 1,
+                    product: props.id,
+                    user: null // TODO - login qilinganda user_id ketadi
+                }
+            })
+                .then(({ data }) => {
+                    dispatch(setCartId(props.id, data.id, ""))
+                })
+
+        } else {
+            const temp: any = cart.ids.find(item => item.id === props.id) // { id: <id>, cartId: <cartId> }
+
+            deleteMutation.mutateAsync({
+                url: `carts/${temp.cartId}`,
+                data: {}
+            })
+                .then(() => {
+                    dispatch(deleteCartId(props.id, temp.cartId, ""))
+                })
+        }
     }
 
     return (
 
-        <div className='relative md:w-64 sm:w-52 w-36 rounded-md' onMouseEnter={() => onHover()} onMouseLeave={() => onLeave()}>
+        <div className='group relative md:w-64 sm:w-52 w-36 rounded-md'>
 
             {/* |---POSITION ABSOLUTE ELEMENTS---| */}
             {
@@ -96,9 +162,9 @@ export const ProductCard = (props: Props): ReactElement => {
             {/* TODO - `props.rating` bilan bog'liq condition larni optimize qilaman */}
             <div className={`${props.rating ? "text-left" : "text-center"} py-2 font-semibold`}>
                 {
-                    props.rating 
-                    ? <Rating initialValue={props.rating ?? 2} size={20} readonly/>                                                         
-                    : null
+                    props.rating
+                        ? <Rating initialValue={props.rating ?? 2} size={20} readonly />
+                        : null
                 }
                 <h3 className={`md:text-sm text-xs ${props.rating ? "text-left" : "text-center"} line-clamp-1`}>{props.productName}</h3>
                 <div className={`${props.rating ? "" : "justify-center"} flex gap-2`}>
@@ -112,27 +178,21 @@ export const ProductCard = (props: Props): ReactElement => {
             </div>
 
             {/* |---HOVERABLE ELEMENTS---| */}
-            {
-                showAction
-                    ? <div className='absolute w-full h-full top-0 left-0 z-50 md:block hidden'>
-                        <div className='relative w-full h-full z-50'>
-                            <div className='flex flex-col absolute right-3 top-20'>
-                                {/* TODO - `test.includes(props.id)` ning o'rniga optimalroq yechim kerak */}
-                                <Button variant={'outline'} size={'icon'} className={`rounded-none ${product?.wishlist.includes(props.id) ? "bg-black" : ""}`} onClick={() => onLike()}><LikeIcon color={`${product?.wishlist.includes(props.id) ? "white" : "#121212"}`} /></Button>
-                                <Button variant={'outline'} size={'icon'} className="rounded-none"> <Link to={`/product/details/${props.id}`} className='w-full h-full flex items-center justify-center'><EyeIcon /></Link></Button>
-                                <Button variant={'outline'} size={'icon'} className={`rounded-none ${product?.compare.includes(props.id) ? "bg-black" : ""}`} onClick={() => onComparison()}><OppositeIcon color={`${product?.compare.includes(props.id) ? "white" : "#121212"}`} /></Button>
-                            </div>
-                            <Button
-                                size={'sm'}
-                                variant={'outline'}
-                                className={`absolute md:top-80 top-60 left-1/2 -translate-x-1/2 rounded-none w-[90%]`}
-                                onClick={() => onCart()}
-                            >Savatchaga</Button>
-                        </div>
-                    </div>
-                    : null
-            }
+            <div className='group-hover:visible invisible bg-red-400'>
+                <div className='flex flex-col gap-2 absolute right-3 top-20'>
+                    {/* TODO - `test.includes(props.id)` ning o'rniga optimalroq yechim kerak */}
+                    <Button variant={'outline'} size={'icon'} className={`rounded-none border-none`} onClick={() => onLike()}><LikeIcon color={`${productIdsForWishlist?.includes(props.id) ? "#121212" : "white"}`} /></Button>
+                    <Button variant={'outline'} size={'icon'} className="rounded-none border-none"> <Link to={`/product/details/${props.id}`} className='w-full h-full flex items-center justify-center'><EyeIcon /></Link></Button>
+                    <Button variant={'outline'} size={'icon'} className={`rounded-none border-none`} onClick={() => onCart()}>
+                        <CartIcon
+                            width={25}
+                            height={25}
+                            color={`${productIdsForCart.includes(props.id) ? "white" : "#121212"}`}
+                            type={`${productIdsForCart.includes(props.id) ? "in" : "add"}`}
+                        />
+                    </Button>
+                </div>
+            </div>
         </div>
-
     )
 }

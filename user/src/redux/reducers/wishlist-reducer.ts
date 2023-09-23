@@ -1,7 +1,7 @@
 import { WISHLIST } from "@/redux/contants";
 
 interface IWishlist {
-  ids: Array<{ id: number; wishlistId: number }>;
+  ids: { id: number; wishlistId: number }[];
   wishlistIds: number[];
   extra: any;
 }
@@ -31,6 +31,8 @@ export const wishlistReducer = (state = initialState, action: IAction) => {
         extra: action.payload.extra,
       };
 
+      localStorage.setItem("wishlists", JSON.stringify(obj));
+
       return obj;
     }
     case WISHLIST.DEL: {
@@ -39,9 +41,21 @@ export const wishlistReducer = (state = initialState, action: IAction) => {
         (item) => item.id !== action.payload.ids.id
       );
 
-      // const arr1 = [...state.wishlistIds];
-      // const filteredArr1 = arr.filter((item) => item !== action.payload.cartId);
-      return { ...state, ids: filteredArr };
+      const arr1 = [...state.wishlistIds];
+      const filteredArr1 = arr1.filter((item) => item !== action.payload.wishlistId);
+
+      const obj = { ...state, ids: filteredArr, wishlistIds: filteredArr1 };
+
+      localStorage.setItem("wishlists", JSON.stringify(obj));
+
+      return obj;
+    }
+    case WISHLIST.SET_ALL: {
+      const wishlists: IWishlist = JSON.parse(localStorage.getItem("wishlists"));
+      console.log(wishlists)
+      if(wishlists)
+        return wishlists;
+      return initialState
     }
     default:
       return state;
