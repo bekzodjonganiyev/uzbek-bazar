@@ -27,6 +27,15 @@ export function useFetch<T, A>(
   return obj;
 }
 
+export function usePost(method: "post" | "patch", onSuccessFn?: Function, onErrorFn?: Function){
+  const mutate = useMutation({
+    mutationFn: (variables: { url: string, data: any }) => http[`${method}`](variables.url, variables.data),
+    onSuccess: (data) => onSuccessFn ? onSuccessFn(data) : null,
+    onError: (data) => onErrorFn ? onErrorFn(data) : null,
+  })
+  return mutate
+}
+
 // export function useMutate<T, A>(keys: (string | number | null | undefined)[], mutateFn: Promise<any>, data: any) {
 //   const obj = useMutation<T, A>({
 //     mutationKey: keys,

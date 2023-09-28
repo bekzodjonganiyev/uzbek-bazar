@@ -23,6 +23,7 @@ import { useFetch } from "@/utils/api"
 export const ProductView = (/*props: Props*/): ReactElement => {
     const { id } = useParams()
     const productById = useFetch<AxiosResponse, AxiosError>(["product-by-id", id], `products/${id}`)
+    console.log(productById.data?.data, "jhsdbjhbdsjh")
 
     const [color, setColor] = useState<{ color: string, id: number | undefined }>({ color: "", id: undefined })
     const [size, setSize] = useState<{ size: string, id: number | undefined }>({ size: "", id: undefined })
@@ -43,7 +44,10 @@ export const ProductView = (/*props: Props*/): ReactElement => {
                 errorFallback={"Error"}
             >
                 <div className='flex max-md:flex-col gap-10 justify-between'>
+                    {/* Product images carusel */}
                     <ProductCarusel />
+
+                    {/* Product starter infos */}
                     <div className='flex flex-col gap-5 md:w-1/2 mx-auto'>
                         <h1 className='text-2xl font-bold line-clamp-1'>{productById.data?.data.name}</h1>
                         <p className='line-camp-2 overflow-x-scroll scrollbar-thin scrollbar-thumb-black'>{productById.data?.data.desc}</p>
@@ -59,19 +63,18 @@ export const ProductView = (/*props: Props*/): ReactElement => {
                         <hr />
                         <div>
                             <p className='mb-[5px]'>Color:</p>
-                            <div className='space-x-1'>
+                            <div className="flex gap-2">
                                 {
                                     productById.data?.data.variables.map((item: any) => (
-                                        <div className='border inline w-7 h-7 p-4'>
+                                        <div className={`border-black rounded-full ${color.id === item.id ? "border-2" : ""}`}>
                                             <button
                                                 style={{ backgroundColor: item.color }}
-                                                className={`p-4 w-6 h-6 rounded-full border-black ${color.id === item.id ? "border-2" : ""}`}
+                                                key={item.id}
+                                                className={`p-5 border-2 rounded-full`}
                                                 onClick={() => setColor({ color: item.color, id: item.id })}
-                                            >
-                                                {/* <i className='p-5 rounded-full border w-5 h-5'>
-                                            </i> */}
-                                            </button>
+                                            ></button>
                                         </div>
+
                                     ))
                                 }
                             </div>
