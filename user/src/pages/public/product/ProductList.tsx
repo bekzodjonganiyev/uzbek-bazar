@@ -1,5 +1,5 @@
 import { ReactElement, useState } from 'react'
-import {  useParams } from "react-router-dom"
+import { Link, useParams, useSearchParams, useLocation } from "react-router-dom"
 import { AxiosResponse, AxiosError } from "axios"
 import "react-range-slider-input/dist/style.css";
 import "./product-view.css"
@@ -12,30 +12,40 @@ import { FiltersSkeleton, ProductCard, ProductSkeleton } from '@/components'
 import { useFetch } from '@/utils/api'
 import { currencys } from "@/utils/mocks"
 
-
 import MultiRangeSlider from '@/components/multi-range-slider/MultiRangeSlider'
 
-const a = [1, 2, 3, 4, 5, 6]
 // type Props = {}
 
 export const ProductList = (/*props: Props*/): ReactElement => {
+    const { search } = useLocation()
     const { category } = useParams()
+    const [_, setSearchParams] = useSearchParams()
 
-    const [minPrice, setMinPrice] = useState<number>()
-    const [maxPrice, setMaxPrice] = useState<number>()
+    const [filters, setFilters] = useState<{ key: string, value: string }[]>([])
 
-    // TODO - productlar filter qilinganda route ga yozishin kerak, professional ishlash konikmasi bu
-    const productsByCaregory = useFetch<AxiosResponse, AxiosError>(
-        ["product-list-by-cetegory", category, maxPrice, minPrice],
-        `products/?category_slug=${category}&min_price=${minPrice ?? ""}&max_price=${maxPrice ?? ""}`,
-    )
     const categoryDetails = useFetch<AxiosResponse, AxiosError>(["categories-by-slug", category], `categories/${category}`,)
+    const productsByCaregory = useFetch<AxiosResponse, AxiosError>(
+        ["product-list-by-cetegory", category, search],
+        `products/?category_slug=${category}&${search.split("?").join("")}`
+    )
 
-    // const categoryDetails2 = useFetch<AxiosResponse, AxiosError>(
-    //     ["category-parents", categoryDetails.data?.data.parent],
-    //     `categories/${categoryDetails.data?.data.parent}`,
-    //     categoryDetails.isFetched ? true : false
-    // )
+    const filterValuesController = (key: string, value: string) => {
+        let temp: { key: string, value: string }[] = []
+        let added = false
+        filters.forEach(item => {
+            if (item.key !== key) {
+                temp.push({ key: item.key, value: `${item.value}` });
+            } else {
+                temp.push({ key: item.key, value: `${value}` });
+                added = true
+            }
+        })
+        if (!added) {
+            temp.push({ key: key, value: `${value}` });
+        }
+        setFilters(Array.from(temp))
+        temp = []
+    }
 
     return (
         <div className='py-5'>
@@ -64,7 +74,7 @@ export const ProductList = (/*props: Props*/): ReactElement => {
                             <div className='flex flex-col gap-1'>
                                 {
                                     categoryDetails.data?.data?.subcategories.map((i: any) => (
-                                        <p key={i} className=''>{i.name}</p>
+                                        <Link to={`/catalog/${i.slug}`} key={i} className=''>{i.name}</Link>
                                     ))
                                 }
                             </div>
@@ -75,8 +85,21 @@ export const ProductList = (/*props: Props*/): ReactElement => {
                             <h3 className='uppercase font-medium mb-2'>Rang</h3>
                             <div className='flex flex-wrap gap-1'>
                                 {
-                                    a.map((i: any) => (
-                                        <button style={{ background: `rgb(2${i}8, ${i}14, ${i}6)` }} key={i} className='p-5 border-2 rounded-full'></button>
+                                    categoryDetails.data?.data?.colors.map((i: any) => (
+                                        // <button style={{ background: `rgb(2${i}8, ${i}14, ${i}6)` }} key={i} className='p-5 border-2 rounded-full'></button>
+                                        <button
+                                            key={i.id}
+                                            style={{ background: i.code }}
+                                            className='p-5 border-2 rounded-full'
+                                            onClick={() => {
+                                                setSearchParams(prev => {
+                                                    prev.set("color", `${i.code}`)
+                                                    return prev
+                                                })
+                                                filterValuesController("color", i.code)
+                                            }}
+                                        >
+                                        </button>
                                     ))
                                 }
                             </div>
@@ -87,17 +110,28 @@ export const ProductList = (/*props: Props*/): ReactElement => {
                             <h3 className='uppercase font-medium mb-2'>O'lcham</h3>
                             <div className='flex flex-wrap gap-2'>
                                 {
-                                    a.map((i: any) => (
-                                        <button key={i} className='p-3 border'>{i}X</button>
+                                    categoryDetails.data?.data?.sizes.map((i: any) => (
+                                        <button
+                                            key={i.id}
+                                            className='p-3 border'
+                                            onClick={() => {
+                                                setSearchParams(prev => {
+                                                    prev.set("size", `${i.name}`)
+                                                    return prev
+                                                })
+                                                filterValuesController("size", i.name)
+                                            }}
+                                        >
+                                            {i.name}
+                                        </button>
                                     ))
                                 }
                             </div>
                         </div>
 
-                        {/* By Coast */}
+                        {/* By Price */}
                         <div className='mb-10'>
                             <h3 className='uppercase font-medium mb-2'>Narx</h3>
-
                             {
                                 // TODO - MultiRangeSlider render bolganda ProductList ham render bolyapti buni optimze qilish kerak
                                 categoryDetails.data?.data.price
@@ -107,13 +141,12 @@ export const ProductList = (/*props: Props*/): ReactElement => {
 
                                         // setRangeValue={() => {}}
                                         setRangeValue={(min: number, max: number) => {
-                                            setMinPrice(min)
-                                            setMaxPrice(max)
-                                            // setSearchParams(params => {
-                                            //     params.set("min_price", `${min}`)
-                                            //     params.set("max_price", `${max}`)
-                                            //     return params
-                                            // })
+                                            setSearchParams(params => {
+                                                params.set("min_price", `${min}`)
+                                                params.set("max_price", `${max}`)
+                                                return params
+                                            })
+                                            filterValuesController("price", `${min} - ${max}`)
                                         }}
                                     />
                                     : null
@@ -125,8 +158,20 @@ export const ProductList = (/*props: Props*/): ReactElement => {
                             <h3 className='uppercase font-medium mb-2'>Turkum</h3>
                             <div className='flex flex-col gap-1'>
                                 {
-                                    a.map((i: any) => (
-                                        <p key={i} className=''>Kategory - {i}</p>
+                                    categoryDetails.data?.data?.types.map((i: any) => (
+                                        <button
+                                            key={i}
+                                            className='capitalize inline-block w-fit'
+                                            onClick={() => {
+                                                setSearchParams(prev => {
+                                                    prev.set("type", `${i}`)
+                                                    return prev
+                                                })
+                                                filterValuesController("type", i)
+                                            }}
+                                        >
+                                            {i}
+                                        </button>
                                     ))
                                 }
                             </div>
@@ -174,29 +219,64 @@ export const ProductList = (/*props: Props*/): ReactElement => {
                         </div>
 
 
-                        {/* Cancel buttons */}
+                        {/* Reset filters */}
                         <div className='flex items-center gap-3'>
-                            <Button
-                                variant={'outline'}
-                                size={'xsm'}
-                                className='bg-stone-100'
-                            >
-                                <span className='flex items-center gap-2'><CancelIcon height={13} width={13} /><p className='md:text-sm text-xs'>Plants</p></span>
-                            </Button>
-                            <Button
-                                variant={'outline'}
-                                size={'xsm'}
-                                className='bg-stone-100'
-                            >
-                                <span className='flex items-center gap-2'><CancelIcon height={13} width={13} /><p className='md:text-sm text-xs'>Plants</p></span>
-                            </Button>
-                            <Button
-                                variant={'outline'}
-                                size={'xsm'}
-                                className='bg-stone-100'
-                            >
-                                <span className='flex items-center gap-2'><CancelIcon height={13} width={13} /><p className='md:text-sm text-xs'>Plants</p></span>
-                            </Button>
+                            {
+                                filters.map(item => (
+                                    <Button
+                                        key={item.key}
+                                        variant={'outline'}
+                                        size={'xsm'}
+                                        className='bg-stone-100'
+                                        onClick={() => {
+                                            const filteredArr = filters.filter(subItem => subItem.key !== item.key)
+                                            setFilters(filteredArr)
+                                            if (item.key === "price") {
+                                                setSearchParams(prev => {
+                                                    prev.delete("max_price")
+                                                    prev.delete("min_price")
+                                                    return prev
+                                                })
+                                            } else {
+                                                setSearchParams(prev => {
+                                                    prev.delete(item.key)
+                                                    return prev
+                                                })
+                                            }
+                                        }}
+                                    >
+                                        <span className='flex items-center gap-2'>
+                                            <CancelIcon height={13} width={13} />
+                                            <p className='md:text-sm text-xs'>{item.value}</p>
+                                        </span>
+                                    </Button>
+                                ))
+                            }
+                            {
+                                filters.length > 0
+                                    ? <Button
+                                        variant={'outline'}
+                                        size={'xsm'}
+                                        className='bg-stone-100'
+                                        onClick={() => {
+                                            setFilters([])
+                                            setSearchParams(prev => {
+                                                prev.delete("max_price")
+                                                prev.delete("min_price")
+                                                prev.delete("color")
+                                                prev.delete("type")
+                                                prev.delete("size")
+                                                return prev
+                                            })
+                                        }}
+                                    >
+                                        <span className='flex items-center gap-2'>
+                                            <CancelIcon height={13} width={13} />
+                                            <p className='md:text-sm text-xs'>Clear All</p>
+                                        </span>
+                                    </Button>
+                                    : ""
+                            }
                         </div>
                     </div>
 

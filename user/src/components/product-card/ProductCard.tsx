@@ -129,7 +129,7 @@ export const ProductCard = (props: Props): ReactElement => {
 
     return (
 
-        <div className='group relative md:w-64 sm:w-52 w-36 rounded-md'>
+        <div className='group relative md:w-64 sm:w-52 w-[150px] rounded-md clg-r'>
 
             {/* |---POSITION ABSOLUTE ELEMENTS---| */}
             {
@@ -145,7 +145,7 @@ export const ProductCard = (props: Props): ReactElement => {
             }
 
             {/* |---IMAGE---| */}
-            <div className='w-full md:h-96 sm:h-72 h-64'>
+            <div className='w-full md:h-80 sm:h-64 h-56 relative'>
                 <LazyLoadImage
                     src={props.img ?? placeholderImg}
                     alt={props.productName}
@@ -155,30 +155,59 @@ export const ProductCard = (props: Props): ReactElement => {
                     width="100%"
                     className='h-full w-full object-cover'
                 />
+
+                {/* Visible on mobile */}
+                <Button
+                    variant={'outline'}
+                    size={'icon'}
+                    className={`rounded-none bg- border-none max-md:block hidden absolute right-0 top-0`}
+                    onClick={() => onLike()}
+                >
+                    <span className='flex items-center justify-center'>
+                        <LikeIcon color={`${productIdsForWishlist?.includes(props.id) ? "#121212" : "white"}`} />
+                    </span>
+                </Button>
+
             </div>
 
 
             {/* |---NAME, PRICE, RATING---| */}
             {/* TODO - `props.rating` bilan bog'liq condition larni optimize qilaman */}
             <div className={`${props.rating ? "text-left" : "text-center"} py-2 font-semibold`}>
-                {
-                    props.rating
-                        ? <Rating initialValue={props.rating ?? 2} size={20} readonly />
-                        : null
-                }
-                <h3 className={`md:text-sm text-xs ${props.rating ? "text-left" : "text-center"} line-clamp-1`}>{props.productName}</h3>
-                <div className={`${props.rating ? "" : "justify-center"} flex gap-2`}>
-                    <p className='md:text-sm text-xs'>{props.price}</p>
-                    {
-                        props.oldPrice
-                            ? <del className='text-stone-300 font-thin md:text-sm text-xs'>{props.oldPrice}</del>
-                            : null
-                    }
+                <div className='flex items-end justify-between'>
+                    <div className='max-md:w-9/12 w-full'>
+                        {
+                            props.rating
+                                ? <Rating initialValue={props.rating ?? 2} size={20} readonly />
+                                : null
+                        }
+                        <h3 className={`md:text-sm text-xs ${props.rating ? "text-left" : "text-center"} line-clamp-1`}>{props.productName}</h3>
+                        <div className={`${props.rating ? "" : "justify-center"} flex gap-2`}>
+                            <p className='md:text-sm text-xs'>{props.price}$</p>
+                            {
+                                props.oldPrice
+                                    ? <del className='text-stone-300 font-thin md:text-sm text-xs'>{props.oldPrice}$</del>
+                                    : null
+                            }
+                        </div>
+                    </div>
+
+                    {/* Visible on mobile */}
+                    <div className='max-md:block hidden w-3/12'>
+                        <Button variant={'outline'} size={'icon'} className={`rounded-none border-none`} onClick={() => onCart()}>
+                            <CartIcon
+                                width={20}
+                                height={20}
+                                color={`${productIdsForCart.includes(props.id) ? "white" : "#121212"}`}
+                                type={`${productIdsForCart.includes(props.id) ? "in" : "add"}`}
+                            />
+                        </Button>
+                    </div>
                 </div>
             </div>
 
             {/* |---HOVERABLE ELEMENTS---| */}
-            <div className='group-hover:visible invisible bg-red-400'>
+            <div className='group-hover:visible group-hover:opacity-100 invisible opacity-0 duration-200 max-md:hidden'>
                 <div className='flex flex-col gap-2 absolute right-3 top-20'>
                     {/* TODO - `test.includes(props.id)` ning o'rniga optimalroq yechim kerak */}
                     <Button variant={'outline'} size={'icon'} className={`rounded-none border-none`} onClick={() => onLike()}><LikeIcon color={`${productIdsForWishlist?.includes(props.id) ? "#121212" : "white"}`} /></Button>
