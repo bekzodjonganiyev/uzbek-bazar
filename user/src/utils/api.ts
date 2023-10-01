@@ -13,7 +13,7 @@ const API_URL =
 // console.log(import.meta.env.VITE_APP_MODE);
 // console.log(import.meta.env.VITE_PRODUCTION_API_URL);
 // console.log(import.meta.env.VITE_STAGING_API_URL);
-// console.log(import.meta.env.PROD);
+// console.log(import.meta.env.PROD); s
 
 export const http = axios.create({
   baseURL: API_URL,
