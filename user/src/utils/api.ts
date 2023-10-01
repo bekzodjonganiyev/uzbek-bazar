@@ -2,10 +2,10 @@ import axios from "axios";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
 export const API_URL =
-  import.meta.env.APP_MODE === "production"
+  import.meta.env.MODE === "production"
     ? import.meta.env.VITE_PRODUCTION_API_URL
     : import.meta.env.VITE_STAGING_API_URL; // 'development' and 'staging' mode both makes requests to staging API
-
+    
 export const http = axios.create({
   baseURL: API_URL,
   headers: {
