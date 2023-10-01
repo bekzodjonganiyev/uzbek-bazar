@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import { ReactElement, useEffect } from 'react'
 import { useSelector } from "react-redux"
 import { Link, useNavigate } from 'react-router-dom'
 import { AxiosResponse, AxiosError } from 'axios'
@@ -12,7 +12,6 @@ import { RootState, /* useAppDispatch*/ } from "@/redux"
 // import { ProductCardActions } from "@/redux/actions"
 // const { deleteCartId } = new ProductCardActions()
 
-import { products } from "@/utils/mocks"
 import { useFetch } from '@/utils/api'
 import { getMachineId } from '@/utils/getSeesionId'
 import { CustomSuspanse } from '../common'
@@ -21,12 +20,20 @@ import { CustomSuspanse } from '../common'
 
 export const CartSheet = (/*props: Props*/): ReactElement => {
     const navigate = useNavigate()
-    //   const dispatch = useAppDispatch()
     const cart = useSelector((state: RootState) => state.cart)
 
     const userCarts = useFetch<AxiosResponse, AxiosError>(["user-carts"], `carts/?session_id=${getMachineId()}`)
 
-    console.log(userCarts.data?.data, "user-carts")
+    const totalPrice = () => {
+        let summ: number = 0
+        userCarts.isFetched && userCarts.data?.data?.results.forEach(
+            (item:any) => {
+                summ = summ + item.quantity * item.product.price
+            }
+        )
+        return summ
+    }
+
     return (
         <aside className='flex flex-col sm:gap-3 items-center justify-between h-full'>
             <SheetHeader>
@@ -44,10 +51,12 @@ export const CartSheet = (/*props: Props*/): ReactElement => {
                     {
                         userCarts.data?.data?.results?.map((item:any) => (
                             <ProductCartItem
+                                key={item.id}
                                 id={item.id}
+                                productId={item.product.id}
                                 img={item?.product?.photo ?? "https://images.uzum.uz/ccojiir5a95unf11rchg/t_product_540_high.jpg"}
-                                info={{ size: "", color: "" }}
                                 price={item?.product?.price}
+                                count={item?.quantity}
                                 productName={item?.product?.name}
                             />
                         ))
@@ -58,7 +67,7 @@ export const CartSheet = (/*props: Props*/): ReactElement => {
             {/* TOTAL COUNT */}
             <div className='rounded-lg sm:border-2 border border-[#CBCBCB] sm:p-3 p-2 w-full'>
                 <p className='font-bold sm:text-lg text-sm mb-3'>Jami</p>
-                <p className='font-medium flex justify-between mb-3 max-sm:text-xs'><span>{cart?.ids.length} ta maxsulot narxi</span> <span>$240.00</span></p>
+                <p className='font-medium flex justify-between mb-3 max-sm:text-xs'><span>{cart?.ids.length} ta maxsulot narxi</span> <span>${totalPrice()}</span></p>
                 <SheetClose className='w-full'><Button size={'lg'} className='w-full max-sm:text-xs' onClick={() => navigate("/checkout")}>Buyurtma berish</Button></SheetClose>
             </div>
 

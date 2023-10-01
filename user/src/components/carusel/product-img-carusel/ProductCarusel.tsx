@@ -19,6 +19,8 @@ export const ProductCarusel = (/*props: Props*/) => {
     return (
         <div className='product-carusel flex gap-5'>
             {/*  @Swiper dan foydalanganda @div ga o'rab qo'ysak ko'p muammolarni oldi olinadi. */}
+
+            {/* begin::Swiper thunbnail */}
             <div className='md:block hidden'>
                 <Swiper
                     onSwiper={(a) => setThumbsSwiper(a)}
@@ -71,6 +73,10 @@ export const ProductCarusel = (/*props: Props*/) => {
                     </SwiperSlide>
                 </Swiper>
             </div>
+            {/* end::Swiper thunbnail */}
+
+
+            {/* begin::Swiper Items shows one by one */}
             <div className=''>
                 <Swiper
                     spaceBetween={10}
@@ -118,6 +124,7 @@ export const ProductCarusel = (/*props: Props*/) => {
                         <img src="https://swiperjs.com/demos/images/nature-10.jpg" />
                     </SwiperSlide>
                 </Swiper>
+                 {/* end::Swiper Items shows one by one */}
             </div>
         </div>
     )

@@ -21,16 +21,16 @@ export function useFetch<T, A>(
   const obj = useQuery<T, A>({
     queryKey: key,
     queryFn: () => http.get(url),
-    enabled: enb,
+    enabled: enb
   });
 
   return obj;
 }
 
-export function usePost(method: "post" | "patch", onSuccessFn?: Function, onErrorFn?: Function){
+export function usePost(method: "post" | "patch" | "delete", onSuccessFn?: Function, onErrorFn?: Function){
   const mutate = useMutation({
     mutationFn: (variables: { url: string, data: any }) => http[`${method}`](variables.url, variables.data),
-    onSuccess: (data) => onSuccessFn ? onSuccessFn(data) : null,
+    onSuccess: () => onSuccessFn ? onSuccessFn() : null,
     onError: (data) => onErrorFn ? onErrorFn(data) : null,
   })
   return mutate

@@ -3,7 +3,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component"
 import { useSelector } from "react-redux"
 import { Link, useNavigate } from 'react-router-dom'
 import { Rating } from 'react-simple-star-rating'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
@@ -32,8 +32,9 @@ type Props = {
 export const ProductCard = (props: Props): ReactElement => {
     const navigate = useNavigate()
     const { toast } = useToast()
-
     const dispatch = useAppDispatch()
+    const queryClient = useQueryClient()
+
     const cart = useSelector((state: RootState) => state.cart)
     const productIdsForCart = cart?.ids.map((i) => i.id)
 
@@ -55,6 +56,7 @@ export const ProductCard = (props: Props): ReactElement => {
                     {url === "carts" ? "Savatga o'tish" : "Sevimlilarga o'tish"}
                 </ToastAction>,
             })
+            queryClient.invalidateQueries(["user-carts"])
         },
         onError: (err) => console.log(err)
     })

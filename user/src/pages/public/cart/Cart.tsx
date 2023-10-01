@@ -1,20 +1,24 @@
 import { ReactElement, useState } from 'react'
 import { AxiosError, AxiosResponse } from 'axios'
+import { useQueryClient } from '@tanstack/react-query'
 
 import { Button } from '@/components/ui/button'
 import { DeleteIcon } from '@/assets/icons'
 import { CustomSuspanse } from '@/components/common'
 
+import { useAppDispatch } from '@/redux'
+import { deleteCartId } from '@/redux/actions/cart-action'
 import { usePost, useFetch } from '@/utils/api'
 import { getMachineId } from '@/utils/getSeesionId'
 
 // type Props = {
 
 // }
-
 export const Cart = (/*props: Props*/): ReactElement => {
-  const carts = useFetch<AxiosResponse, AxiosError>([`user-carts?session_id=${getMachineId()}`], "carts/")
-
+  const carts = useFetch<AxiosResponse, AxiosError>(
+    [`user-carts`],
+    `carts/?session_id=${getMachineId()}`
+  )
   return (
     <CustomSuspanse
       loading={carts.isLoading}
@@ -52,8 +56,14 @@ type TableItemProps = {
 }
 
 const TableItem = (props: TableItemProps) => {
-  const cartMutate = usePost("patch")
+  const queryClient = useQueryClient()
+  const dispatch = useAppDispatch()
 
+  const cartMutate = usePost("patch", () => queryClient.invalidateQueries({ queryKey: ["user-carts"] }))
+  const cartDelete = usePost("delete", () => {
+    queryClient.invalidateQueries({ queryKey: ["user-carts"] })
+    dispatch(deleteCartId(props.item.product.id, props.item.id, ""))
+  })
   const [count, setCount] = useState<number>(1)
 
   const increese = () => {
@@ -68,7 +78,7 @@ const TableItem = (props: TableItemProps) => {
     } else setCount(count - 1)
   }
   return (
-    <tr className='text-left border-b'>
+    <tr className={`text-left border-b ${cartDelete.isLoading ? "opacity-60 pointer-events-none cursor-not-allowed" : ""}`}>
 
       {/* -----<TD>PRODUCT NAME</TD>----- */}
       <td className='py-5'>
@@ -76,7 +86,7 @@ const TableItem = (props: TableItemProps) => {
           {/* image */}
           <div className='w-20 h-32'>
             <img
-              src={props.item.product.photo}
+              src={props.item.product.photo ?? "https://storage.kun.uz/source/thumbnails/_medium/9/sSOEwvT85NZVoYkcpfA6XOwG4rw8826l_medium.jpg"}
               alt={props.item.product.name}
               className='w-full h-full object-cover' />
           </div>
@@ -89,7 +99,10 @@ const TableItem = (props: TableItemProps) => {
             </div>
 
             {/* delete */}
-            <Button variant={'outline'} className='border-none p-0 m-0 h-fit'>
+            <Button
+              variant={'outline'}
+              className='border-none p-0 m-0 h-fit'
+              onClick={() => cartDelete.mutate({ url: `carts/${props.item.id}`, data: null })}>
               <span className='flex items-end gap-1'>
                 <DeleteIcon /> <p>O'chirish</p>
               </span>
@@ -101,25 +114,28 @@ const TableItem = (props: TableItemProps) => {
       {/* -----<TD>COUNTER</TD>----- */}
       <td className='py-5'>
         {/* INCREESE AND DECREESE */}
-        <div className='rounded-md border flex items-center justify-between w-24 py-1'>
+        <div className={`rounded-md border flex items-center justify-between w-24 py-1 ${cartMutate.isLoading ? "opacity-60 pointer-events-none cursor-not-allowed" : "opacity-1"}`}>
           <Button
             variant={'outline'}
             size={'icon'}
-            disabled={count <= 1}
+            disabled={props.item.quantity <= 1}
             onClick={() => {
-              decreese()
-              cartMutate.mutate({ url: `carts/${props.item.id}/`, data: { quantity: count } })
+              props.item.quantity >= 1
+                ? cartMutate.mutate({ url: `carts/${props.item.id}/`, data: { quantity: props.item.quantity - 1 } })
+                : null
             }}
             className='border-none text-2xl font-extrabold p-0 m-0 h-8 w-8 cursor-pointer'
           >
             -
           </Button>
-          <p className='font-medium'>{count}</p>
+          <p className='font-medium'>{props.item.quantity}</p>
           <Button
             variant={'outline'}
             size={'icon'}
-            disabled={count >= 10}
-            onClick={() => increese()}
+            // disabled={count >= 10}
+            onClick={() => {
+              cartMutate.mutate({ url: `carts/${props.item.id}/`, data: { quantity: props.item.quantity + 1 } })
+            }}
             className='border-none text-2xl font-extrabold p-0 m-0 h-8 w-8 cursor-pointer'
           >
             +
@@ -131,7 +147,7 @@ const TableItem = (props: TableItemProps) => {
       <td className='py-5'>${props.item.product.price}</td>
 
       {/* -----<TD>TOTAL PRICE</TD>----- */}
-      <td className='py-5'>$80.0</td>
+      <td className='py-5'>${props.item.quantity * props.item.product.price}</td>
     </tr>
   )
 }
