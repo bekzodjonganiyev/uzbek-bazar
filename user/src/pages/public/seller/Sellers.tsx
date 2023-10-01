@@ -2,20 +2,21 @@ import { ReactElement, useState } from 'react'
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { ProductSkeleton, SellerCard } from '@/components'
+import { CustomSelect, CustomSuspanse } from '@/components/common'
 import { FilterIcon, SearchIcon } from '@/assets/icons'
-import { CustomSelect } from '@/components/common'
 
 import sallerBgImage from "@/assets/images/sellers-bg.png"
 
 import { currencys } from "@/utils/mocks"
-import { SellerCard } from '@/components'
+import { useFetch } from '@/utils/api'
+import { AxiosError, AxiosResponse } from 'axios'
 
 // type Props = {}
 
 export const Sellers = (/*props: Props*/): ReactElement => {
     const [searchTerm, setSearchTerm] = useState("")
-
-    const sellers = [1,2,3,4,5,6,7,8,9]
+    const sellers = useFetch<AxiosResponse, AxiosError>(["sellers"], `organizations/`)
     return (
         <div className='py-10'>
             <div
@@ -57,19 +58,31 @@ export const Sellers = (/*props: Props*/): ReactElement => {
             </div>
 
             {/* -----SELLERS LIST----- */}
-            <div className='flex flex-wrap justify-between gap-y-7'>
-                {
-                    sellers.map((i: any) => (
-                        <SellerCard 
-                            key={i}
-                            id={i}
-                            img='https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
-                            name='Ict shop Ict shop Ict shop Ict shop Ict shop Ict shop Ict shop '
-                            rating={3}
-                        />
-                    ))
+            <CustomSuspanse
+                loading={sellers.isLoading}
+                loadingFallback={
+                    <div className='flex flex-wrap gap-7'>
+                        <ProductSkeleton limit={12} />
+                    </div>
                 }
-            </div>            
+                error={sellers.isError}
+                errorFallback={sellers.error?.message}
+            >
+                <div className='flex flex-wrap justify-between'>
+                    {
+                        sellers.data?.data.results.map((i: any) => (
+                            <SellerCard
+                                key={i.id}
+                                id={i.id}
+                                img={i.avatar}
+                                name={i.name}
+                                rating={3}
+                            />
+                        ))
+                    }
+                </div>
+            </CustomSuspanse>
+
         </div>
     )
 }
