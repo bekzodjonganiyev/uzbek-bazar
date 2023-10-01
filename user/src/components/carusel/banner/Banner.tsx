@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { AxiosError, AxiosResponse } from "axios";
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
@@ -19,8 +19,6 @@ import { InfinitySpin } from "react-loader-spinner";
 
 
 export const Carusel = (): ReactElement => {
-    const navigate = useNavigate()
-
     const banner = useFetch<AxiosResponse, AxiosError>(["banner"], "banners/")
 
     return (

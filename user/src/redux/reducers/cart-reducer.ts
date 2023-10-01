@@ -53,7 +53,7 @@ export const cartReducer = (state = initialState, action: IAction) => {
       return obj
     }
     case CART.SET_STORE: {
-      const carts: ICart = JSON.parse(localStorage.getItem("carts"));
+      const carts: ICart = JSON.parse(localStorage.getItem("carts") || `{"ids":[],"cartIds":[],"extra":null}`);
       if(!carts)
         return initialState;
       return carts

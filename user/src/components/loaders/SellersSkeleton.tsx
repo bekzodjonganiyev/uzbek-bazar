@@ -1,9 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton"
 
-type FiltersSkeletonProps = {
-    // limit: number
-}
-export function SellersSkeleton(props: FiltersSkeletonProps) {
+export function SellersSkeleton() {
     return (
         <div className="flex items-start max-md:flex-col-reverse gap-48 w-full">
             <div className="flex flex-col gap-5 md:w-1/2 w-full">

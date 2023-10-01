@@ -131,7 +131,7 @@ export const ProductCard = (props: Props): ReactElement => {
 
     return (
 
-        <div className='group relative md:w-64 sm:w-52 w-[150px] rounded-md clg-r'>
+        <div className='group relative md:w-64 sm:w-52 w-[150px] rounded-md mb-3'>
 
             {/* |---POSITION ABSOLUTE ELEMENTS---| */}
             {

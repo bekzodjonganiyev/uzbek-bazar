@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from 'react'
+import { ReactElement } from 'react'
 import { useSelector } from "react-redux"
 import { Link, useNavigate } from 'react-router-dom'
 import { AxiosResponse, AxiosError } from 'axios'
@@ -40,6 +40,8 @@ export const CartSheet = (/*props: Props*/): ReactElement => {
                 <SheetTitle className='sm:text-2xl text-lg font-semibold'>Savatcha</SheetTitle>
             </SheetHeader>
 
+            {/* TODO - redux stete ni localstoragedagi holatini o'chirib tashlaganda cartsni get qilmasin */}
+            {/* TODO - Carts sheet ochilganda va Carts pagega kirilganda reload qilmasa ham fetch qilishi kerak */}
             {/* PRODUCT LIST */}
             <CustomSuspanse
                 loading={userCarts.isLoading}

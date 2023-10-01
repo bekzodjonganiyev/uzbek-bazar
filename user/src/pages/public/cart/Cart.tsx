@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react'
+import { ReactElement } from 'react'
 import { AxiosError, AxiosResponse } from 'axios'
 import { useQueryClient } from '@tanstack/react-query'
 
@@ -64,19 +64,7 @@ const TableItem = (props: TableItemProps) => {
     queryClient.invalidateQueries({ queryKey: ["user-carts"] })
     dispatch(deleteCartId(props.item.product.id, props.item.id, ""))
   })
-  const [count, setCount] = useState<number>(1)
 
-  const increese = () => {
-    if (count >= 10) {
-      return
-    } else setCount(count + 1)
-  }
-
-  const decreese = () => {
-    if (count <= 1) {
-      return
-    } else setCount(count - 1)
-  }
   return (
     <tr className={`text-left border-b ${cartDelete.isLoading ? "opacity-60 pointer-events-none cursor-not-allowed" : ""}`}>
 
