@@ -24,16 +24,6 @@ export const ProductView = (/*props: Props*/): ReactElement => {
     const { id } = useParams()
     const productById = useFetch<AxiosResponse, AxiosError>(["product-by-id", id], `products/${id}`)
 
-    const productMedias = productById.isFetched && productById.data?.data.variables.map(
-        (item: any) => item.media
-    )
-
-    const productMediasItem = productMedias.map(
-        (item: any) => item
-    )
-
-    console.log(productMediasItem, "jhsdbjhbdsjh")
-
     const [color, setColor] = useState<{ color: string, id: number | undefined }>({ color: "", id: undefined })
     const [size, setSize] = useState<{ size: string, id: number | undefined }>({ size: "", id: undefined })
     const [tabs, setTabs] = useState<{ data: ReactElement, id: number | undefined }>({ data: <p></p>, id: 1 })

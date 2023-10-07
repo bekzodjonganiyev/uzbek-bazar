@@ -36,7 +36,6 @@ export const ProductCarusel = (/*props: Props*/) => {
                     className="thumbs"
                     direction='vertical'
                 >
-                    
                     {/* {
                         props.images?.map((item) => (
                             <SwiperSlide key={item.id}>
