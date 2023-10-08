@@ -1,6 +1,7 @@
 import { ReactElement, useState } from 'react'
 import { Link, useParams, useSearchParams, useLocation } from "react-router-dom"
 import { AxiosResponse, AxiosError } from "axios"
+
 import "react-range-slider-input/dist/style.css";
 import "./product-view.css"
 
@@ -8,11 +9,12 @@ import { Button } from '@/components/ui/button'
 import { CancelIcon, ColumnsIcon, FilterIcon } from '@/assets/icons'
 import { CustomSelect, CustomSuspanse } from '@/components/common'
 import { FiltersSkeleton, ProductCard, ProductSkeleton } from '@/components'
+import MultiRangeSlider from '@/components/multi-range-slider/MultiRangeSlider'
 
 import { useFetch } from '@/utils/api'
 import { currencys } from "@/utils/mocks"
+import { cn } from '@/lib/utils';
 
-import MultiRangeSlider from '@/components/multi-range-slider/MultiRangeSlider'
 
 // type Props = {}
 
@@ -22,6 +24,7 @@ export const ProductList = (/*props: Props*/): ReactElement => {
     const [_, setSearchParams] = useSearchParams()
 
     const [filters, setFilters] = useState<{ key: string, value: string }[]>([])
+    const [gridClass, setGridClass] = useState<{ class: string, id: number, row?: boolean }>({ class: "grid-cols-4", id: 2, row: false })
 
     const categoryDetails = useFetch<AxiosResponse, AxiosError>(["categories-by-slug", category], `categories/${category}`,)
     const productsByCaregory = useFetch<AxiosResponse, AxiosError>(
@@ -196,10 +199,34 @@ export const ProductList = (/*props: Props*/): ReactElement => {
                                     placeholderValue="Sort by"
                                 />
                                 <div className='flex items-center max-md:hidden'>
-                                    <Button variant={'outline'} className={`rounded-none p-3`}><ColumnsIcon active count={5} /></Button>
-                                    <Button variant={'outline'} className={`rounded-none p-3`}><ColumnsIcon active count={4} /></Button>
-                                    <Button variant={'outline'} className={`rounded-none p-3`}><ColumnsIcon active count={3} /></Button>
-                                    <Button variant={'outline'} className={`rounded-none p-3`}><ColumnsIcon active count={2} classNames='rotate-90' /></Button>
+                                    <Button
+                                        variant={'outline'}
+                                        className={cn("rounded-none p-3 lg:inline-flex hidden`", gridClass.id === 1 && "border-black")}
+                                        onClick={() => setGridClass({ class: "grid-cols-5", id: 1 })}
+                                    >
+                                        <ColumnsIcon active count={5} />
+                                    </Button>
+                                    <Button
+                                        variant={'outline'}
+                                        className={cn("rounded-none p-3", gridClass.id === 2 && "border-black")}
+                                        onClick={() => setGridClass({ class: "grid-cols-4", id: 2 })}
+                                    >
+                                        <ColumnsIcon active count={4} />
+                                    </Button>
+                                    <Button
+                                        variant={'outline'}
+                                        className={cn("rounded-none p-3", gridClass.id === 3 && "border-black")}
+                                        onClick={() => setGridClass({ class: "grid-cols-3", id: 3 })}
+                                    >
+                                        <ColumnsIcon active count={3} />
+                                    </Button>
+                                    <Button
+                                        variant={'outline'}
+                                        className={cn("rounded-none p-3", gridClass.id === 4 && "border-black")}
+                                        onClick={() => setGridClass({ class: "max-md:grid-cols-1 grid-cols-2", id: 4, row: true })}
+                                    >
+                                        <ColumnsIcon active count={2} classNames='rotate-90' />
+                                    </Button>
                                 </div>
                             </div>
                         </div>
@@ -213,8 +240,20 @@ export const ProductList = (/*props: Props*/): ReactElement => {
                                 <span className='flex gap-2'><p>Filter</p> <FilterIcon /></span>
                             </Button>
                             <div className='flex items-center'>
-                                <Button variant={'outline'} className={`rounded-none p-2`}><ColumnsIcon active count={2} /></Button>
-                                <Button variant={'outline'} className={`rounded-none p-2`}><ColumnsIcon active count={2} classNames='rotate-90' /></Button>
+                                <Button
+                                    variant={'outline'}
+                                    className={cn("rounded-none p-2", gridClass.id === 1.1 && "border-black")}
+                                    onClick={() => setGridClass({ class: "grid-cols-2", id: 1.1 })}
+                                >
+                                    <ColumnsIcon active count={2} />
+                                </Button>
+                                <Button
+                                    variant={'outline'}
+                                    className={cn("rounded-none p-2", gridClass.id === 2.1 && "border-black")}
+                                    onClick={() => setGridClass({ class: "max-md:grid-cols-1 grid-cols-2", id: 2.1, row: true })}
+                                >
+                                    <ColumnsIcon active count={2} classNames='rotate-90' />
+                                </Button>
                             </div>
                         </div>
 
@@ -291,7 +330,7 @@ export const ProductList = (/*props: Props*/): ReactElement => {
                         error={productsByCaregory.isError || productsByCaregory.isPaused}
                         errorFallback={"Error"}
                     >
-                        <div className={`flex flex-wrap gap-5 justify-between`}>
+                        <div className={cn("grid gap-4", gridClass.class)}>
                             {
                                 productsByCaregory.data?.data.results.map((item: any) => (
                                     <ProductCard
@@ -303,7 +342,11 @@ export const ProductList = (/*props: Props*/): ReactElement => {
                                         discount={item.discount}
                                         productName={item.name}
                                         newBadge={item.newBadge}
-                                        rating={item.rating}
+                                        rating={item.rating ?? 2}
+                                        row={gridClass.row}
+                                        material={item.material.name}
+                                        minimumSold={item.minimum_order_count}
+                                        season={item.season}
                                     />
                                 ))
                             }

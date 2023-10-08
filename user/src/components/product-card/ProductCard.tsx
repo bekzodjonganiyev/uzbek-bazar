@@ -17,6 +17,7 @@ import { setCartId, deleteCartId } from "@/redux/actions/cart-action"
 import { setWishlistId, deleteWishlistId } from "@/redux/actions/wishlist-action"
 import { http } from '@/utils/api'
 import { getMachineId } from "@/utils/getSeesionId"
+import { cn } from '@/lib/utils'
 
 type Props = {
     id: number,
@@ -27,6 +28,11 @@ type Props = {
     rating?: number,
     newBadge?: boolean,
     discount?: string | null
+    gridClass?: string
+    row?: boolean
+    material?: string
+    minimumSold?: string
+    season?: string
 }
 
 export const ProductCard = (props: Props): ReactElement => {
@@ -129,9 +135,61 @@ export const ProductCard = (props: Props): ReactElement => {
         }
     }
 
-    return (
+    if (props.row) {
+        return (
+            // Not Hoverable ProcutCard
+            <div className={cn('sm:p-3 p-0 flex items-start min-[365px]:justify-between sm:gap-1 gap-0 border')}>
+                <div className='md:w-4/12 sm:w-3/12 w-3/12 sm:h-36 h-32 max-sm:mr-3'>
+                    <LazyLoadImage
+                        src={props.img ?? placeholderImg}
+                        alt={props.productName}
+                        // placeholderSrc={placeholderImg}
+                        // effect={'blur'}
+                        height="100%"
+                        width="100%"
+                        className='h-full w-full object-fill'
+                    />
+                </div>
 
-        <div className='group relative md:w-64 sm:w-52 w-[150px] rounded-md mb-3'>
+                {/* NAME, RATE, ADDITIONAL INFO */}
+                <div className='md:w-4/12 sm:w-6/12 w-4/12 max-[365px]:mr-9'>
+                    <h3 className={cn("leading-none line-clamp-2 sm:text-base text-[14px]")}>{props.productName}</h3>
+                    {
+                        props.rating
+                            ? <Rating initialValue={props.rating} size={17} readonly />
+                            : null
+                    }
+                    <div className='flex flex-col'>
+                        <div className='h-[12px]'><b className='text-xs'>Material:</b><span className='ml-1 text-xs'>{props.material}</span></div>
+                        <div className='h-[12px]'><b className='text-xs'>Minimum sold:</b><span className='ml-1 text-xs'>{props.minimumSold}</span></div>
+                        <div className='h-[12px]'><b className='text-xs'>Season:</b><span className='ml-1 text-xs'>{props.season}</span></div>
+                    </div>
+                </div>
+
+                {/* PRICE, BUTTONS */}
+                <div className='w-3/12 h-full flex justify-end'>
+                    <div className='flex flex-col justify-between items-end gap-5'>
+                        <p className='md:text-sm text-xs'>{props.price}$</p>
+                        <div className='flex'>
+                            <button className={`rounded-none border-none`} onClick={() => onLike()}><LikeIcon color={`${productIdsForWishlist?.includes(props.id) ? "#121212" : "white"}`} /></button>
+                            <button className={"rounded-none border-none"}> <Link to={`/product/details/${props.id}`} className='w-full h-full flex items-center justify-center'><EyeIcon /></Link></button>
+                            <button className={`rounded-none border-none`} onClick={() => onCart()}>
+                                <CartIcon
+                                    width={25}
+                                    height={25}
+                                    color={`${productIdsForCart.includes(props.id) ? "white" : "#121212"}`}
+                                    type={`${productIdsForCart.includes(props.id) ? "in" : "add"}`}
+                                />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+    return (
+        // Hoverable ProductCard
+        <div className={cn('group relative rounded-md mb-3 clg-r')}>
 
             {/* |---POSITION ABSOLUTE ELEMENTS---| */}
             {
@@ -147,7 +205,7 @@ export const ProductCard = (props: Props): ReactElement => {
             }
 
             {/* |---IMAGE---| */}
-            <div className='w-full md:h-80 sm:h-64 h-56 relative'>
+            <div className='w-full md:h-80 sm:h-64 h-56 relative clg-g'>
                 <LazyLoadImage
                     src={props.img ?? placeholderImg}
                     alt={props.productName}
@@ -169,7 +227,6 @@ export const ProductCard = (props: Props): ReactElement => {
                         <LikeIcon color={`${productIdsForWishlist?.includes(props.id) ? "#121212" : "white"}`} />
                     </span>
                 </Button>
-
             </div>
 
 
