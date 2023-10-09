@@ -26,9 +26,9 @@ export const Cart = (/*props: Props*/): ReactElement => {
       error={carts.isError}
       errorFallback={carts.error?.message}
     >
-      <div className='py-10 w-[90%] mx-auto'>
+      <div className='py-10 w-[90%] mx-auto max-md:overflow-x-scroll '>
         <h1 className='text-3xl font-medium text-center mb-10'>Savatcha</h1>
-        <table className='w-full mb-10'>
+        <table className='w-full mb-10 '>
           <thead>
             <tr className='text-left border-b py-3'>
               <th className='py-3'>Mahsulot</th>
@@ -67,9 +67,8 @@ const TableItem = (props: TableItemProps) => {
 
   return (
     <tr className={`text-left border-b ${cartDelete.isLoading ? "opacity-60 pointer-events-none cursor-not-allowed" : ""}`}>
-
       {/* -----<TD>PRODUCT NAME</TD>----- */}
-      <td className='py-5'>
+      <td className='py-5 px-3 w-1/2'>
         <div className='flex items-center gap-2'>
           {/* image */}
           <div className='w-20 h-32'>
@@ -82,8 +81,8 @@ const TableItem = (props: TableItemProps) => {
           <div className='flex flex-col items-start gap-3'>
             {/*product name and info */}
             <div className='flex flex-col gap-1'>
-              <h3 className='sm:text-base text-sm font-semibold line-clamp-1'>{props.item.product.name}</h3>
-              {/* <p className='sm:text-sm text-xs'>Size: 2xl, Color: qizil</p> */}
+              <h3 className='sm:text-base text-sm font-semibold line-clamp-2 w-64'>{props.item.product.name}</h3>
+              <p className='sm:text-sm text-xs'>Color: {props.item.product.color ?? '|color|'}, Size: {props.item.product.size ?? "|size|"}</p>
             </div>
 
             {/* delete */}
@@ -100,7 +99,7 @@ const TableItem = (props: TableItemProps) => {
       </td>
 
       {/* -----<TD>COUNTER</TD>----- */}
-      <td className='py-5'>
+      <td className='py-5 px-3'>
         {/* INCREESE AND DECREESE */}
         <div className={`rounded-md border flex items-center justify-between w-24 py-1 ${cartMutate.isLoading ? "opacity-60 pointer-events-none cursor-not-allowed" : "opacity-1"}`}>
           <Button
@@ -132,10 +131,10 @@ const TableItem = (props: TableItemProps) => {
       </td>
 
       {/* -----<TD>PRICE</TD>----- */}
-      <td className='py-5'>${props.item.product.price}</td>
+      <td className='py-5 px-3'>${props.item.product.price}</td>
 
       {/* -----<TD>TOTAL PRICE</TD>----- */}
-      <td className='py-5'>${props.item.quantity * props.item.product.price}</td>
+      <td className='py-5 px-3'>${props.item.quantity * props.item.product.price}</td>
     </tr>
   )
 }
