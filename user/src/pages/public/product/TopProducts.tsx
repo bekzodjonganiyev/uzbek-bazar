@@ -23,7 +23,7 @@ export const TopProducts = (/*props: Props*/): ReactElement => {
         >
             <div className='py-10'>
                 <h1 className='font-medium text-3xl text-center mb-10'>Top mahsulotlar</h1>
-                <div className="flex flex-wrap justify-between">
+                <div className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 md:gap-10 gap-5">
                     {
                         topProducts.data?.data.results.map((item: any) => (
                             <ProductCard
