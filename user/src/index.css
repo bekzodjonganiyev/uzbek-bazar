@@ -98,3 +98,21 @@
 body{
   min-width: 320px !important;
 }
+
+.same-products .swiper-button-next::after,
+.same-products .swiper-button-prev::after {
+  content: "";
+}
+
+
+.same-products .swiper-button-prev {
+  position: absolute;
+  left: 95%;
+  rotate: 180deg;
+}
+
+.same-products .swiper-button-next {
+  position: absolute;
+  right: 0%;
+  rotate: 180deg;
+}

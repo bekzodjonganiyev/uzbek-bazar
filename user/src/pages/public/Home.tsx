@@ -1,23 +1,31 @@
 import { ReactElement, useState } from "react";
 import { AxiosError, AxiosResponse } from "axios";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode, Pagination, Navigation } from 'swiper/modules';
+import { Rating } from 'react-simple-star-rating'
 
 import { Carusel, ProductCard, ShowCaseCard, LikedBrands, ProductSkeleton, PageLoader } from "@/components";
 import { CustomSuspanse } from "@/components/common";
+import { NextItemIcon, PrevItemIcon } from "@/assets/icons";
 
 import { useFetch } from "@/utils/api";
 import { showCase } from "@/utils/mocks"
+
+const sameProducts = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 export const Home = (): ReactElement => {
   const [tabs, setTabs] = useState<{ title: string, id: number | undefined }>({ title: "", id: 1 })
   const productArr = useFetch<AxiosResponse, AxiosError>(["products", tabs.title], `products/?type=${tabs.title}`)
   const page = useFetch<AxiosResponse, AxiosError>(["page"], `banners/`)
+  const reviews = useFetch<AxiosResponse, AxiosError>(["reviews"], "reviews/")
+  console.log(reviews.data?.data.results)
 
   return (
     <CustomSuspanse
-        loading={page.isLoading}
-        loadingFallback={<PageLoader />}
-        error={page.isError}
-        errorFallback={page.error?.message}
+      loading={page.isLoading}
+      loadingFallback={<PageLoader />}
+      error={page.isError}
+      errorFallback={page.error?.message}
     >
       <div className="">
         <Carusel />
@@ -124,6 +132,78 @@ export const Home = (): ReactElement => {
         <br />
 
         <LikedBrands />
+
+        {/* Reivew in carusel */}
+        <div className='same-products mt-10'>
+          <div className='flex max-md:flex-col max-md:gap-5 items-center justify-between relative mb-5'>
+            <h3 className='text-2xl font-medium max-sm:text-center'>Mijozlar fikri</h3>
+            <div className='flex items-center gap-3 relative'>
+              <button className="swiper-button-next"><NextItemIcon /></button>
+              <button className="swiper-button-prev"><PrevItemIcon /></button>
+            </div>
+          </div>
+          <Swiper
+            slidesPerView={4}
+            spaceBetween={10}
+            // freeMode={true}
+            navigation={{
+              prevEl: '.swiper-button-prev',
+              nextEl: '.swiper-button-next',
+            }}
+            pagination={false}
+            modules={[ Pagination, Navigation]}
+            className=""
+            breakpoints={{
+              120: {
+                slidesPerView: 1,
+                spaceBetween: 24,
+                resistanceRatio: 0.85
+              },
+              480: {
+                slidesPerView: 2,
+                spaceBetween: 24,
+                resistanceRatio: 0.85
+              },
+              768: {
+                slidesPerView: 3,
+                spaceBetween: 28,
+                resistanceRatio: 0.85
+              },
+              980: {
+                slidesPerView: 4,
+                spaceBetween: 28,
+                resistanceRatio: 0.85
+              },
+              1280: {
+                slidesPerView: 4,
+                spaceBetween: 32,
+                resistanceRatio: 0
+              },
+            }}
+          >
+            {
+              reviews.data?.data.results.map((item: any) => (
+                <SwiperSlide className="shadow-md p-2 my-5 rounded-md">
+                  <div className='flex gap-2 items-center'>
+                    <img className="w-10 h-10 rounded-full" src={item.avatar ?? "https://res.cloudinary.com/daily-now/image/upload/f_auto,q_auto/v1/posts/17f192f61c30f492e1ac218ca4666b68?_a=AQAEufR"} alt='Avatar' />
+                    <div className=''>
+                      <h4>
+                        {item.client}
+                      </h4>
+                      <Rating initialValue={item.rating ?? 2} size={20} readonly />
+                    </div>
+                  </div>
+                  <div className=''>
+                    <h5 className="my-3">productName</h5>
+                    <p>
+                      {item.comment}
+                    </p>
+                  </div>
+                </SwiperSlide>
+              ))
+            }
+          </Swiper>
+        </div>
 
         <br />
         <br />
