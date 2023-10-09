@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { AxiosResponse, AxiosError } from "axios"
 
 import "react-range-slider-input/dist/style.css";
-import "./product-view.css"
 
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetTrigger } from '@/components/ui/sheet'

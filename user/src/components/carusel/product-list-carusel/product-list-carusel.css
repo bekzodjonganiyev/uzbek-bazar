@@ -1,4 +1,4 @@
-.same-products .swiper-button-next::after,
+/* .same-products .swiper-button-next::after,
 .same-products .swiper-button-prev::after,
 .same-products .swiper-button-prev-1::after,
 .same-products .swiper-button-next-1::after {
@@ -8,24 +8,19 @@
 .same-products .swiper-button-prev {
   position: absolute;
   left: 95%;
-  /* rotate: 180deg; */
 }
 
 .same-products .swiper-button-next {
   position: absolute;
   right: 0%;
-  /* rotate: 180deg; */
-  display: none;
 }
 
 .same-products .swiper-button-prev-1 {
   position: absolute;
   left: 95%;
-  /* rotate: 180deg; */
 }
 
 .same-products .swiper-button-next-1 {
   position: absolute;
   right: 0%;
-  /* rotate: 180deg; */
-}
+} */
