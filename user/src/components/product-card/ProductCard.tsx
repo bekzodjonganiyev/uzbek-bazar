@@ -205,29 +205,31 @@ export const ProductCard = (props: Props): ReactElement => {
             }
 
             {/* |---IMAGE---| */}
-            <div className='w-full md:h-80 sm:h-64 h-56 relative'>
-                <LazyLoadImage
-                    src={props.img ?? placeholderImg}
-                    alt={props.productName}
-                    // placeholderSrc={placeholderImg}
-                    // effect={'blur'}
-                    height="100%"
-                    width="100%"
-                    className='h-full w-full object-cover'
-                />
+            <Link to={`/product/details/${props.id}`}>
+                <div className='w-full md:h-80 sm:h-64 h-56 relative'>
+                    <LazyLoadImage
+                        src={props.img ?? placeholderImg}
+                        alt={props.productName}
+                        // placeholderSrc={placeholderImg}
+                        // effect={'blur'}
+                        height="100%"
+                        width="100%"
+                        className='h-full w-full object-cover'
+                    />
 
-                {/* Visible on mobile */}
-                <Button
-                    variant={'outline'}
-                    size={'icon'}
-                    className={`rounded-none bg- border-none max-md:block hidden absolute right-0 top-0`}
-                    onClick={() => onLike()}
-                >
-                    <span className='flex items-center justify-center'>
-                        <LikeIcon color={`${productIdsForWishlist?.includes(props.id) ? "#121212" : "white"}`} />
-                    </span>
-                </Button>
-            </div>
+                    {/* Visible on mobile */}
+                    <Button
+                        variant={'outline'}
+                        size={'icon'}
+                        className={`rounded-none bg- border-none max-md:block hidden absolute right-0 top-0`}
+                        onClick={() => onLike()}
+                    >
+                        <span className='flex items-center justify-center'>
+                            <LikeIcon color={`${productIdsForWishlist?.includes(props.id) ? "#121212" : "white"}`} />
+                        </span>
+                    </Button>
+                </div>
+            </Link>
 
 
             {/* |---NAME, PRICE, RATING---| */}

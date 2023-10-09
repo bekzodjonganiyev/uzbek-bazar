@@ -1,20 +1,13 @@
 import { ReactElement, useState, Fragment } from 'react'
 import { Link, useParams } from "react-router-dom"
 import { AxiosResponse, AxiosError } from "axios"
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Pagination, Navigation } from 'swiper/modules';
 import { Rating } from 'react-simple-star-rating'
 
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/pagination';
-
-import './product-view.css';
 
 import { Button } from '@/components/ui/button'
-import { EyeIcon, HumanIcon, LikeIcon, NextItemIcon, PrevItemIcon, QuestionIcon, ShareIcon } from '@/assets/icons'
+import { EyeIcon, HumanIcon, LikeIcon, QuestionIcon, ShareIcon } from '@/assets/icons'
 import { CustomSuspanse } from '@/components/common'
-import { ProductCard, ProductCarusel, ProductReview } from '@/components'
+import { ProductCarusel, ProductsListCarusel, ProductReview } from '@/components'
 
 import { useFetch } from "@/utils/api"
 
@@ -23,6 +16,7 @@ import { useFetch } from "@/utils/api"
 export const ProductView = (/*props: Props*/): ReactElement => {
     const { id } = useParams()
     const productById = useFetch<AxiosResponse, AxiosError>(["product-by-id", id], `products/${id}`)
+    const sameProducts = useFetch<AxiosResponse, AxiosError>(["same-products", id], `products/?type=${productById.data?.data.type}&season=${productById.data?.data.season}`, productById.isSuccess)
 
     const [color, setColor] = useState<{ color: string, id: number | undefined }>({ color: "", id: undefined })
     const [size, setSize] = useState<{ size: string, id: number | undefined }>({ size: "", id: undefined })
@@ -30,7 +24,6 @@ export const ProductView = (/*props: Props*/): ReactElement => {
 
     const reviwes = [1, 2, 3, 4]
     const questions = [1, 2, 3, 4]
-    const sameProducts = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
     return (
         <div className='flex flex-col gap-16 py-10 w-[90%] mx-auto'>
@@ -95,12 +88,13 @@ export const ProductView = (/*props: Props*/): ReactElement => {
                             <p className='mb-[5px]'>Size:</p>
                             <div className='space-x-3'>
                                 {
-                                    productById.data?.data.variables.map((item: any) => (
+                                    productById.data?.data.size.map((item: any) => (
                                         <button
+                                            key={item.id}
                                             className={`rounded-md p-2 border-2 ${size.id === item.id ? "border-black" : ""}`}
-                                            onClick={() => setSize({ size: item.color, id: item.id })}
+                                            onClick={() => setSize({ size: item, id: item.id })}
                                         >
-                                            {item.size}
+                                            {item.name}
                                         </button>
                                     ))
                                 }
@@ -203,86 +197,15 @@ export const ProductView = (/*props: Props*/): ReactElement => {
             {/* begin:PRODUCT ADDITIONAL INFO */}
 
             {/* begin:SAME PRODUCTS */}
-            <div className='same-products'>
-                <div className='flex items-center justify-between relative mb-10'>
-                    <h3 className='text-2xl font-medium'>O'xshash maxsulotlar</h3>
-                    <div className='flex items-center gap-3'>
-                        <button className="swiper-button-prev"><PrevItemIcon /></button>
-                        <button className="swiper-button-next"><NextItemIcon /></button>
-                    </div>
-                </div>
-                <Swiper
-                    slidesPerView={4}
-                    spaceBetween={10}
-                    freeMode={true}
-                    navigation={{
-                        prevEl: '.swiper-button-prev',
-                        nextEl: '.swiper-button-next',
-                    }}
-                    pagination={false}
-                    modules={[FreeMode, Pagination, Navigation]}
-                >
-                    {
-                        sameProducts.map((i: any) => (
-                            <SwiperSlide>
-                                <ProductCard
-                                    key={Number(i)}
-                                    id={+i.id}
-                                    img={i.img}
-                                    price={i.price}
-                                    oldPrice={i.oldPice}
-                                    discount={i.discount}
-                                    productName={i.productName}
-                                    newBadge={i.newBadge}
-                                    rating={i.rating}
-                                />
-                            </SwiperSlide>
-                        ))
-                    }
-                </Swiper>
-            </div>
+            {
+                sameProducts.isLoading 
+                ? ""
+                : <ProductsListCarusel array={sameProducts.data?.data.results} title="O'xshash maxsulotlar" prevElClass='.swiper-button-prev' nextElClass='.swiper-button-next'/> 
+            }
             {/* begin:SAME PRODUCTS */}
 
             {/* begin:RECENTLT VIEWED PRODUCTS */}
-            <div className='same-products'>
-                <div className='flex items-center justify-between relative mb-10'>
-                    <h3 className='text-2xl font-medium'>O'xshash maxsulotlar</h3>
-                    <div className='flex items-center gap-3'>
-                        <button className="swiper-button-prev"><PrevItemIcon /></button>
-                        <button className="swiper-button-next"><NextItemIcon /></button>
-                    </div>
-                </div>
-                <Swiper
-                    slidesPerView={4}
-                    spaceBetween={10}
-                    freeMode={true}
-                    navigation={{
-                        prevEl: '.swiper-button-prev',
-                        nextEl: '.swiper-button-next',
-                    }}
-                    pagination={false}
-                    modules={[FreeMode, Pagination, Navigation]}
-                >
-                    {
-                        sameProducts.map((i: any) => (
-                            <SwiperSlide>
-                                <ProductCard
-                                    key={Number(i)}
-                                    id={+i.id}
-                                    img={i.img}
-                                    price={i.price}
-                                    oldPrice={i.oldPice}
-                                    discount={i.discount}
-                                    productName={i.productName}
-                                    newBadge={i.newBadge}
-                                    rating={i.rating}
-                                />
-                            </SwiperSlide>
-                        ))
-                    }
-                </Swiper>
-
-            </div>
+            <ProductsListCarusel array={[]} title="Yaqinda ko'rib chiqilgan" prevElClass='.swiper-button-prev-1' nextElClass='.swiper-button-next-1' />
             {/* begin:RECENTLT VIEWED PRODUCTS */}
         </div>
     )

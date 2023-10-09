@@ -12,7 +12,6 @@ type Props = {
 
 export const ProductReview = (props: Props): ReactElement => {
 
-    console.log(props)
     return (
         <div className='flex flex-col gap-4 border-b mt-10 pb-5'>
             <div className='flex items-center gap-5'>
