@@ -5,7 +5,7 @@ import { Rating } from 'react-simple-star-rating'
 
 
 import { Button } from '@/components/ui/button'
-import { EyeIcon, HumanIcon, LikeIcon, QuestionIcon, ShareIcon } from '@/assets/icons'
+import { EyeIcon, HumanIcon, LikeIcon, NextItemIcon, PrevItemIcon, QuestionIcon, ShareIcon } from '@/assets/icons'
 import { CustomSuspanse } from '@/components/common'
 import { ProductCarusel, ProductsListCarusel, ProductReview } from '@/components'
 
@@ -198,14 +198,28 @@ export const ProductView = (/*props: Props*/): ReactElement => {
 
             {/* begin:SAME PRODUCTS */}
             {
-                sameProducts.isLoading 
-                ? ""
-                : <ProductsListCarusel array={sameProducts.data?.data.results} title="O'xshash maxsulotlar" prevElClass='.swiper-button-prev' nextElClass='.swiper-button-next'/> 
+                sameProducts.isLoading
+                    ? ""
+                    : <ProductsListCarusel
+                        array={sameProducts.data?.data.results}
+                        title="O'xshash maxsulotlar"
+                        prevElClass='.swiper-button-prev'
+                        nextElClass='.swiper-button-next'
+                        prevElIcon={<PrevItemIcon />}
+                        nextElIcon={<NextItemIcon />}
+                    />
             }
             {/* begin:SAME PRODUCTS */}
 
             {/* begin:RECENTLT VIEWED PRODUCTS */}
-            <ProductsListCarusel array={[]} title="Yaqinda ko'rib chiqilgan" prevElClass='.swiper-button-prev-1' nextElClass='.swiper-button-next-1' />
+            <ProductsListCarusel
+                array={[]}
+                title="Yaqinda ko'rib chiqilgan"
+                prevElClass='.swiper-button-prev-2'
+                nextElClass='.swiper-button-next-1'
+                prevElIcon={<PrevItemIcon />}
+                nextElIcon={<NextItemIcon />}
+            />
             {/* begin:RECENTLT VIEWED PRODUCTS */}
         </div>
     )
