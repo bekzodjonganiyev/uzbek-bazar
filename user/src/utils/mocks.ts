@@ -192,3 +192,8 @@ export const currencys = [
   { label: "RUB", value: "rub" },
   { label: "USD", value: "usd" },
 ];
+
+export const productSortItems = [
+  { label: "Narx", value: "price" },
+  { label: "Ommabop", value: "rating" },
+];

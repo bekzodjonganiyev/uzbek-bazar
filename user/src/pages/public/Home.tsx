@@ -98,7 +98,7 @@ export const Home = (): ReactElement => {
             error={productArr.isError}
             errorFallback={"Error"}
           >
-            <div className="flex flex-wrap justify-between">
+            <div className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 grid-cols-2 sm:gap-10 gap-5">
               {
                 productArr.data?.data.results.map((item: any) => (
                   <ProductCard

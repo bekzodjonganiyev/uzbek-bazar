@@ -189,7 +189,7 @@ export const ProductCard = (props: Props): ReactElement => {
     }
     return (
         // Hoverable ProductCard
-        <div className={cn('group relative rounded-md mb-3 clg-r')}>
+        <div className={cn('group relative rounded-md mb-3 ')}>
 
             {/* |---POSITION ABSOLUTE ELEMENTS---| */}
             {
@@ -205,7 +205,7 @@ export const ProductCard = (props: Props): ReactElement => {
             }
 
             {/* |---IMAGE---| */}
-            <div className='w-full md:h-80 sm:h-64 h-56 relative clg-g'>
+            <div className='w-full md:h-80 sm:h-64 h-56 relative'>
                 <LazyLoadImage
                     src={props.img ?? placeholderImg}
                     alt={props.productName}
@@ -234,7 +234,7 @@ export const ProductCard = (props: Props): ReactElement => {
             {/* TODO - `props.rating` bilan bog'liq condition larni optimize qilaman */}
             <div className={`${props.rating ? "text-left" : "text-center"} py-2 font-semibold`}>
                 <div className='flex items-end justify-between'>
-                    <div className='max-md:w-9/12 w-full'>
+                    <div className='max-md:w-9/12 w-full '>
                         {
                             props.rating
                                 ? <Rating initialValue={props.rating ?? 2} size={20} readonly />
@@ -252,7 +252,7 @@ export const ProductCard = (props: Props): ReactElement => {
                     </div>
 
                     {/* Visible on mobile */}
-                    <div className='max-md:block hidden w-3/12'>
+                    <div className='max-md:flex hidden w-3/12 justify-end'>
                         <Button variant={'outline'} size={'icon'} className={`rounded-none border-none`} onClick={() => onCart()}>
                             <CartIcon
                                 width={20}

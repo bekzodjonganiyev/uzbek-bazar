@@ -48,18 +48,29 @@ export const ProductView = (/*props: Props*/): ReactElement => {
 
                     {/* Product starter infos */}
                     <div className='flex flex-col gap-5 md:w-1/2 mx-auto'>
+                        {/* Name */}
                         <h1 className='text-2xl font-bold line-clamp-1'>{productById.data?.data.name}</h1>
+
+                        {/* Description */}
                         <p className='line-camp-2 overflow-x-scroll scrollbar-thin scrollbar-thumb-black'>{productById.data?.data.desc}</p>
+
+                        {/* Rating */}
                         <Rating initialValue={productById.data?.data.rating ?? 2} size={20} readonly />
+
+                        {/* Price */}
                         <p className='flex gap-2'>
                             <span>{productById.data?.data.price}</span>
                             <span className='line-through'>{productById.data?.data.price}</span>
                         </p>
+
+                        {/* Head count */}
                         <div className='flex items-center gap-2'>
                             <span><EyeIcon /></span>
                             <p>32 people are looking at this product</p>
                         </div>
                         <hr />
+
+                        {/* Color */}
                         <div>
                             <p className='mb-[5px]'>Color:</p>
                             <div className="flex gap-2">
@@ -78,6 +89,8 @@ export const ProductView = (/*props: Props*/): ReactElement => {
                                 }
                             </div>
                         </div>
+
+                        {/* Size */}
                         <div>
                             <p className='mb-[5px]'>Size:</p>
                             <div className='space-x-3'>
@@ -93,19 +106,29 @@ export const ProductView = (/*props: Props*/): ReactElement => {
                                 }
                             </div>
                         </div>
+
+                        {/* Add to cart */}
                         <Button variant={'default'} className='rounded-none py-5'>Savatga qo’shish</Button>
+
                         <div className='flex gap-5'>
+                            {/* Add to wishlist */}
                             <button>
                                 <span className='flex items-center gap-1'><LikeIcon color='black' /><p>Wishlist</p></span>
                             </button>
+
+                            {/* Ask question */}
                             <button>
                                 <span className='flex items-center gap-2'><QuestionIcon /><p>Ask question</p></span>
                             </button>
+
+                            {/* Share this product */}
                             <button>
                                 <span className='flex items-center gap-2'><ShareIcon /><p>Share</p></span>
                             </button>
                         </div>
                         <hr />
+
+                        {/* Seller profile */}
                         <div className='flex items-center gap-2'>
                             <span className='flex items-end gap-2'>
                                 <HumanIcon />

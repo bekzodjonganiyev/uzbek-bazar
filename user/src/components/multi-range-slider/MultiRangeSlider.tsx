@@ -14,13 +14,15 @@ interface MultiRangeSliderProps {
     max: number;
     setRangeValue: Function;
     onChange?: Function;
+    className?: string
 }
 
 const MultiRangeSlider: FC<MultiRangeSliderProps> = ({
     min,
     max,
     setRangeValue,
-    onChange
+    onChange,
+    className
 }) => {
     const [minVal, setMinVal] = useState(min);
     const [maxVal, setMaxVal] = useState(max);
@@ -74,7 +76,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({
     }, [minVal, maxVal]);
 
     return (
-        <div className="multi-range-slider">
+        <div className={classnames("multi-range-slider", className)}>
             <input
                 type="range"
                 min={min}
