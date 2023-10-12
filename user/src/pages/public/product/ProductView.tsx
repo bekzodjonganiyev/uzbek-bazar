@@ -28,7 +28,7 @@ import { question } from "@/interfaces/question";
 export const ProductView = (/*props: Props*/): ReactElement => {
   const { id } = useParams();
 
-  const [activeColor, setActiveColor] = useState<number>(0);
+  const [activeColor, setActiveColor] = useState<number>(1);
 
   const productById = useFetch<AxiosResponse, AxiosError>(
     ["product-by-id", id],
@@ -50,20 +50,11 @@ export const ProductView = (/*props: Props*/): ReactElement => {
 
   const reviews = useFetch<AxiosResponse, AxiosError>(
     ["product_reviews"],
-    "reviews/",
-    tabs.id === 3
-  );
+    "reviews/");
 
   const questions = useFetch<AxiosResponse, AxiosError>(
     ["product_questions"],
-    "questions/",
-    tabs.id === 4
-  );
-
-  // const questions = [1, 2, 3, 4];
-
-  console.log(productById.data?.data);
-  console.log("same", sameProducts.data?.data);
+    "questions/");
 
   const getActiveColor = (index: number) => {
     try {
@@ -156,9 +147,8 @@ export const ProductView = (/*props: Props*/): ReactElement => {
                 {productById.data?.data.variables.map(
                   (item: productColor, ind: number) => (
                     <div
-                      className={`border-black rounded-full ${
-                        getActiveColor(activeColor) === item ? "border-2" : ""
-                      }`}
+                      className={`border-black rounded-full ${getActiveColor(activeColor) === item ? "border-2" : ""
+                        }`}
                     >
                       <button
                         style={{ backgroundColor: item.color }}
@@ -179,9 +169,8 @@ export const ProductView = (/*props: Props*/): ReactElement => {
                 {productById.data?.data.size.map((item: any) => (
                   <button
                     key={item.id}
-                    className={`rounded-md p-2 border-2 ${
-                      size.id === item.id ? "border-black" : ""
-                    }`}
+                    className={`rounded-md p-2 border-2 ${size.id === item.id ? "border-black" : ""
+                      }`}
                     onClick={() => setSize({ size: item, id: item.id })}
                   >
                     {item.name}
@@ -242,9 +231,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
         <div className="border-b flex gap-10">
           {/* -----Description----- */}
           <button
-            className={`${
-              tabs.id === 1 ? "border-b-2 border-black" : ""
-            }  pb-1`}
+            className={`${tabs.id === 1 ? "border-b-2 border-black" : ""}  pb-1`}
             onClick={() =>
               setTabs({
                 data: (
@@ -261,9 +248,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
 
           {/* -----Additional Info----- */}
           <button
-            className={`${
-              tabs.id === 2 ? "border-b-2 border-black" : ""
-            }  pb-1`}
+            className={`${tabs.id === 2 ? "border-b-2 border-black" : ""}  pb-1`}
             onClick={() =>
               setTabs({
                 data: <ProductView_Info data="Additional info" />,
@@ -276,15 +261,11 @@ export const ProductView = (/*props: Props*/): ReactElement => {
 
           {/* -----Reviwes(23)----- */}
           <button
-            className={`${
-              tabs.id === 3 ? "border-b-2 border-black" : ""
-            }  pb-1`}
+            className={`${tabs.id === 3 ? "border-b-2 border-black" : ""} pb-1`}
             onClick={() =>
               setTabs({
                 data: (
-                  <ProductView_Review
-                    arr={!reviews.isLoading ? reviews.data?.data?.results : []}
-                  />
+                  <ProductView_Review arr={reviews.data?.data?.results} />
                 ),
                 id: 3,
               })
@@ -295,17 +276,11 @@ export const ProductView = (/*props: Props*/): ReactElement => {
 
           {/* -----Questions----- */}
           <button
-            className={`${
-              tabs.id === 4 ? "border-b-2 border-black" : ""
-            }  pb-1`}
+            className={`${tabs.id === 4 ? "border-b-2 border-black" : ""}  pb-1`}
             onClick={() =>
               setTabs({
                 data: (
-                  <ProductView_Question
-                    arr={
-                      !questions.isLoading ? questions.data?.data.results : []
-                    }
-                  />
+                  <ProductView_Question arr={questions.data?.data.results} />
                 ),
                 id: 4,
               })
@@ -314,7 +289,13 @@ export const ProductView = (/*props: Props*/): ReactElement => {
             Questions
           </button>
         </div>
-        <div className="py-10">{tabs.data}</div>
+        <div className="py-10">
+          {
+            reviews.isLoading || questions.isLoading
+              ? "Loading"
+              : <>{tabs.data}</>
+          }
+        </div>
       </div>
       {/* begin:PRODUCT ADDITIONAL INFO */}
 

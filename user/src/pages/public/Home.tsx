@@ -185,16 +185,16 @@ export const Home = (): ReactElement => {
               reviews.data?.data.results.map((item: any) => (
                 <SwiperSlide className="shadow-md p-2 my-5 rounded-md">
                   <div className='flex gap-2 items-center'>
-                    <img className="w-10 h-10 rounded-full" src={item.avatar ?? "https://res.cloudinary.com/daily-now/image/upload/f_auto,q_auto/v1/posts/17f192f61c30f492e1ac218ca4666b68?_a=AQAEufR"} alt='Avatar' />
+                    <img className="w-10 h-10 rounded-full" src={item.client.avatar ?? "https://res.cloudinary.com/daily-now/image/upload/f_auto,q_auto/v1/posts/17f192f61c30f492e1ac218ca4666b68?_a=AQAEufR"} alt='Avatar' />
                     <div className=''>
                       <h4>
-                        {item.client}
+                        {item.client.full_name}
                       </h4>
                       <Rating initialValue={item.rating ?? 2} size={20} readonly />
                     </div>
                   </div>
                   <div className=''>
-                    <h5 className="my-3">productName</h5>
+                    <h5 className="my-3">{item.product.name}</h5>
                     <p>
                       {item.comment}
                     </p>
