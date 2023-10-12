@@ -292,32 +292,20 @@ export const ProductView = (/*props: Props*/): ReactElement => {
       </div>
       {/* begin:PRODUCT ADDITIONAL INFO */}
 
-      {/* begin:SAME PRODUCTS */}
-      {sameProducts.isLoading ? (
-        <div className='flex flex-wrap justify-between gap-10 py-10'>
-          <ProductSkeleton limit={4} />
-        </div>
-      ) : (
-        <ProductsListCarusel
-          array={sameProducts.data?.data.results}
-          title="O'xshash maxsulotlar"
-          prevElClass=".swiper-button-prev"
-          nextElClass=".swiper-button-next"
-        />
-      )}
-      {/* begin:SAME PRODUCTS */}
+            {/* begin:SAME PRODUCTS */}
+            {
+                sameProducts.isLoading 
+                ? ""
+                : <ProductsListCarusel array={sameProducts.data?.data.results} title="O'xshash maxsulotlar" prevElClass='.swiper-button-prev' nextElClass='.swiper-button-next'/> 
+            }
+            {/* begin:SAME PRODUCTS */}
 
-      {/* begin:RECENTLT VIEWED PRODUCTS */}
-      <ProductsListCarusel
-        array={[]}
-        title="Yaqinda ko'rib chiqilgan"
-        prevElClass=".swiper-button-prev-1"
-        nextElClass=".swiper-button-next-1"
-      />
-      {/* begin:RECENTLT VIEWED PRODUCTS */}
-    </div>
-  );
-};
+            {/* begin:RECENTLT VIEWED PRODUCTS */}
+            <ProductsListCarusel array={[]} title="Yaqinda ko'rib chiqilgan" prevElClass='.swiper-button-prev-1' nextElClass='.swiper-button-next-1' />
+            {/* begin:RECENTLT VIEWED PRODUCTS */}
+        </div>
+    )
+}
 
 type DescriptionProps = {
   data: string;
