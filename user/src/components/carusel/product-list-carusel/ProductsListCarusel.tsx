@@ -37,6 +37,33 @@ export const ProductsListCarusel = (props: Props) => {
                 }}
                 pagination={false}
                 modules={[FreeMode, Pagination, Navigation]}
+                breakpoints={{
+                    120: {
+                      slidesPerView: 1,
+                      spaceBetween: 24,
+                      resistanceRatio: 0.85
+                    },
+                    480: {
+                      slidesPerView: 2,
+                      spaceBetween: 24,
+                      resistanceRatio: 0.85
+                    },
+                    768: {
+                      slidesPerView: 3,
+                      spaceBetween: 28,
+                      resistanceRatio: 0.85
+                    },
+                    980: {
+                      slidesPerView: 4,
+                      spaceBetween: 28,
+                      resistanceRatio: 0.85
+                    },
+                    1280: {
+                      slidesPerView: 4,
+                      spaceBetween: 32,
+                      resistanceRatio: 0
+                    },
+                  }}
             >
                 {
                     props.array.map((i: any) => (

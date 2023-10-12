@@ -51,7 +51,7 @@ export const wishlistReducer = (state = initialState, action: IAction) => {
       return obj;
     }
     case WISHLIST.SET_ALL: {
-      const wishlists: IWishlist = JSON.parse(localStorage.getItem("wishlists") || `{"ids":[],"cartIds":[],"extra":null}`);
+      const wishlists: IWishlist = JSON.parse(localStorage.getItem("wishlists") || `{"ids":[],"wishlistIds":[],"extra":null}`);
       if(wishlists)
         return wishlists;
       return initialState

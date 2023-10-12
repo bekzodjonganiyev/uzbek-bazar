@@ -16,6 +16,7 @@ import {
   ProductCarusel,
   ProductsListCarusel,
   ProductReview,
+  ProductSkeleton,
 } from "@/components";
 
 import { useFetch } from "@/utils/api";
@@ -39,22 +40,12 @@ export const ProductView = (/*props: Props*/): ReactElement => {
     `products/?type=${productById.data?.data.type}&season=${productById.data?.data.season}`,
     productById.isSuccess
   );
-  const [size, setSize] = useState<{ size: string; id: number | undefined }>({
-    size: "",
-    id: undefined,
-  });
-  const [tabs, setTabs] = useState<{
-    data: ReactElement;
-    id: number | undefined;
-  }>({ data: <div>{productById.data?.data.gender}</div>, id: 1 });
+  const questions = useFetch<AxiosResponse, AxiosError>(["ions"], "questions/");
+  const reviews = useFetch<AxiosResponse, AxiosError>(["product_reviews"], "reviews/");
 
-  const reviews = useFetch<AxiosResponse, AxiosError>(
-    ["product_reviews"],
-    "reviews/");
-
-  const questions = useFetch<AxiosResponse, AxiosError>(
-    ["product_questions"],
-    "questions/");
+  const [size, setSize] = useState<{ size: string; id: number | undefined }>({ size: "", id: undefined });
+  const [tabs, setTabs] = useState<{ data: ReactElement; id: number | undefined; }>
+    ({ data: <div>{productById.data?.data.gender}</div>, id: 1 });
 
   const getActiveColor = (index: number) => {
     try {
@@ -166,16 +157,18 @@ export const ProductView = (/*props: Props*/): ReactElement => {
             <div>
               <p className="mb-[5px]">Size:</p>
               <div className="space-x-3">
-                {productById.data?.data.size.map((item: any) => (
-                  <button
-                    key={item.id}
-                    className={`rounded-md p-2 border-2 ${size.id === item.id ? "border-black" : ""
-                      }`}
-                    onClick={() => setSize({ size: item, id: item.id })}
-                  >
-                    {item.name}
-                  </button>
-                ))}
+                {productById.data?.data?.size
+                  ? productById.data?.data?.size.map((item: any) => (
+                    <button
+                      key={item.id}
+                      className={`rounded-md p-2 border-2 ${size.id === item.id ? "border-black" : ""
+                        }`}
+                      onClick={() => setSize({ size: item, id: item.id })}
+                    >
+                      {item.name}
+                    </button>
+                  ))
+                  : null}
               </div>
             </div>
 
@@ -301,7 +294,9 @@ export const ProductView = (/*props: Props*/): ReactElement => {
 
       {/* begin:SAME PRODUCTS */}
       {sameProducts.isLoading ? (
-        ""
+        <div className='flex flex-wrap justify-between gap-10 py-10'>
+          <ProductSkeleton limit={4} />
+        </div>
       ) : (
         <ProductsListCarusel
           array={sameProducts.data?.data.results}

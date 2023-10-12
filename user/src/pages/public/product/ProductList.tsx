@@ -138,7 +138,7 @@ export const ProductList = (/*props: Props*/): ReactElement => {
                                                 className='p-3 border'
                                                 onClick={() => {
                                                     setSearchParams(prev => {
-                                                        prev.set("size", `${i.name}`)
+                                                        prev.set("size", `${i.id}`)
                                                         return prev
                                                     })
                                                     filterValuesController("size", i.name)

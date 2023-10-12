@@ -9,6 +9,8 @@ import "swiper/css/thumbs";
 
 import "./product-carusel.css";
 
+import { API_URL } from "@/utils/api"
+
 type Props = {
   images?: string[];
 };
@@ -37,19 +39,15 @@ export const ProductCarusel = ({ images }: Props) => {
           className="thumbs"
           direction="vertical"
         >
-          {/* {
-                        props.images?.map((item) => (
-                            <SwiperSlide key={item.id}>
-                                <img src={API_URL + item.file} alt='' loading='lazy' />
-                            </SwiperSlide>
-                        ))
-                    } */}
-          {images &&
-            images.map((e, ind) => (
-              <SwiperSlide key={ind}>
-                <img src={e} alt="product image" />
-              </SwiperSlide>
-            ))}
+          {
+            images
+              ? images.map((e, ind) => (
+                <SwiperSlide key={ind}>
+                  <img src={API_URL + e} alt="product image" />
+                </SwiperSlide>
+              ))
+              : null
+          }
         </Swiper>
       </div>
       {/* end::Swiper thunbnail */}
@@ -67,14 +65,16 @@ export const ProductCarusel = ({ images }: Props) => {
           className="product-image xl:w-[500px] lg:w-[400px] md:w-[300px] w-72"
           direction="horizontal"
         >
-          {/* {
-                        props.images?.map((item) => (
-                            <SwiperSlide key={item.id}>
-                                <img src={item.file} alt='' loading='lazy' />
-                            </SwiperSlide>
-                        ))
-                    } */}
-          <SwiperSlide>
+          {
+            images
+              ? images.map((e, ind) => (
+                <SwiperSlide key={ind}>
+                  <img src={API_URL + e} alt="product image" />
+                </SwiperSlide>
+              ))
+              : null
+          }
+          {/* <SwiperSlide>
             <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
           </SwiperSlide>
           <SwiperSlide>
@@ -100,7 +100,7 @@ export const ProductCarusel = ({ images }: Props) => {
           </SwiperSlide>
           <SwiperSlide>
             <img src="https://swiperjs.com/demos/images/nature-10.jpg" />
-          </SwiperSlide>
+          </SwiperSlide> */}
         </Swiper>
         {/* end::Swiper Items shows one by one */}
       </div>
