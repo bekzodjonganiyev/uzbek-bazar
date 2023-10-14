@@ -1,4 +1,5 @@
 import { ReactElement, useState } from 'react'
+import { AxiosError, AxiosResponse } from 'axios'
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -10,7 +11,6 @@ import sallerBgImage from "@/assets/images/sellers-bg.png"
 
 import { currencys } from "@/utils/mocks"
 import { useFetch } from '@/utils/api'
-import { AxiosError, AxiosResponse } from 'axios'
 
 // type Props = {}
 
@@ -38,7 +38,7 @@ export const Sellers = (/*props: Props*/): ReactElement => {
             <div className='mt-10 mb-5'>
                 <div className='flex items-center justify-between max-md:border-b'>
                     {/* Products count */}
-                    <p>{ }_ mahsulotlar</p>
+                    <p>{sellers.data?.data.results.length} sotuvchilar</p>
 
                     {/* Filter, sort and ui-change buttons */}
                     <div className='flex items-center gap-3'>
@@ -68,7 +68,7 @@ export const Sellers = (/*props: Props*/): ReactElement => {
                 error={sellers.isError}
                 errorFallback={sellers.error?.message}
             >
-                <div className='flex flex-wrap justify-between'>
+                <div className='grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 min-[500px]:grid-cols-2 grid-cols-1 sm:gap-10 gap-5'>
                     {
                         sellers.data?.data.results.map((i: any) => (
                             <SellerCard
@@ -82,7 +82,6 @@ export const Sellers = (/*props: Props*/): ReactElement => {
                     }
                 </div>
             </CustomSuspanse>
-
         </div>
     )
 }

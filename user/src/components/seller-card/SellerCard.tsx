@@ -12,8 +12,8 @@ type Props = {
 export const SellerCard = (props: Props): ReactElement => {
     return (
         <Link to={`/seller/details/${props.id}`}>
-            <div className='flex flex-col gap-3 w-80 h-80'>
-                <div className='w-80 h-72 border'>
+            <div className='flex flex-col gap-3'>
+                <div className='w-full h-72 border'>
                     <img src={props.img} alt={props.name} className='w-full h-full object-cover' />
                 </div>
                 <div>
