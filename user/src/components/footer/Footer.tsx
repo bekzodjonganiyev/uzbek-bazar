@@ -23,7 +23,7 @@ export const Footer = (): ReactElement => {
   ]
 
   return (
-    <footer className="w-full bg-footer pt-16 pb-3">
+    <footer className="w-full bg-footer pt-16 pb-3 max-md:pb-24">
       <div className="container">
         <div className="w-full flex flex-col lg:flex-row justify-between">
 

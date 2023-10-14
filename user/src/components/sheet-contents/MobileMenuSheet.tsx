@@ -5,9 +5,9 @@ import { SheetHeader, SheetTitle } from "@/components/ui/sheet"
 
 export const MobileMenuSheet = (/*props: Props*/):ReactElement  => {
   return (
-    <aside>
+    <aside className='z-[9999]'>
         <SheetHeader>
-            <SheetTitle className='text-2xl font-semibold'>Mobile Menu</SheetTitle>
+            <SheetTitle className='text-2xl font-semibold'>Katalog</SheetTitle>
         </SheetHeader>
     </aside>
   )

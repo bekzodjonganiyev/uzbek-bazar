@@ -1,6 +1,7 @@
 // Organism components
 export * from "@/components/header/Header"
 export * from "@/components/footer/Footer"
+export * from "@/components/bottom-nav/BottomNav"
 export * from "@/components/carusel/banner/Banner"
 export * from "@/components/carusel/product-img-carusel/ProductCarusel"
 export * from "@/components/carusel/product-list-carusel/ProductsListCarusel"

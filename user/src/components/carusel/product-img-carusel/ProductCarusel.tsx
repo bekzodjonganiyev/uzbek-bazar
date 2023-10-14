@@ -43,7 +43,7 @@ export const ProductCarusel = ({ images }: Props) => {
             images
               ? images.map((e, ind) => (
                 <SwiperSlide key={ind}>
-                  <img src={API_URL + e} alt="product image" />
+                  <img src={e} alt="product image" />
                 </SwiperSlide>
               ))
               : null
@@ -69,7 +69,7 @@ export const ProductCarusel = ({ images }: Props) => {
             images
               ? images.map((e, ind) => (
                 <SwiperSlide key={ind}>
-                  <img src={API_URL + e} alt="product image" />
+                  <img src={e} alt="product image" />
                 </SwiperSlide>
               ))
               : null

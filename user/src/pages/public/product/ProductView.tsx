@@ -221,7 +221,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
 
       {/* begin:PRODUCT ADDITIONAL INFO */}
       <div>
-        <div className="border-b flex gap-10">
+        <div className="border-b flex flex-wrap gap-10">
           {/* -----Description----- */}
           <button
             className={`${tabs.id === 1 ? "border-b-2 border-black" : ""}  pb-1`}

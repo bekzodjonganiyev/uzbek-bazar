@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { useEffect } from "react";
 
 import { Toaster } from "@/components/ui/toaster"
-import { Header, Footer } from "@/components";
+import { Header, Footer, BottomNav } from "@/components";
 
 import { useAppDispatch } from "@/redux";
 import { storeAllCarts } from "@/redux/actions/cart-action";
@@ -19,13 +19,14 @@ export const MainContent = ():JSX.Element => {
   },[])
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen relative">
       <Header />
       <main className="flex-auto container">
         <Outlet />
       </main>
       <Toaster />
       <Footer />
+      <BottomNav className="md:hidden"/>
     </div>
   );
 }
