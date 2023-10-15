@@ -9,7 +9,7 @@ type Props = {
 
 export const BottomNav = ({ className }: Props) => {
   return (
-    <div className={cn("z-[10] fixed bottom-0 w-screen bg-black py-5 min-w-[320px]", className)}>
+    <div className={cn("z-[10] fixed -bottom-2 w-screen bg-black py-5 min-w-[320px]", className)}>
       <ul className="flex justify-between container">
         <li>
           <Link to={"/"} className="">
