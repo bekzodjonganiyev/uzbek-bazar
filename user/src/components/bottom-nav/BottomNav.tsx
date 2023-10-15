@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { NavLink, useLocation } from "react-router-dom"
 import { Heart, Home, SearchIcon, ShoppingCart, UserIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -8,49 +8,51 @@ type Props = {
 }
 
 export const BottomNav = ({ className }: Props) => {
+  const {pathname} = useLocation()
+
   return (
-    <div className={cn("z-[10] fixed -bottom-2 w-screen bg-black py-5 min-w-[320px]", className)}>
+    <div className={cn("z-[10] fixed -bottom-2 w-full bg-black py-5 min-w-[320px]", className)}>
       <ul className="flex justify-between container">
-        <li>
-          <Link to={"/"} className="">
+        <li className="">
+          <NavLink to={"/"} className="">
             <p className="flex flex-col items-center">
-              <Home color="white" />
+              <Home color={`${pathname === "/" ? "red" : "white"}`} />
               <span className="text-white text-xs">Bosh sahifa</span>
             </p>
-          </Link>
+          </NavLink>
         </li>
 
-        <li>
-          <Link to={"/search"} className="">
+        <li className="">
+          <NavLink to={"/search"} className="">
             <p className="flex flex-col items-center">
-              <SearchIcon color="white" />
+              <SearchIcon color={`${pathname === "/search" ? "red" : "white"}`} />
               <span className="text-white text-xs">Qidiruv</span>
             </p>
-          </Link>
+          </NavLink>
         </li>
-        <li>
-          <Link to={"/favourites"} className="">
+        <li className="">
+          <NavLink to={"/favourites"} className="">
             <p className="flex flex-col items-center">
-              <Heart color="white" />
+              <Heart color={`${pathname === "/favourites" ? "red" : "white"}`} />
               <span className="text-white text-xs">Sevimlilar</span>
             </p>
-          </Link>
+          </NavLink>
         </li>
-        <li>
-          <Link to={"/cart"} className="">
+        <li className="">
+          <NavLink to={"/cart"} className="">
             <p className="flex flex-col items-center">
-              <ShoppingCart color="white" />
+              <ShoppingCart color={`${pathname === "/cart" ? "red" : "white"}`} />
               <span className="text-white text-xs">Savatcha</span>
             </p>
-          </Link>
+          </NavLink>
         </li>
-        <li>
-          <Link to={"/user-profile"} className="">
+        <li className="">
+          <NavLink to={"/user-profile"} className="">
             <p className="flex flex-col items-center">
-              <UserIcon color="white" />
+              <UserIcon color={`${pathname === "/user-profile" ? "red" : "white"}`} />
               <span className="text-white text-xs">Kirish</span>
             </p>
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </div>

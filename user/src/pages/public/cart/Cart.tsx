@@ -26,27 +26,28 @@ export const Cart = (/*props: Props*/): ReactElement => {
       error={carts.isError}
       errorFallback={carts.error?.message}
     >
-      <div className='py-10 w-[90%] mx-auto max-md:overflow-x-scroll '>
-        <h1 className='text-3xl font-medium text-center mb-10'>Savatcha</h1>
-        <table className='w-full mb-10 '>
-          <thead>
-            <tr className='text-left border-b py-3'>
-              <th className='py-3'>Mahsulot</th>
-              <th className='py-3'>Miqdori</th>
-              <th className='py-3'>Narxi</th>
-              <th className='py-3'>Jami</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              carts.data?.data.results.map((i: any) => (
-                <TableItem key={i.id} item={i} />
-              ))
-            }
-          </tbody>
-        </table>
-        {/* <Button onClick={() => cartMutate.mutate({ url: "carts/97/", data: { quantity: 100 } })}>OK</Button> */}
-      </div>
+      <>
+        <h1 className='text-3xl font-medium text-center mb-5'>Savatcha</h1>
+        <div className='py-10 w-[90%] mx-auto max-md:overflow-x-scroll '>
+          <table className='w-full mb-10 '>
+            <thead>
+              <tr className='text-left border-b py-3'>
+                <th className='py-3'>Mahsulot</th>
+                <th className='py-3'>Miqdori</th>
+                <th className='py-3'>Narxi</th>
+                <th className='py-3'>Jami</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                carts.data?.data.results.map((i: any) => (
+                  <TableItem key={i.id} item={i} />
+                ))
+              }
+            </tbody>
+          </table>
+          {/* <Button onClick={() => cartMutate.mutate({ url: "carts/97/", data: { quantity: 100 } })}>OK</Button> */}
+        </div></>
     </CustomSuspanse>
   )
 }
@@ -65,6 +66,8 @@ const TableItem = (props: TableItemProps) => {
     dispatch(deleteCartId(props.item.product.id, props.item.id, ""))
   })
 
+  console.log(props.item)
+
   return (
     <tr className={`text-left border-b ${cartDelete.isLoading ? "opacity-60 pointer-events-none cursor-not-allowed" : ""}`}>
       {/* -----<TD>PRODUCT NAME</TD>----- */}
@@ -82,7 +85,7 @@ const TableItem = (props: TableItemProps) => {
             {/*product name and info */}
             <div className='flex flex-col gap-1'>
               <h3 className='sm:text-base text-sm font-semibold line-clamp-2 w-64'>{props.item.product.name}</h3>
-              <p className='sm:text-sm text-xs'>Color: {props.item.product.color ?? '|color|'}, Size: {props.item.product.size ?? "|size|"}</p>
+              <p className='sm:text-sm text-xs'>Color: {props.item.product.color.name ?? '|color|'}, Size: {props.item.product.size ?? "|size|"}</p>
             </div>
 
             {/* delete */}

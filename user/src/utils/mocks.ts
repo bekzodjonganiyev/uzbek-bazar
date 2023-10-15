@@ -1,6 +1,8 @@
 import img1 from "@/assets/images/3.png";
 import img2 from "@/assets/images/2.png";
 
+import { EnFlagIcon, HamburgerIcon, HumanIcon, PhoneIcon, RuFlagIcon, SearchIcon, ShopCardIcon, UzFlagIcon } from "@/assets/icons"
+
 export const products = [
   {
     id: 1,
@@ -197,3 +199,9 @@ export const productSortItems = [
   { label: "Narx", value: "price" },
   { label: "Ommabop", value: "rating" },
 ];
+
+export const languages = [
+  { label: "UZB", value: "uz", icon: 10 },
+  { label: "RUS", value: "ru", icon: 10 },
+  { label: "ENG", value: "en", icon: 10 }
+]

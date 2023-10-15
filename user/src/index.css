@@ -97,6 +97,7 @@
 
 body{
   min-width: 320px !important;
+  overflow-x: hidden;
 }
 
 .same-products .swiper-button-next::after,
@@ -115,4 +116,8 @@ body{
   position: absolute;
   right: 0%;
   rotate: 180deg;
+}
+
+.active p span{
+  color: red;
 }

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
-import { EnFlagIcon, HamburgerIcon, HumanIcon, PhoneIcon, RuFlagIcon, SearchIcon, ShopCardIcon, UzFlagIcon, LogoIcon } from "@/assets/icons"
+import { EnFlagIcon, HamburgerIcon, HumanIcon, PhoneIcon, RuFlagIcon, SearchIcon, ShopCardIcon, UzFlagIcon } from "@/assets/icons"
 import { CustomSelect, CustomSheetContent } from "@/components/common"
 import { CartSheet, MobileMenuSheet, SearchSheet } from "@/components/sheet-contents"
 
@@ -12,17 +12,13 @@ import { Menu } from "./header-elements"
 import { useAppDispatch, RootState } from "@/redux"
 import { setSheetContent } from "@/redux/actions"
 
+import { currencys } from "@/utils/mocks"
 
-const languages = [
+
+export const languages = [
   { label: "UZB", value: "uz", icon: <UzFlagIcon /> },
   { label: "RUS", value: "ru", icon: <RuFlagIcon /> },
   { label: "ENG", value: "en", icon: <EnFlagIcon /> }
-]
-
-const currencys = [
-  { label: "UZS", value: "usz" },
-  { label: "RUB", value: "rub" },
-  { label: "USD", value: "usd" }
 ]
 
 export const Header = (): JSX.Element => {
@@ -33,7 +29,7 @@ export const Header = (): JSX.Element => {
   const [open, setOpen] = useState<boolean>(false)
 
   return (
-    <header className="w-full">
+    <header className="w-full sticky top-0 z-50">
       <Sheet>
         {/* begin::CUSTOM SHEET CONTENT */}
         <CustomSheetContent side={sheetContent.side}>
@@ -78,7 +74,7 @@ export const Header = (): JSX.Element => {
           {/* begin::MAIN HEADER */}
           <div className="flex justify-between items-center relative py-2">
             {/* |---LOGO---| */}
-            <div><Link to="/"><LogoIcon /></Link></div>
+            <div><Link to="/">Logo</Link></div>
 
             {/* |---MENU---| */}
             <div className="md:block hidden">
