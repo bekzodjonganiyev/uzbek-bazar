@@ -9,8 +9,6 @@ import "swiper/css/thumbs";
 
 import "./product-carusel.css";
 
-import { API_URL } from "@/utils/api"
-
 type Props = {
   images?: string[];
 };

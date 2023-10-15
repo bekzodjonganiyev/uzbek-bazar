@@ -16,7 +16,6 @@ import {
   ProductCarusel,
   ProductsListCarusel,
   ProductReview,
-  ProductSkeleton,
 } from "@/components";
 
 import { useFetch } from "@/utils/api";

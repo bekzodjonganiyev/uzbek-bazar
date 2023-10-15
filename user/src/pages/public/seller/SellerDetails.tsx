@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react'
+import { ReactElement } from 'react'
 import { Rating } from 'react-simple-star-rating'
 import { useParams } from 'react-router-dom'
 import { AxiosError, AxiosResponse } from 'axios'
@@ -14,29 +14,29 @@ import { useFetch } from '@/utils/api'
 export const SellerDetails = (/*props: Props*/): ReactElement => {
     const { id } = useParams()
 
-    const [filters, setFilters] = useState<{ key: string, value: string }[]>([])
+    // const [filters, setFilters] = useState<{ key: string, value: string }[]>([])
 
     const sellerDetails = useFetch<AxiosResponse, AxiosError>(["seller-details", id], `organizations/${id}/`)
-    
 
-        const filterValuesController = (key: string, value: string) => {
-        let temp: { key: string, value: string }[] = []
-        let added = false
-        filters.forEach(item => {
-            if (item.key !== key) {
-                temp.push({ key: item.key, value: `${item.value}` });
-            } else {
-                temp.push({ key: item.key, value: `${value}` });
-                added = true
-            }
-        })
-        if (!added) {
-            temp.push({ key: key, value: `${value}` });
-        }
-        setFilters(Array.from(temp))
-        temp = []
-    }
-    
+
+    // const filterValuesController = (key: string, value: string) => {
+    //     let temp: { key: string, value: string }[] = []
+    //     let added = false
+    //     filters.forEach(item => {
+    //         if (item.key !== key) {
+    //             temp.push({ key: item.key, value: `${item.value}` });
+    //         } else {
+    //             temp.push({ key: item.key, value: `${value}` });
+    //             added = true
+    //         }
+    //     })
+    //     if (!added) {
+    //         temp.push({ key: key, value: `${value}` });
+    //     }
+    //     setFilters(Array.from(temp))
+    //     temp = []
+    // }
+
     return (
         <div className='py-10'>
             <CustomSuspanse

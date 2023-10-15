@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { AxiosResponse, AxiosError } from 'axios'
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { SheetClose, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { SheetClose, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { CustomSuspanse } from '@/components/common'
 import { FiltersSkeleton } from "@/components"
 
