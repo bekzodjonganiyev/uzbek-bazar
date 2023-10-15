@@ -18,7 +18,7 @@ export const CustomAccardion = ({ items, className }: Props): ReactElement => {
         <Accordion type="multiple" className={className}>
             {
                 items.map((item, idx) => (
-                    <AccordionItem key={idx} value={item.value}>
+                    <AccordionItem key={idx} value={item.value} className="border-">
                         <AccordionTrigger>{item.title}</AccordionTrigger>
                         <AccordionContent>
                             <div className="flex flex-col gap-2">

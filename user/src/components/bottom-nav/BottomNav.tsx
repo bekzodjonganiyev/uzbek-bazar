@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { Heart, SearchIcon, ShoppingCart, SignalHigh, UserIcon } from "lucide-react"
+import { Heart, Home, SearchIcon, ShoppingCart, UserIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -12,15 +12,16 @@ export const BottomNav = ({ className }: Props) => {
     <div className={cn("z-[10] fixed bottom-0 w-screen bg-black py-5 min-w-[320px]", className)}>
       <ul className="flex justify-between container">
         <li>
-          <Link to={"#"} className="">
+          <Link to={"/"} className="">
             <p className="flex flex-col items-center">
-              <UserIcon color="white" />
-              <span className="text-white text-xs">Kirish</span>
+              <Home color="white" />
+              <span className="text-white text-xs">Bosh sahifa</span>
             </p>
           </Link>
         </li>
+
         <li>
-          <Link to={"#"} className="">
+          <Link to={"/search"} className="">
             <p className="flex flex-col items-center">
               <SearchIcon color="white" />
               <span className="text-white text-xs">Qidiruv</span>
@@ -44,10 +45,10 @@ export const BottomNav = ({ className }: Props) => {
           </Link>
         </li>
         <li>
-          <Link to={"/top-products"} className="">
+          <Link to={"/user-profile"} className="">
             <p className="flex flex-col items-center">
-              <SignalHigh color="white" />
-              <span className="text-white text-xs">Top maxsulotlar</span>
+              <UserIcon color="white" />
+              <span className="text-white text-xs">Kirish</span>
             </p>
           </Link>
         </li>

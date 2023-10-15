@@ -1,7 +1,7 @@
 import { ReactElement, useState } from "react";
 import { AxiosError, AxiosResponse } from "axios";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Pagination, Navigation } from 'swiper/modules';
+import { Pagination, Navigation } from 'swiper/modules';
 import { Rating } from 'react-simple-star-rating'
 
 import { Carusel, ProductCard, ShowCaseCard, LikedBrands, ProductSkeleton, PageLoader } from "@/components";
@@ -11,14 +11,11 @@ import { NextItemIcon, PrevItemIcon } from "@/assets/icons";
 import { useFetch } from "@/utils/api";
 import { showCase } from "@/utils/mocks"
 
-const sameProducts = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
 export const Home = (): ReactElement => {
   const [tabs, setTabs] = useState<{ title: string, id: number | undefined }>({ title: "", id: 1 })
   const productArr = useFetch<AxiosResponse, AxiosError>(["products", tabs.title], `products/?type=${tabs.title}`)
   const page = useFetch<AxiosResponse, AxiosError>(["page"], `banners/`)
   const reviews = useFetch<AxiosResponse, AxiosError>(["reviews"], "reviews/")
-  console.log(reviews.data?.data.results)
 
   return (
     <CustomSuspanse
