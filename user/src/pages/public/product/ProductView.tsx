@@ -29,7 +29,7 @@ import { question } from "@/interfaces/question";
 export const ProductView = (/*props: Props*/): ReactElement => {
   const { id } = useParams();
 
-  const [activeColor, setActiveColor] = useState<number>(1);
+  const [activeColor, setActiveColor] = useState<number>(0);
 
   const productById = useFetch<AxiosResponse, AxiosError>(
     ["product-by-id", id],
@@ -41,11 +41,19 @@ export const ProductView = (/*props: Props*/): ReactElement => {
     productById.isSuccess
   );
   const questions = useFetch<AxiosResponse, AxiosError>(["ions"], "questions/");
-  const reviews = useFetch<AxiosResponse, AxiosError>(["product_reviews"], "reviews/");
+  const reviews = useFetch<AxiosResponse, AxiosError>(
+    ["product_reviews"],
+    "reviews/"
+  );
 
-  const [size, setSize] = useState<{ size: string; id: number | undefined }>({ size: "", id: undefined });
-  const [tabs, setTabs] = useState<{ data: ReactElement; id: number | undefined; }>
-    ({ data: <div>{productById.data?.data.gender}</div>, id: 1 });
+  const [size, setSize] = useState<{ size: string; id: number | undefined }>({
+    size: "",
+    id: undefined,
+  });
+  const [tabs, setTabs] = useState<{
+    data: ReactElement;
+    id: number | undefined;
+  }>({ data: <div>{productById.data?.data.gender}</div>, id: 1 });
 
   const getActiveColor = (index: number) => {
     try {
@@ -138,8 +146,9 @@ export const ProductView = (/*props: Props*/): ReactElement => {
                 {productById.data?.data.variables.map(
                   (item: productColor, ind: number) => (
                     <div
-                      className={`border-black rounded-full ${getActiveColor(activeColor) === item ? "border-2" : ""
-                        }`}
+                      className={`border-black rounded-full ${
+                        getActiveColor(activeColor) === item ? "border-2" : ""
+                      }`}
                     >
                       <button
                         style={{ backgroundColor: item.color }}
@@ -159,15 +168,16 @@ export const ProductView = (/*props: Props*/): ReactElement => {
               <div className="space-x-3">
                 {productById.data?.data?.size
                   ? productById.data?.data?.size.map((item: any) => (
-                    <button
-                      key={item.id}
-                      className={`rounded-md p-2 border-2 ${size.id === item.id ? "border-black" : ""
+                      <button
+                        key={item.id}
+                        className={`rounded-md p-2 border-2 ${
+                          size.id === item.id ? "border-black" : ""
                         }`}
-                      onClick={() => setSize({ size: item, id: item.id })}
-                    >
-                      {item.name}
-                    </button>
-                  ))
+                        onClick={() => setSize({ size: item, id: item.id })}
+                      >
+                        {item.name}
+                      </button>
+                    ))
                   : null}
               </div>
             </div>
@@ -224,7 +234,9 @@ export const ProductView = (/*props: Props*/): ReactElement => {
         <div className="border-b flex flex-wrap gap-10">
           {/* -----Description----- */}
           <button
-            className={`${tabs.id === 1 ? "border-b-2 border-black" : ""}  pb-1`}
+            className={`${
+              tabs.id === 1 ? "border-b-2 border-black" : ""
+            }  pb-1`}
             onClick={() =>
               setTabs({
                 data: (
@@ -241,7 +253,9 @@ export const ProductView = (/*props: Props*/): ReactElement => {
 
           {/* -----Additional Info----- */}
           <button
-            className={`${tabs.id === 2 ? "border-b-2 border-black" : ""}  pb-1`}
+            className={`${
+              tabs.id === 2 ? "border-b-2 border-black" : ""
+            }  pb-1`}
             onClick={() =>
               setTabs({
                 data: <ProductView_Info data="Additional info" />,
@@ -257,9 +271,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
             className={`${tabs.id === 3 ? "border-b-2 border-black" : ""} pb-1`}
             onClick={() =>
               setTabs({
-                data: (
-                  <ProductView_Review arr={reviews.data?.data?.results} />
-                ),
+                data: <ProductView_Review arr={reviews.data?.data?.results} />,
                 id: 3,
               })
             }
@@ -269,7 +281,9 @@ export const ProductView = (/*props: Props*/): ReactElement => {
 
           {/* -----Questions----- */}
           <button
-            className={`${tabs.id === 4 ? "border-b-2 border-black" : ""}  pb-1`}
+            className={`${
+              tabs.id === 4 ? "border-b-2 border-black" : ""
+            }  pb-1`}
             onClick={() =>
               setTabs({
                 data: (
@@ -283,29 +297,39 @@ export const ProductView = (/*props: Props*/): ReactElement => {
           </button>
         </div>
         <div className="py-10">
-          {
-            reviews.isLoading || questions.isLoading
-              ? "Loading"
-              : <>{tabs.data}</>
-          }
+          {reviews.isLoading || questions.isLoading ? (
+            "Loading"
+          ) : (
+            <>{tabs.data}</>
+          )}
         </div>
       </div>
       {/* begin:PRODUCT ADDITIONAL INFO */}
 
-            {/* begin:SAME PRODUCTS */}
-            {
-                sameProducts.isLoading 
-                ? ""
-                : <ProductsListCarusel array={sameProducts.data?.data.results} title="O'xshash maxsulotlar" prevElClass='.swiper-button-prev' nextElClass='.swiper-button-next'/> 
-            }
-            {/* begin:SAME PRODUCTS */}
+      {/* begin:SAME PRODUCTS */}
+      {sameProducts.isLoading ? (
+        ""
+      ) : (
+        <ProductsListCarusel
+          array={sameProducts.data?.data.results}
+          title="O'xshash maxsulotlar"
+          prevElClass=".swiper-button-prev"
+          nextElClass=".swiper-button-next"
+        />
+      )}
+      {/* begin:SAME PRODUCTS */}
 
-            {/* begin:RECENTLT VIEWED PRODUCTS */}
-            <ProductsListCarusel array={[]} title="Yaqinda ko'rib chiqilgan" prevElClass='.swiper-button-prev-1' nextElClass='.swiper-button-next-1' />
-            {/* begin:RECENTLT VIEWED PRODUCTS */}
-        </div>
-    )
-}
+      {/* begin:RECENTLT VIEWED PRODUCTS */}
+      <ProductsListCarusel
+        array={[]}
+        title="Yaqinda ko'rib chiqilgan"
+        prevElClass=".swiper-button-prev-1"
+        nextElClass=".swiper-button-next-1"
+      />
+      {/* begin:RECENTLT VIEWED PRODUCTS */}
+    </div>
+  );
+};
 
 type DescriptionProps = {
   data: string;

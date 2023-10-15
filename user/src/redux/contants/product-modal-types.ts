@@ -1,0 +1,4 @@
+export const PRODUCT_MODAL = {
+  SET: "SET_PRODUCT_MODAL",
+  DEL: "DEL_PRODUCT_MODAL",
+};
