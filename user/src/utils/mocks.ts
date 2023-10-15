@@ -1,8 +1,6 @@
 import img1 from "@/assets/images/3.png";
 import img2 from "@/assets/images/2.png";
 
-import { EnFlagIcon, HamburgerIcon, HumanIcon, PhoneIcon, RuFlagIcon, SearchIcon, ShopCardIcon, UzFlagIcon } from "@/assets/icons"
-
 export const products = [
   {
     id: 1,
