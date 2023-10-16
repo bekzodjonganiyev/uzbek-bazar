@@ -1,9 +1,13 @@
 import { Suspense, Fragment } from "react"
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 
-import { Home, Cart, Checkout, AboutUs, Compare, ContactUs, Faq, Favourite, FourZeroFour, SellWithUs, SellerDetails, Sellers, TopProducts, ProductList, ProductView } from "@/pages/public";
+import { Home, Cart, Checkout, AboutUs, Compare, 
+         ContactUs, Faq, Favourite, FourZeroFour, 
+         SellWithUs, SellerDetails, Sellers, TopProducts, 
+         ProductList, ProductView, UserProfile, Login, SearchPage 
+       } from "@/pages";
 import { MainContent } from "@/components/layout/MainContent";
-import { PageLoader } from "@/components/loaders";
+import { PageLoader, PrivateRoute } from "@/components";
 
 function App(): JSX.Element {
 
@@ -30,6 +34,11 @@ function App(): JSX.Element {
               <Route path="/about-us" element={<AboutUs />} />
               <Route path="/faq" element={<Faq />} />
               <Route path="/contact-us" element={<ContactUs />} />
+              <Route path="/search" element={<SearchPage />} />
+
+              <Route path="/user-profile" element={<PrivateRoute><UserProfile /></PrivateRoute>}/>
+              <Route path="/login" element={<Login />}/>
+
               <Route path="*" element={<FourZeroFour />} />
             </Route>
           </Routes>

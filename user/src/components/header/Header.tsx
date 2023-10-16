@@ -29,7 +29,7 @@ export const Header = (): JSX.Element => {
   const [open, setOpen] = useState<boolean>(false)
 
   return (
-    <header className="w-full sticky top-0 z-50">
+    <header className="w-full">
       <Sheet>
         {/* begin::CUSTOM SHEET CONTENT */}
         <CustomSheetContent side={sheetContent.side}>
