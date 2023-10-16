@@ -1,6 +1,6 @@
-type Props = {}
+// type Props = {}
 
-export const SearchPage = (props: Props) => {
+export const SearchPage = (/*props: Props*/) => {
   return (
     <div>SearchPage</div>
   )

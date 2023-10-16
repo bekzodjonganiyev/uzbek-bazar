@@ -1,6 +1,6 @@
-type Props = {}
+// type Props = {}
 
-export const Login = (props: Props) => {
+export const Login = (/*props: Props*/) => {
   return (
     <div>Login</div>
   )
