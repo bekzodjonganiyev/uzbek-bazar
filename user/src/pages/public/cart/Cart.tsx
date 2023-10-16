@@ -27,7 +27,7 @@ export const Cart = (/*props: Props*/): ReactElement => {
       errorFallback={carts.error?.message}
     >
       <>
-        <h1 className='text-3xl font-medium text-center mb-5'>Savatcha</h1>
+        <h1 className='text-3xl font-medium text-center my-5'>Savatcha</h1>
         <div className='py-10 w-[90%] mx-auto max-md:overflow-x-scroll '>
           <table className='w-full mb-10 '>
             <thead>
@@ -66,8 +66,6 @@ const TableItem = (props: TableItemProps) => {
     dispatch(deleteCartId(props.item.product.id, props.item.id, ""))
   })
 
-  console.log(props.item)
-
   return (
     <tr className={`text-left border-b ${cartDelete.isLoading ? "opacity-60 pointer-events-none cursor-not-allowed" : ""}`}>
       {/* -----<TD>PRODUCT NAME</TD>----- */}
@@ -85,7 +83,7 @@ const TableItem = (props: TableItemProps) => {
             {/*product name and info */}
             <div className='flex flex-col gap-1'>
               <h3 className='sm:text-base text-sm font-semibold line-clamp-2 w-64'>{props.item.product.name}</h3>
-              <p className='sm:text-sm text-xs'>Color: {props.item.product.color.name ?? '|color|'}, Size: {props.item.product.size ?? "|size|"}</p>
+              <p className='sm:text-sm text-xs'>Color: {props.item.product.color?.name ?? '|color|'}, Size: {props.item.product.size ?? "|size|"}</p>
             </div>
 
             {/* delete */}

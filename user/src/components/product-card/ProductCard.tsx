@@ -90,7 +90,6 @@ export const ProductCard = (props: Props): ReactElement => {
                 }
             })
                 .then(({ data }) => {
-                    console.log(data)
                     dispatch(setWishlistId(props.id, data.id, ""))
                 })
 

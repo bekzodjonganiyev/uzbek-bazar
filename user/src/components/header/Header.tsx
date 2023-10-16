@@ -92,9 +92,9 @@ export const Header = (): JSX.Element => {
                 <SearchIcon />
               </SheetTrigger>
 
-              <button className="max-md:hidden">
+              <Link to={"/user-profile"} className="max-md:hidden">
                 <HumanIcon />
-              </button>
+              </Link>
 
               <SheetTrigger className="flex md:gap-1 items-center " onClick={() => dispatch(setSheetContent("right", <CartSheet />))}>
                 <ShopCardIcon />
