@@ -216,7 +216,7 @@ export const ProductList = (/*props: Props*/): ReactElement => {
                                         <Button
                                             variant={'outline'}
                                             className='border-none p-0 lg:hidden max-md:hidden'
-                                            onClick={() => dispatch(setSheetContent("left", <FiltersSheet children={""}  category={category} filters={filters} setFilters={setFilters}/>))}
+                                            onClick={() => dispatch(setSheetContent("left", <FiltersSheet children={""} category={category} filters={filters} setFilters={setFilters} />))}
                                         >
                                             <span className='flex gap-2'><p>Filter</p> <FilterIcon /></span>
                                         </Button>
@@ -266,7 +266,7 @@ export const ProductList = (/*props: Props*/): ReactElement => {
                                     <Button
                                         variant={'outline'}
                                         className='border-none p-0'
-                                        onClick={() => dispatch(setSheetContent("left", <FiltersSheet children={"oka"} category={category} filters={filters} setFilters={setFilters}/>))}
+                                        onClick={() => dispatch(setSheetContent("left", <FiltersSheet children={"oka"} category={category} filters={filters} setFilters={setFilters} />))}
                                     >
                                         <span className='flex gap-2'><p>Filter</p> <FilterIcon /></span>
                                     </Button>
@@ -355,7 +355,7 @@ export const ProductList = (/*props: Props*/): ReactElement => {
                         <CustomSuspanse
                             loading={productsByCaregory.isLoading && !productsByCaregory.isPaused}
                             loadingFallback={
-                                <div className='flex flex-wrap justify-between gap-10 py-10'>
+                                <div className='grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 grid-cols-2 sm:gap-10 gap-5'>
                                     <ProductSkeleton limit={12} />
                                 </div>
                             }

@@ -7,19 +7,8 @@ import { Input } from "@/components/ui/input"
 import { SheetClose } from "@/components/ui/sheet"
 import { LogoIcon, SearchIcon } from "@/assets/icons"
 
-import { http } from '@/utils/api';
-import { CustomSuspanse } from '../common';
-
-const seacrFc = async (url: string, key: string, value: string, setState: (args: any) => void) => {
-    try {
-        setState({ loading: true })
-        const res = await http.get(`${url}/?${key}=${value}`)
-        setState({ loading: false, data: res.data?.results, error: "" })
-    } catch (error: any) {
-        setState({ loading: false, data: [], error: error.message })
-        return new Error("Server error")
-    }
-}
+import { seacrFc } from '@/utils/searchFn';
+import { CustomSuspanse } from '@/components/common';
 
 export const SearchSheet = (): ReactElement => {
     const [searchTerm, setSearchTerm] = useState("")
@@ -98,7 +87,7 @@ export const SearchSheet = (): ReactElement => {
                     <div className='pt-3 overflow-x-hidden overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-zinc-300 scrollbar-thumb-rounded-md scrollbar-thumb-r h-80'>
                         {
                             searchedProductData?.data?.length === 0
-                                ? ""
+                                ? <p className='text-center'>Qidiruvga mos natijalalar topilmadi</p>
                                 : searchedProductData?.data?.map((item: any) => (
                                     <Link to={`product/details/${item.id}`} key={item.id}>
                                         <SheetClose className='w-full'>

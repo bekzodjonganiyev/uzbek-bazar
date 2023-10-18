@@ -50,6 +50,7 @@ export const ProductCard = (props: Props): ReactElement => {
     const createMutation = useMutation({
         mutationFn: (variables: { url: string, data: any }) => http.post(variables.url, variables.data),
         onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ["user-carts"] })
             const url = data.config.url?.split("/")[0]
             toast({
                 description: url === "carts" ? "Maxsulot savatga qo'shildi" : "Maxsulot sevimlilarga qo'shildi",
@@ -62,7 +63,6 @@ export const ProductCard = (props: Props): ReactElement => {
                     {url === "carts" ? "Savatga o'tish" : "Sevimlilarga o'tish"}
                 </ToastAction>,
             })
-            queryClient.invalidateQueries(["user-carts"])
         },
         onError: (err) => console.log(err)
     })
@@ -70,6 +70,7 @@ export const ProductCard = (props: Props): ReactElement => {
     const deleteMutation = useMutation({
         mutationFn: (variables: { url: string, data: any }) => http.delete(variables.url, variables.data),
         onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ["user-carts"] })
             const url = data.config.url?.split("/")[0]
             toast({
                 description: url === "carts" ? "Maxsulot savatdan o'chirildi" : "Maxsulot sevimlilardan o'chirildi",

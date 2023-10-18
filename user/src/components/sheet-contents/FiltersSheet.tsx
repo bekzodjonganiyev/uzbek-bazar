@@ -40,117 +40,118 @@ export const FiltersSheet = (props: Props): ReactElement => {
         temp = []
     }
     return (
-        <aside>
-            <SheetHeader>
-                <SheetTitle className='text-2xl font-semibold mb-5'>Filters</SheetTitle>
-                {/* {props.children} */}
-                <div className={`flex flex-col gap-y-3`}>
-                    {/* -----FILTER HEADER----- */}
-                    {/* <h2 className='text-2xl font-medium'>Filter</h2> */}
+        <aside className='z-[9999] h-full'>
+            <ScrollArea className='h-full'>
 
-                    <CustomSuspanse
-                        loading={categoryDetails.isLoading && !categoryDetails.isPaused}
-                        loadingFallback={
-                            <div className='flex flex-wrap justify-between gap-10 py-10'>
-                                <FiltersSkeleton limit={12} />
-                            </div>
-                        }
-                        error={categoryDetails.isError || categoryDetails.isPaused}
-                        errorFallback={"Error"}
-                    >
-                        {/* By Kategory  */}
-                        <div>
-                            <h3 className='uppercase font-medium mb-2'>Kategoriyalar</h3>
-                            <ScrollArea className='h-24'>
-                                <div className='flex flex-col gap-1 '>
-                                    {
-                                        categoryDetails.data?.data?.subcategories.map((i: any) => (
-                                            <Link to={`/catalog/${i.slug}`} key={i} className=''>{i.name}</Link>
-                                        ))
-                                    }</div>
-                            </ScrollArea>
+                <SheetHeader>
+                    <SheetTitle className='text-2xl font-semibold mb-5'>Filters</SheetTitle>
+                    {/* {props.children} */}
+                    <div className={`flex flex-col gap-y-3`}>
+                        {/* -----FILTER HEADER----- */}
+                        {/* <h2 className='text-2xl font-medium'>Filter</h2> */}
 
-                        </div>
-
-                        {/* By Color  */}
-                        <div>
-                            <h3 className='uppercase font-medium mb-2'>Rang</h3>
-                            <div className='flex flex-wrap gap-1'>
-                                {
-                                    categoryDetails.data?.data?.colors.map((i: any) => (
-                                        // <button style={{ background: `rgb(2${i}8, ${i}14, ${i}6)` }} key={i} className='p-5 border-2 rounded-full'></button>
-                                        <button
-                                            key={i.id}
-                                            style={{ background: i.code }}
-                                            className='p-3 border-2 rounded-full'
-                                            onClick={() => {
-                                                setSearchParams(prev => {
-                                                    prev.set("color", `${i.code}`)
-                                                    return prev
-                                                })
-                                                filterValuesController("color", i.code)
-                                            }}
-                                        >
-                                        </button>
-                                    ))
-                                }
-                            </div>
-                        </div>
-
-                        {/* By Size  */}
-                        <div>
-                            <h3 className='uppercase font-medium mb-2'>O'lcham</h3>
-                            <div className='flex flex-wrap gap-2 '>
-                                {
-                                    categoryDetails.data?.data?.sizes.map((i: any) => (
-                                        <button
-                                            key={i.id}
-                                            className='p-2 border'
-                                            onClick={() => {
-                                                setSearchParams(prev => {
-                                                    prev.set("size", `${i.name}`)
-                                                    return prev
-                                                })
-                                                filterValuesController("size", i.name)
-                                            }}
-                                        >
-                                            {i.name}
-                                        </button>
-                                    ))
-                                }
-                            </div>
-                        </div>
-
-                        {/* By Price */}
-                        <div className='mb-10'>
-                            <h3 className='uppercase font-medium mb-2'>Narx</h3>
-                            {
-                                // TODO - MultiRangeSlider render bolganda ProductList ham render bolyapti buni optimze qilish kerak
-                                categoryDetails.data?.data.price
-                                    ? <MultiRangeSlider
-                                        className='-ml-20'
-                                        min={categoryDetails.data?.data.price.min - 1}
-                                        max={categoryDetails.data?.data.price.max + 1}
-
-                                        // setRangeValue={() => {}}
-                                        setRangeValue={(min: number, max: number) => {
-                                            setSearchParams(params => {
-                                                params.set("min_price", `${min}`)
-                                                params.set("max_price", `${max}`)
-                                                return params
-                                            })
-                                            filterValuesController("price", `${min} - ${max}`)
-                                        }}
-                                    />
-                                    : null
+                        <CustomSuspanse
+                            loading={categoryDetails.isLoading && !categoryDetails.isPaused}
+                            loadingFallback={
+                                <div className='flex flex-wrap justify-between gap-10 py-10'>
+                                    <FiltersSkeleton limit={12} />
+                                </div>
                             }
-                        </div>
+                            error={categoryDetails.isError || categoryDetails.isPaused}
+                            errorFallback={"Error"}
+                        >
+                            {/* By Kategory  */}
+                            <div className='mb-10'>
+                                <h3 className='uppercase text-center font-medium mb-2'>Kategoriyalar</h3>
+                                <div className='flex flex-col items-center justify-center gap-1 '>
+                                    {
+                                        categoryDetails.data?.data?.subcategories.length === 0
+                                            ? "No categories found"
+                                            : categoryDetails.data?.data?.subcategories.map((i: any) => (
+                                                <Link to={`/catalog/${i.slug}`} key={i} className=''>{i.name}</Link>
+                                            ))
+                                    }</div>
+                            </div>
 
-                        {/* By Style */}
-                        <div>
-                            <h3 className='uppercase font-medium mb-2'>Turkum</h3>
-                            <ScrollArea className='h-24'>
-                                <div className='flex flex-col gap-1'>
+                            {/* By Color  */}
+                            <div className='mb-10'>
+                                <h3 className='uppercase text-center font-medium mb-2'>Rang</h3>
+                                <div className='flex items-center justify-center flex-wrap gap-1'>
+                                    {
+                                        categoryDetails.data?.data?.colors.map((i: any) => (
+                                            <button
+                                                key={i.id}
+                                                style={{ background: i.code }}
+                                                className='p-3 border-2 rounded-full'
+                                                onClick={() => {
+                                                    setSearchParams(prev => {
+                                                        prev.set("color", `${i.code}`)
+                                                        return prev
+                                                    })
+                                                    filterValuesController("color", i.code)
+                                                }}
+                                            >
+                                            </button>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+
+                            {/* By Size  */}
+                            <div className='mb-10'>
+                                <h3 className='uppercase text-center font-medium mb-2'>O'lcham</h3>
+                                <div className='flex flex-wrap items-center justify-center gap-2 '>
+                                    {
+                                        categoryDetails.data?.data?.sizes.map((i: any) => (
+                                            <button
+                                                key={i.id}
+                                                className='p-2 border'
+                                                onClick={() => {
+                                                    setSearchParams(prev => {
+                                                        prev.set("size", `${i.name}`)
+                                                        return prev
+                                                    })
+                                                    filterValuesController("size", i.name)
+                                                }}
+                                            >
+                                                {i.name}
+                                            </button>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+
+                            {/* By Price */}
+                            <div className='mb-10'>
+                                <h3 className='uppercase text-center font-medium mb-2'>Narx</h3>
+                                <div className='relative flex items-center justify-center'>
+                                    {
+                                        // TODO - MultiRangeSlider render bolganda ProductList ham render bolyapti buni optimze qilish kerak
+                                        categoryDetails.data?.data.price
+                                            ? <MultiRangeSlider
+                                                className=''
+                                                min={categoryDetails.data?.data.price.min - 1}
+                                                max={categoryDetails.data?.data.price.max + 1}
+
+                                                // setRangeValue={() => {}}
+                                                setRangeValue={(min: number, max: number) => {
+                                                    setSearchParams(params => {
+                                                        params.set("min_price", `${min}`)
+                                                        params.set("max_price", `${max}`)
+                                                        return params
+                                                    })
+                                                    filterValuesController("price", `${min} - ${max}`)
+                                                }}
+                                            />
+                                            : null
+                                    }
+                                </div>
+                            </div>
+
+                            {/* By Style */}
+                            <div className='mb-10'>
+                                <h3 className='uppercase text-center font-medium mb-2'>Turkum</h3>
+                                <div className='flex flex-col items-center justify-center gap-1'>
                                     {
                                         categoryDetails.data?.data?.types.map((i: any) => (
                                             <button
@@ -203,11 +204,11 @@ export const FiltersSheet = (props: Props): ReactElement => {
                                         ))
                                     }
                                 </div>
-                            </ScrollArea>
-                        </div>
-                    </CustomSuspanse>
-                </div>
-            </SheetHeader>
+                            </div>
+                        </CustomSuspanse>
+                    </div>
+                </SheetHeader>
+            </ScrollArea>
         </aside>
     )
 }

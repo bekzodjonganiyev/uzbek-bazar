@@ -10,7 +10,7 @@ import { NotFoundIcon } from "@/assets/icons"
 export const FourZeroFour = (/*props: Props*/): ReactElement => {
     const navigate = useNavigate()
     return (
-        <div className='w-full h-full flex items-center justify-center'>
+        <div className='w-full h-full flex items-center justify-center py-10'>
             <div className='flex flex-col gap-2 items-center justify-center text-center'>
                 <NotFoundIcon />
                 <h1 className='text-3xl font-semibold'>404 – Sahifa topilmadi</h1>
