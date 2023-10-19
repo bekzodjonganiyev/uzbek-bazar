@@ -8,6 +8,6 @@ type Props = {
 export const PrivateRoute = (props: Props) => {
   const token = localStorage.getItem("token")
 
-  if (!token) return <Navigate to={"/login"} replace />
+  if (!token) return <Navigate to={"/auth/login"} replace />
   return props.children
 }
