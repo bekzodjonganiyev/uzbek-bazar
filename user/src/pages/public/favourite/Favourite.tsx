@@ -114,7 +114,7 @@ const TableItem = (props: TableItemProps) => {
                         <Button
                             variant={'outline'}
                             className='border-none p-0 m-0 h-fit'
-                            onClick={() => favouriteDelete.mutate({ url: `favourites/${props.item.id}/`, data: {} })}>
+                            onClick={() => favouriteDelete.mutate({ url: `favorites/${props.item.id}/`, data: {} })}>
                             <span className='flex items-end gap-1'>
                                 <DeleteIcon /> <p>O'chirish</p>
                             </span>

@@ -1,9 +1,11 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
+import MaskInput from 'react-maskinput';
+
 
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Link } from "react-router-dom"
 
 // type Props = {}
 export const Login = (/*props: Props*/) => {
@@ -22,8 +24,14 @@ export const Login = (/*props: Props*/) => {
         <br />
 
         <Label htmlFor="phone" className="font-bold">Telefon raqam</Label>
-        <Input name="phone" id="phone" type="number" placeholder="+998 (99) 111-22-33" className="" />
-
+        <MaskInput
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          alwaysShowMask
+          mask={'+998 (00) 000 - 00 - 00'}
+          showMask
+          maskChar="_"
+        />
+        
         <br />
 
         <Label htmlFor="password" className="font-bold">Parol</Label>
