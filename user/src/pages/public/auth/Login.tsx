@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { Link } from "react-router-dom"
 import MaskInput from 'react-maskinput';
 
@@ -9,7 +8,6 @@ import { Button } from "@/components/ui/button"
 
 // type Props = {}
 export const Login = (/*props: Props*/) => {
-  const [isLogin, setIsLogin] = useState(true)
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault()
