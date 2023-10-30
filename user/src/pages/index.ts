@@ -24,6 +24,8 @@ const Sellers = lazy(() => import("./public/seller/Sellers").then(module => ({de
 const SellerDetails = lazy(() => import("./public/seller/SellerDetails").then(module => ({default: module.SellerDetails})))
 
 const UserProfile = lazy(() => import("./private/UserProfile").then(module => ({default: module.UserProfile})))
+const UserProfileSettings = lazy(() => import("./private/UserProfileSettings").then(module => ({default: module.UserProfileSettings})))
+const UserProfileOrders = lazy(() => import("./private/UserProfileOrders").then(module => ({default: module.UserProfileOrders})))
 const Login = lazy(() => import("./public/auth/Login").then(module => ({default: module.Login})))
 const SignUp = lazy(() => import("./public/auth/SignUp").then(module => ({default: module.SignUp})))
 
@@ -47,5 +49,7 @@ export {
     UserProfile,
     Login,
     SearchPage,
-    SignUp
+    SignUp,
+    UserProfileOrders,
+    UserProfileSettings
 }
