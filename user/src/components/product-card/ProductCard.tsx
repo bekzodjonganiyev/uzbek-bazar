@@ -48,7 +48,7 @@ export const ProductCard = (props: Props): ReactElement => {
     const productIdsForWishlist = wishlist?.ids.map((i) => i.id)
 
     const createMutation = useMutation({
-        mutationFn: (variables: { url: string, data: any }) => http.post(variables.url, variables.data),
+        mutationFn: (variables: { url: string, data: any }) => http().post(variables.url, variables.data),
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ["user-carts"] })
             const url = data.config.url?.split("/")[0]
@@ -68,7 +68,7 @@ export const ProductCard = (props: Props): ReactElement => {
     })
 
     const deleteMutation = useMutation({
-        mutationFn: (variables: { url: string, data: any }) => http.delete(variables.url, variables.data),
+        mutationFn: (variables: { url: string, data: any }) => http().delete(variables.url, variables.data),
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ["user-carts"] })
             const url = data.config.url?.split("/")[0]
