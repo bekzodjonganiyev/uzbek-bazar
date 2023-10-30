@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
-import MaskInput from "react-maskinput"
+import InputMask from 'react-input-mask';
 
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -30,9 +30,9 @@ export const SignUp = (/*props: Props*/) => {
     event.preventDefault()
 
 
-    if (user.phone.length === 17 && user.full_name && user.password){
+    if (user.phone.length === 17 && user.full_name && user.password) {
       useRegister
-        .mutateAsync({url: "clients/", data: user})
+        .mutateAsync({ url: "clients/", data: user })
         .then(res => console.log(res))
         .catch(err => console.log(err))
     }
@@ -60,7 +60,7 @@ export const SignUp = (/*props: Props*/) => {
         <br />
 
         <Label htmlFor="phone" className="font-bold">Telefon raqam</Label>
-        <MaskInput
+        {/* <MaskInput
           className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           mask={'+998 (00) 000 - 00 - 00'}
           alwaysShowMask
@@ -69,7 +69,17 @@ export const SignUp = (/*props: Props*/) => {
           value={user?.phone}
           onValueChange={(e) => {
             const a = e.value.split(" ").join("")
-            setUser({...user, phone: a})
+            setUser({ ...user, phone: a })
+          }}
+        /> */}
+        <InputMask
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          mask="+\9\98 (99) 999-99-99"
+          maskChar={null}
+          value={user?.phone}
+          onChange={(e) => {
+            const a = e.target.value.split(" ").join("")
+            setUser({ ...user, phone: a })
           }}
         />
 
