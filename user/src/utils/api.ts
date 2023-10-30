@@ -5,21 +5,22 @@ export const API_URL = import.meta.env.PROD
   ? import.meta.env.VITE_PRODUCTION_API_URL
   : import.meta.env.VITE_STAGING_API_URL; // 'development' and 'staging' mode both makes requests to staging API
 
-export const http = axios.create({
+export const http = (withToken?: boolean) => axios.create({
   baseURL: API_URL,
   headers: {
-    Authorization: `Bearer ${localStorage.getItem("token") ?? ""}`,
+    Authorization: `Bearer ${ withToken ? localStorage.getItem("token") : ""}`,
   },
 });
 
 export function useFetch<T, A>(
   key: (string | number | null | undefined)[],
   url: string,
+  withToken: boolean,
   enb?: boolean
 ) {
   const obj = useQuery<T, A>({
     queryKey: key,
-    queryFn: () => http.get(url),
+    queryFn: () => http(withToken).get(url),
     enabled: enb,
   });
 
@@ -33,7 +34,7 @@ export function usePost(
 ) {
   const mutate = useMutation({
     mutationFn: (variables: { url: string; data: any }) =>
-      http[`${method}`](variables.url, variables.data),
+      http()[`${method}`](variables.url, variables.data),
     onSuccess: () => (onSuccessFn ? onSuccessFn() : null),
     onError: (data) => (onErrorFn ? onErrorFn(data) : null),
   });

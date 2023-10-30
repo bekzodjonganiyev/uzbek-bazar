@@ -32,10 +32,11 @@ export const ProductList = (/*props: Props*/): ReactElement => {
     const [gridClass, setGridClass] = useState<{ class: string, id: number, row?: boolean }>({ class: "min-[1132px]:grid-cols-4 sm:grid-cols-3 grid-cols-2", id: 2, row: false })
     const [windewSize, setWindowSize] = useState(window.innerWidth)
 
-    const categoryDetails = useFetch<AxiosResponse, AxiosError>(["categories-by-slug", category], `categories/${category}`,)
+    const categoryDetails = useFetch<AxiosResponse, AxiosError>(["categories-by-slug", category], `categories/${category}`, false)
     const productsByCaregory = useFetch<AxiosResponse, AxiosError>(
         ["product-list-by-cetegory", category, search],
-        `products/?category_slug=${category}&${search.split("?").join("")}`
+        `products/?category_slug=${category}&${search.split("?").join("")}`,
+        false
     )
 
     const filterValuesController = (key: string, value: string) => {

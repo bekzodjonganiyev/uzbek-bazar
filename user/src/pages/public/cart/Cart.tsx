@@ -17,7 +17,8 @@ import { getMachineId } from '@/utils/getSeesionId'
 export const Cart = (/*props: Props*/): ReactElement => {
   const carts = useFetch<AxiosResponse, AxiosError>(
     [`user-carts`],
-    `carts/?session_id=${getMachineId()}`
+    `carts/?session_id=${getMachineId()}`,
+    false
   )
   return (
     <CustomSuspanse

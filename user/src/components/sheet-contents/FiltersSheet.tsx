@@ -20,7 +20,7 @@ interface Props {
 export const FiltersSheet = (props: Props): ReactElement => {
     const [_, setSearchParams] = useSearchParams()
 
-    const categoryDetails = useFetch<AxiosResponse, AxiosError>(["categories-by-slug", props.category], `categories/${props.category}`,)
+    const categoryDetails = useFetch<AxiosResponse, AxiosError>(["categories-by-slug", props.category], `categories/${props.category}`, false)
 
     const filterValuesController = (key: string, value: string) => {
         let temp: { key: string, value: string }[] = []

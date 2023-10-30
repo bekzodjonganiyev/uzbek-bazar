@@ -18,7 +18,7 @@ import { useFetch } from "@/utils/api";
 // }[] | null
 
 export const LikedBrands = (/*props: Props*/): ReactElement => {
-    const logos = useFetch<AxiosResponse, AxiosError>(["brands"], "brands/")
+    const logos = useFetch<AxiosResponse, AxiosError>(["brands"], "brands/", false)
 
     return (
         <div className='p-10 flex md:flex-row flex-col items-start bg-card-bg max-md:gap-y-10'>

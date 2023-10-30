@@ -32,15 +32,17 @@ export const ProductView = (/*props: Props*/): ReactElement => {
 
   const productById = useFetch<AxiosResponse, AxiosError>(
     ["product-by-id", id],
-    `products/${id ?? ""}`
+    `products/${id ?? ""}`,
+    false
   );
   const sameProducts = useFetch<AxiosResponse, AxiosError>(
     ["same-products", id],
     `products/?type=${productById.data?.data.type}&season=${productById.data?.data.season}`,
+    false,
     productById.isSuccess
   );
-  const questions = useFetch<AxiosResponse, AxiosError>(["ions"], "questions/");
-  const reviews = useFetch<AxiosResponse, AxiosError>(["product_reviews"], "reviews/");
+  const questions = useFetch<AxiosResponse, AxiosError>(["ions"], "questions/", false);
+  const reviews = useFetch<AxiosResponse, AxiosError>(["product_reviews"], "reviews/", false);
 
   const [size, setSize] = useState<{ size: string; id: number | undefined }>({ size: "", id: undefined });
   const [tabs, setTabs] = useState<{ data: ReactElement; id: number | undefined; }>

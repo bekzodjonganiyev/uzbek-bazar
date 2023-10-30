@@ -22,7 +22,8 @@ import { getMachineId } from '@/utils/getSeesionId'
 export const Favourite = (/*props: Props*/): ReactElement => {
     const favourites = useFetch<AxiosResponse, AxiosError>(
         [`user-favourites`],
-        `favorites/?session_id=${getMachineId()}`
+        `favorites/?session_id=${getMachineId()}`,
+        false
     )
     return (
         <CustomSuspanse

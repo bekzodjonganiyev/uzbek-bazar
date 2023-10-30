@@ -16,7 +16,7 @@ export const SellerDetails = (/*props: Props*/): ReactElement => {
 
     // const [filters, setFilters] = useState<{ key: string, value: string }[]>([])
 
-    const sellerDetails = useFetch<AxiosResponse, AxiosError>(["seller-details", id], `organizations/${id}/`)
+    const sellerDetails = useFetch<AxiosResponse, AxiosError>(["seller-details", id], `organizations/${id}/`, false)
 
 
     // const filterValuesController = (key: string, value: string) => {

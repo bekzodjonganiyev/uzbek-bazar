@@ -19,7 +19,7 @@ import { InfinitySpin } from "react-loader-spinner";
 
 
 export const Carusel = (): ReactElement => {
-    const banner = useFetch<AxiosResponse, AxiosError>(["banner"], "banners/")
+    const banner = useFetch<AxiosResponse, AxiosError>(["banner"], "banners/", false)
 
     return (
         <CustomSuspanse

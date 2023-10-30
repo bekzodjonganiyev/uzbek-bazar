@@ -16,7 +16,7 @@ import { useFetch } from '@/utils/api'
 
 export const Sellers = (/*props: Props*/): ReactElement => {
     const [searchTerm, setSearchTerm] = useState("")
-    const sellers = useFetch<AxiosResponse, AxiosError>(["sellers"], `organizations/`)
+    const sellers = useFetch<AxiosResponse, AxiosError>(["sellers"], `organizations/`, false)
     return (
         <div className='py-10'>
             <div

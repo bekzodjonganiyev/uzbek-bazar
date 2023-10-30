@@ -13,9 +13,9 @@ import { showCase } from "@/utils/mocks"
 
 export const Home = (): ReactElement => {
   const [tabs, setTabs] = useState<{ title: string, id: number | undefined }>({ title: "", id: 1 })
-  const productArr = useFetch<AxiosResponse, AxiosError>(["products", tabs.title], `products/?type=${tabs.title}`)
-  const page = useFetch<AxiosResponse, AxiosError>(["page"], `banners/`)
-  const reviews = useFetch<AxiosResponse, AxiosError>(["reviews"], "reviews/")
+  const productArr = useFetch<AxiosResponse, AxiosError>(["products", tabs.title], `products/?type=${tabs.title}`, false)
+  const page = useFetch<AxiosResponse, AxiosError>(["page"], `banners/`, false)
+  const reviews = useFetch<AxiosResponse, AxiosError>(["reviews"], "reviews/", false)
 
   return (
     <CustomSuspanse

@@ -9,7 +9,7 @@ import { useFetch } from "@/utils/api";
 // type Props = {}
 
 export const TopProducts = (/*props: Props*/): ReactElement => {
-    const topProducts = useFetch<AxiosResponse, AxiosError>(["top-products"], "products/")
+    const topProducts = useFetch<AxiosResponse, AxiosError>(["top-products"], "products/", false)
 
     return (
         <CustomSuspanse

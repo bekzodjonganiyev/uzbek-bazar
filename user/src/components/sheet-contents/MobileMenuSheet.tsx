@@ -16,7 +16,7 @@ import { languages } from '@/components'
 // interface Props {}
 
 export const MobileMenuSheet = (/*props: Props*/): ReactElement => {
-  const categories = useFetch<AxiosResponse, AxiosError>(["categories"], "categories/")
+  const categories = useFetch<AxiosResponse, AxiosError>(["categories"], "categories/", false)
 
   console.log(categories.data?.data?.results)
 

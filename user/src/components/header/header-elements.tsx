@@ -12,7 +12,7 @@ type Props = {
   close: () => void
 }
 export const Menu = (props: Props) => {
-  const { data, isLoading, isError } = useFetch<AxiosResponse, AxiosError>(["categories"], "categories/")
+  const { data, isLoading, isError } = useFetch<AxiosResponse, AxiosError>(["categories"], "categories/", false)
 
   const [subCategories, setSubCategories] = useState<any[]>([])
   const [selected, setSelected] = useState<{ title: string, id: number }>({ title: "", id: 0 })
