@@ -46,7 +46,6 @@ function App(): JSX.Element {
             <Route path="/auth/signup" element={<SignUp />} />
 
             <Route path="*" element={<FourZeroFour />} />
-            
           </Route>
         </Routes>
       </BrowserRouter>
