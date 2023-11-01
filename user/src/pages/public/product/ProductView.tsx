@@ -119,10 +119,10 @@ export const ProductView = (/*props: Props*/): ReactElement => {
 
             {/* Price */}
             <p className="flex gap-2">
-              <span>{productById.data?.data.price}</span>
+              <span>{productById.data?.data.price}$</span>
               {productById.data?.data.discount > 0 && (
                 <span className="line-through">
-                  {productById.data?.data.price}
+                  {productById.data?.data.price}$
                 </span>
               )}
             </p>
