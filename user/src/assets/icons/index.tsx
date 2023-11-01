@@ -820,39 +820,8 @@ export const EnFlagIcon = (): ReactElement => {
 
 export const RuFlagIcon = (): ReactElement => {
   return (
-    <svg
-      width="18"
-      height="14"
-      viewBox="0 0 18 14"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g clipPath="url(#clip0_176_36725)">
-        <path
-          fillRule="evenodd"
-          clipRule="evenodd"
-          d="M-1.12793 0H19.1221V14H-1.12793V0Z"
-          fill="white"
-        />
-        <path
-          d="M9.00007 11.3525C11.3176 11.3525 13.1964 9.40412 13.1964 7.0007C13.1964 4.59728 11.3176 2.64893 9.00007 2.64893C6.68248 2.64893 4.80371 4.59728 4.80371 7.0007C4.80371 9.40412 6.68248 11.3525 9.00007 11.3525Z"
-          fill="#BC002D"
-        />
-      </g>
-      <rect
-        x="0.25"
-        y="0.25"
-        width="17.5"
-        height="13.5"
-        stroke="#EAE8E8"
-        strokeWidth="0.5"
-      />
-      <defs>
-        <clipPath id="clip0_176_36725">
-          <rect width="18" height="14" fill="white" />
-        </clipPath>
-      </defs>
-    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 6" width="18"
+      height="14"><rect fill="#fff" width="9" height="3" className="border border-black" /><rect fill="#d52b1e" y="3" width="9" height="3" /><rect fill="#0039a6" y="2" width="9" height="2" /></svg>
   );
 };
 
