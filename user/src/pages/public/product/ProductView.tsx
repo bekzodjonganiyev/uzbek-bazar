@@ -1,4 +1,4 @@
-import { ReactElement, useState, Fragment } from "react";
+import { ReactElement, useState, Fragment, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { AxiosResponse, AxiosError } from "axios";
 import { Rating } from "react-simple-star-rating";
@@ -29,6 +29,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
   const { id } = useParams();
 
   const [activeColor, setActiveColor] = useState<number>(1);
+  const [defaultImg, setDefaultImg] = useState<string[]>([]);
 
   const productById = useFetch<AxiosResponse, AxiosError>(
     ["product-by-id", id],
@@ -71,12 +72,18 @@ export const ProductView = (/*props: Props*/): ReactElement => {
         });
         return matchedMedia;
       } else {
-        return [];
+        return defaultImg;
       }
     } catch {
       return [];
     }
   };
+
+  useEffect(() => {
+    const arr = productById.isFetched && productById.data?.data.variables?.map((item:any, id:number) => item.media[id]?.file)
+    setDefaultImg(arr)
+    console.log(arr)
+  }, [productById.isFetched])
 
   return (
     <div className="flex flex-col gap-16 py-10 w-[90%] mx-auto">
