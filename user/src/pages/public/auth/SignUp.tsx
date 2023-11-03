@@ -5,11 +5,14 @@ import InputMask from 'react-input-mask';
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { useToast } from "@/components/ui/use-toast"
 
 import { usePost } from "@/utils/api"
+import { cn } from "@/lib/utils";
+import { ToastAction } from "@/components/ui/toast";
 
 // type Props = {}
-type User = {
+type UserSignUp = {
   full_name: string,
   phone: string,
   password: string
@@ -17,9 +20,30 @@ type User = {
 }
 
 export const SignUp = (/*props: Props*/) => {
-  const useRegister = usePost("post")
+  const { toast } = useToast()
+  const useRegister = usePost(
+    "post",
+    () => {
+      toast({
+        description:"Hisob muvafaqqiyatli ochildi",
+        variant: "success",
+        action: <ToastAction
+            className="bg-white text-black text-xs font-bold"
+            altText="Kirish"
+            onClick={() => window.location.replace("/auth/login")}
+        >
+          Kirish
+        </ToastAction>,
+    })
 
-  const [user, setUser] = useState<User>({
+      // setTimeout(() => {
+      //   window.location.replace("/auth/login")
+      // }, 1000);
+    },
+    (res) => { alert(res.message) }
+  )
+
+  const [user, setUser] = useState<UserSignUp>({
     full_name: "",
     phone: "",
     password: "",
@@ -31,10 +55,7 @@ export const SignUp = (/*props: Props*/) => {
 
 
     if (user.phone.length === 17 && user.full_name && user.password) {
-      useRegister
-        .mutateAsync({ url: "clients/", data: user })
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
+      useRegister.mutate({ url: "clients/", data: user })
     }
   }
 
@@ -60,18 +81,6 @@ export const SignUp = (/*props: Props*/) => {
         <br />
 
         <Label htmlFor="phone" className="font-bold">Telefon raqam</Label>
-        {/* <MaskInput
-          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-          mask={'+998 (00) 000 - 00 - 00'}
-          alwaysShowMask
-          showMask
-          maskChar="_"
-          value={user?.phone}
-          onValueChange={(e) => {
-            const a = e.value.split(" ").join("")
-            setUser({ ...user, phone: a })
-          }}
-        /> */}
         <InputMask
           className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           mask="+\9\98 (99) 999-99-99"
@@ -98,7 +107,17 @@ export const SignUp = (/*props: Props*/) => {
 
         <br />
 
-        <Button type="submit" className="w-full">Yuborish</Button>
+        <Button
+          type="submit"
+          className={cn("w-full", useRegister.isLoading && "cursor-not-allowed")}
+          disabled={useRegister.isLoading}
+        >
+          {
+            useRegister.isLoading
+              ? <span className="border-gray-300 h-5 w-5 animate-spin rounded-full border-2 border-t-blue-600" />
+              : "Yuborish"
+          }
+        </Button>
 
         <br />
 

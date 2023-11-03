@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
 export const API_URL = import.meta.env.PROD
@@ -29,14 +29,14 @@ export function useFetch<T, A>(
 
 export function usePost(
   method: "post" | "patch" | "delete",
-  onSuccessFn?: () => void,
-  onErrorFn?: (data: any) => void
+  onSuccessFn?: (data: AxiosResponse) => void,
+  onErrorFn?: (data: AxiosError) => void
 ) {
   const mutate = useMutation({
     mutationFn: (variables: { url: string; data: any }) =>
       http()[`${method}`](variables.url, variables.data),
-    onSuccess: () => (onSuccessFn ? onSuccessFn() : null),
-    onError: (data) => (onErrorFn ? onErrorFn(data) : null),
+    onSuccess: (data) => (onSuccessFn ? onSuccessFn(data) : null),
+    onError: (data: AxiosError) => (onErrorFn ? onErrorFn(data) : null),
   });
   return mutate;
 }
