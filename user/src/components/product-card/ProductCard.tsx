@@ -205,8 +205,8 @@ export const ProductCard = (props: Props): ReactElement => {
             }
 
             {/* |---IMAGE---| */}
-            <Link to={`/product/details/${props.id}`}>
-                <div className='w-full md:h-80 sm:h-64 h-56 relative'>
+            <div className='w-full md:h-80 sm:h-64 h-56 relative'>
+                <Link to={`/product/details/${props.id}`}>
                     <LazyLoadImage
                         src={props.img ?? placeholderImg}
                         alt={props.productName}
@@ -216,20 +216,20 @@ export const ProductCard = (props: Props): ReactElement => {
                         width="100%"
                         className='h-full w-full object-cover'
                     />
+                </Link>
 
-                    {/* Visible on mobile */}
-                    <Button
-                        variant={'outline'}
-                        size={'icon'}
-                        className={`rounded-none bg- border-none max-md:block hidden absolute right-0 top-0`}
-                        onClick={() => onLike()}
-                    >
-                        <span className='flex items-center justify-center'>
-                            <LikeIcon color={`${productIdsForWishlist?.includes(props.id) ? "#121212" : "white"}`} />
-                        </span>
-                    </Button>
-                </div>
-            </Link>
+                {/* Visible on mobile */}
+                <Button
+                    variant={'outline'}
+                    size={'icon'}
+                    className={`rounded-none bg-transparent border-none max-md:block hidden absolute right-0 top-0 z-[9999]`}
+                    onClick={() => onLike()}
+                >
+                    <span className='flex items-center justify-center'>
+                        <LikeIcon color={`${productIdsForWishlist?.includes(props.id) ? "#121212" : "white"}`} />
+                    </span>
+                </Button>
+            </div>
 
 
             {/* |---NAME, PRICE, RATING---| */}
