@@ -16,13 +16,12 @@ type Props = {
 export const ProductCarusel = ({ images }: Props) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
 
-  // console.log(props.images, "images from carusel")
   return (
-    <div className="product-carusel flex gap-5">
+    <div className="product-carusel flex gap-3 md:w-1/2 w-full">
       {/*  @Swiper dan foydalanganda @div ga o'rab qo'ysak ko'p muammolarni oldi olinadi. */}
 
       {/* begin::Swiper thunbnail */}
-      <div className="md:block hidden">
+      <div className="min-[400px]:block hidden">
         <Swiper
           onSwiper={(a) => setThumbsSwiper(a)}
           spaceBetween={10}
@@ -51,7 +50,7 @@ export const ProductCarusel = ({ images }: Props) => {
       {/* end::Swiper thunbnail */}
 
       {/* begin::Swiper Items shows one by one */}
-      <div className="">
+      {/* <div className="w-full oka"> */}
         <Swiper
           spaceBetween={10}
           thumbs={{ swiper: thumbsSwiper }}
@@ -60,21 +59,22 @@ export const ProductCarusel = ({ images }: Props) => {
            * @direction => horizontal bo'lganda @SwiperSlide larni
            * o'rab turgan wrapperga @width berilishi shart
            */
-          className="product-image xl:w-[500px] lg:w-[400px] md:w-[300px] w-72"
+          className="product-image h-full w-full"
           direction="horizontal"
         >
           {
             images
               ? images.map((e, ind) => (
                 <SwiperSlide key={ind}>
-                  <img src={e} alt="product image" />
+                  <img className="object-cover h-full w-full" src={e} alt="product image" />
                 </SwiperSlide>
               ))
               : null
           }
         </Swiper>
         {/* end::Swiper Items shows one by one */}
-      </div>
+      {/* </div> */}
+      {/* begin::Swiper Items shows one by one */}
     </div>
   );
 };

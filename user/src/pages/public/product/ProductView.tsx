@@ -2,53 +2,106 @@ import { ReactElement, useState, Fragment, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { AxiosResponse, AxiosError } from "axios";
 import { Rating } from "react-simple-star-rating";
+import { useSelector } from "react-redux";
 
 import { Button } from "@/components/ui/button";
-import {
-  EyeIcon,
-  HumanIcon,
-  LikeIcon,
-  QuestionIcon,
-  ShareIcon,
-} from "@/assets/icons";
+import { EyeIcon, HumanIcon, LikeIcon, QuestionIcon, ShareIcon } from "@/assets/icons";
 import { CustomSuspanse } from "@/components/common";
-import {
-  ProductCarusel,
-  ProductsListCarusel,
-  ProductReview,
-} from "@/components";
+import { ProductCarusel, ProductsListCarusel, ProductReview } from "@/components";
 
-import { useFetch } from "@/utils/api";
+import { RootState, useAppDispatch } from "@/redux"
+import { setCartId, deleteCartId } from "@/redux/actions/cart-action"
+import { setWishlistId, deleteWishlistId } from "@/redux/actions/wishlist-action"
+import { useFetch, usePost } from "@/utils/api";
+import { cn } from "@/lib/utils";
 import { productColor, productMedia } from "@/interfaces/product";
 import { review } from "@/interfaces/review";
 import { question } from "@/interfaces/question";
+import { getMachineId } from "@/utils/getSeesionId";
 
 // type Props = {}
 
 export const ProductView = (/*props: Props*/): ReactElement => {
   const { id } = useParams();
+  const cart = useSelector((state: RootState) => state.cart)
+  const wishlist = useSelector((state: RootState) => state.wishlist)
+  const dispatch = useAppDispatch()
 
-  const [activeColor, setActiveColor] = useState<number>(1);
-  const [defaultImg, setDefaultImg] = useState<string[]>([]);
-
-  const productById = useFetch<AxiosResponse, AxiosError>(
-    ["product-by-id", id],
-    `products/${id ?? ""}`,
-    false
-  );
-  const sameProducts = useFetch<AxiosResponse, AxiosError>(
-    ["same-products", id],
-    `products/?type=${productById.data?.data.type}&season=${productById.data?.data.season}`,
-    false,
-    productById.isSuccess
-  );
+  const productById = useFetch<AxiosResponse, AxiosError>(["product-by-id", id], `products/${id ?? ""}`, false);
+  const sameProducts = useFetch<AxiosResponse, AxiosError>(["same-products", id], `products/?type=${productById.data?.data.type}&season=${productById.data?.data.season}`, false, productById.isSuccess);
+  const seller = useFetch<AxiosResponse, AxiosError>(["seller", productById.data?.data.organization], `/organizations/?id=${productById.data?.data.organization}`, false, productById.isFetched);
   const questions = useFetch<AxiosResponse, AxiosError>(["ions"], "questions/", false);
   const reviews = useFetch<AxiosResponse, AxiosError>(["product_reviews"], "reviews/", false);
 
+  const cartMutationPost = usePost("post", () => { }, () => { })
+  const cartMutationDelete = usePost("delete", () => { }, () => { })
+  const wishlistMutationPost = usePost("post", () => { }, () => { })
+  const wishlistMutationDelete = usePost("delete", () => { }, () => { })
+
+  const [activeColor, setActiveColor] = useState<number>(1);
+  const [defaultImg, setDefaultImg] = useState<string[]>([]);
+  const [sellerData, setSellerData] = useState<any>(null);
   const [size, setSize] = useState<{ size: string; id: number | undefined }>({ size: "", id: undefined });
   const [tabs, setTabs] = useState<{ data: ReactElement; id: number | undefined; }>
     ({ data: <div>{productById.data?.data.gender}</div>, id: 1 });
 
+  const productIdsForCart = cart?.ids.map((i) => i.id)
+  const productIdsForWishlist = wishlist?.ids.map((i) => i.id)
+  const isCart = productIdsForCart.includes(productById.data?.data.id)
+  const isWishlist = productIdsForWishlist.includes(productById.data?.data.id)
+
+  // ADD TO WISHLIST
+  const addToWishlist = () => {
+    if (!isWishlist) {
+      wishlistMutationPost.mutateAsync({
+        url: "favorites/",
+        data: {
+          session_id: getMachineId(), // TODO - login qilinganda null ketadi
+          product: productById.data?.data.id,
+          user: null
+        }
+      })
+        .then(res => dispatch(setWishlistId(productById.data?.data.id, res.data.id, "")))
+        .catch(err => console.log(err))
+    } else {
+      const temp: any = wishlist.ids.find(item => item.id === productById.data?.data.id) // { id: <id>, wishlistId: <wishlistId> }
+
+      wishlistMutationDelete.mutateAsync({
+        url: `favorites/${temp.wishlistId}`,
+        data: {}
+      })
+        .then(() => { dispatch(deleteWishlistId(productById.data?.data.id, temp.wishlistId, "")) })
+        .catch(err => console.log(err))
+    }
+  }
+
+  // ADD TO CART
+  const addToCart = () => {
+    if (!isCart) {
+      cartMutationPost.mutateAsync({
+        url: "carts/",
+        data: {
+          session_id: getMachineId(), // TODO - login qilinganda null ketadi
+          quantity: 1,
+          product: productById.data?.data.id,
+          user: null // TODO - login qilinganda user_id ketadi
+        }
+      })
+        .then(res => dispatch(setCartId(productById.data?.data.id, res.data.id, "")))
+        .catch(err => console.log(err))
+    } else {
+      const temp: any = cart.ids.find(item => item.id === productById.data?.data.id) // { id: <id>, cartId: <cartId> }
+
+      cartMutationDelete.mutateAsync({
+        url: `carts/${temp.cartId}`,
+        data: {}
+      })
+        .then(() => { dispatch(deleteCartId(productById.data?.data.id, temp.cartId, "")) })
+        .catch(err => console.log(err))
+    }
+  }
+
+  // HELPER FOR IMG CARUSEL
   const getActiveColor = (index: number) => {
     try {
       const variables: productColor[] = productById.data?.data.variables;
@@ -79,10 +132,15 @@ export const ProductView = (/*props: Props*/): ReactElement => {
     }
   };
 
+  // GET SELLER DATA
   useEffect(() => {
-    const arr = productById.isFetched && productById.data?.data.variables?.map((item:any, id:number) => item.media[id]?.file)
+    const sellerData = seller.isFetched && seller.data?.data?.results.filter((item: any) => item.id === productById.data?.data.organization)
+    setSellerData(sellerData[0])
+  }, [seller.isFetched])
+
+  useEffect(() => {
+    const arr = productById.isFetched && productById.data?.data.variables?.map((item: any, id: number) => item.media[id]?.file)
     setDefaultImg(arr)
-    console.log(arr)
   }, [productById.isFetched])
 
   return (
@@ -94,12 +152,12 @@ export const ProductView = (/*props: Props*/): ReactElement => {
         loadingFallback={"Loading"}
         errorFallback={"Error"}
       >
-        <div className="flex max-md:flex-col gap-10 justify-between">
+        <div className="flex max-md:flex-col gap-10 justify-between items-start">
           {/* Product images carusel */}
           <ProductCarusel images={getActiveMedia()} />
 
           {/* Product starter infos */}
-          <div className="flex flex-col gap-5 md:w-1/2 mx-auto">
+          <div className="flex flex-col gap-5 md:w-1/2 w-full">
             {/* Name */}
             <h1 className="text-2xl font-bold line-clamp-1">
               {productById.data?.data.name}
@@ -146,13 +204,13 @@ export const ProductView = (/*props: Props*/): ReactElement => {
                 {productById.data?.data.variables.map(
                   (item: productColor, ind: number) => (
                     <div
-                      className={`border-black rounded-full ${getActiveColor(activeColor) === item ? "border-2" : ""
+                      className={`border-black rounded-full p-0.5 ${getActiveColor(activeColor) === item ? "border-2 border-dashed" : ""
                         }`}
                     >
                       <button
                         style={{ backgroundColor: item.color }}
                         key={item.id}
-                        className={`p-5 border-2 rounded-full`}
+                        className={`p-4 border-2 rounded-full`}
                         onClick={() => setActiveColor(ind)}
                       ></button>
                     </div>
@@ -169,7 +227,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
                   ? productById.data?.data?.size.map((item: any) => (
                     <button
                       key={item.id}
-                      className={`rounded-md p-2 border-2 ${size.id === item.id ? "border-black" : ""
+                      className={`rounded-md p-2 border-2 ${size.id === item.id ? "border-black  border-dashed" : ""
                         }`}
                       onClick={() => setSize({ size: item, id: item.id })}
                     >
@@ -181,16 +239,20 @@ export const ProductView = (/*props: Props*/): ReactElement => {
             </div>
 
             {/* Add to cart */}
-            <Button variant={"default"} className="rounded-none py-5">
-              Savatga qo’shish
+            <Button
+              variant={"default"}
+              className={cn("rounded-none py-5")}
+              onClick={() => addToCart()}
+            >
+              {isCart ? "Savatda" : "Savatga qo’shish"}
             </Button>
 
             <div className="flex gap-5">
               {/* Add to wishlist */}
-              <button>
+              <button onClick={() => addToWishlist()}>
                 <span className="flex items-center gap-1">
-                  <LikeIcon color="black" />
-                  <p>Wishlist</p>
+                  <LikeIcon color={isWishlist ? "black" : "white"} />
+                  <p>{isWishlist ? "Sevimlilarda" : "Sevimlilarga"}</p>
                 </span>
               </button>
 
@@ -198,7 +260,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
               <button>
                 <span className="flex items-center gap-2">
                   <QuestionIcon />
-                  <p>Ask question</p>
+                  <p>Savol berish</p>
                 </span>
               </button>
 
@@ -206,10 +268,11 @@ export const ProductView = (/*props: Props*/): ReactElement => {
               <button>
                 <span className="flex items-center gap-2">
                   <ShareIcon />
-                  <p>Share</p>
+                  <p>Ulashish</p>
                 </span>
               </button>
             </div>
+
             <hr />
 
             {/* Seller profile */}
@@ -218,8 +281,8 @@ export const ProductView = (/*props: Props*/): ReactElement => {
                 <HumanIcon />
                 <text className="font-semibold">Sotuvchi:</text>
               </span>
-              <Link to="" className="text-stone-400 underline">
-                Terro Pro
+              <Link to={`/seller/details/${sellerData?.id}`} className="text-stone-400 underline">
+                { sellerData?.name }
               </Link>
             </div>
           </div>
@@ -300,19 +363,19 @@ export const ProductView = (/*props: Props*/): ReactElement => {
       </div>
       {/* begin:PRODUCT ADDITIONAL INFO */}
 
-            {/* begin:SAME PRODUCTS */}
-            {
-                sameProducts.isLoading 
-                ? ""
-                : <ProductsListCarusel array={sameProducts.data?.data.results} title="O'xshash maxsulotlar" prevElClass='.swiper-button-prev' nextElClass='.swiper-button-next'/> 
-            }
-            {/* begin:SAME PRODUCTS */}
+      {/* begin:SAME PRODUCTS */}
+      {
+        sameProducts.isLoading
+          ? ""
+          : <ProductsListCarusel array={sameProducts.data?.data.results} title="O'xshash maxsulotlar" prevElClass='.swiper-button-prev' nextElClass='.swiper-button-next' />
+      }
+      {/* begin:SAME PRODUCTS */}
 
-            {/* begin:RECENTLT VIEWED PRODUCTS */}
-            <ProductsListCarusel array={[]} title="Yaqinda ko'rib chiqilgan" prevElClass='.swiper-button-prev-1' nextElClass='.swiper-button-next-1' />
-            {/* begin:RECENTLT VIEWED PRODUCTS */}
-        </div>
-    )
+      {/* begin:RECENTLT VIEWED PRODUCTS */}
+      <ProductsListCarusel array={[]} title="Yaqinda ko'rib chiqilgan" prevElClass='.swiper-button-prev-1' nextElClass='.swiper-button-next-1' />
+      {/* begin:RECENTLT VIEWED PRODUCTS */}
+    </div>
+  )
 }
 
 type DescriptionProps = {
