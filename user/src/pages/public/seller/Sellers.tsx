@@ -24,11 +24,11 @@ export const Sellers = (/*props: Props*/): ReactElement => {
                 className='w-full h-96 bg-cover bg-no-repeat flex items-center justify-center'
             >
                 <div className='flex flex-col gap-5'>
-                    <h1 className='text-3xl font-medium text-center'>Sotuvchilar</h1>
-                    <p className='text-center'>At vero eos et accusamus et iusto odio dignissimos qui blanditiis <br /> praesentium voluptatum deleniti.</p>
-                    <div className="relative max-md:w-full">
+                    <h1 className='xl:text-3xl lg:text-2xl md:text-xl text-xl font-medium text-center'>Sotuvchilar</h1>
+                    <p className='text-center max-md:px-4'>At vero eos et accusamus et iusto odio dignissimos qui blanditiis <br /> praesentium voluptatum deleniti.</p>
+                    <div className="relative max-md:w-full max-md:px-5">
                         {/* TODO - icon bosilganda search qilishi kerak */}
-                        <SearchIcon className="w-6 h-6 absolute right-3 top-1/2 -translate-y-1/2" />
+                        <SearchIcon className="w-6 h-6 absolute right-3 max-md:right-6 top-1/2 -translate-y-1/2" />
                         <Input className='md:w-[500px]' placeholder='Izlash...' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                     </div>
                 </div>

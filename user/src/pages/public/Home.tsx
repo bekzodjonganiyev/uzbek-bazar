@@ -14,16 +14,10 @@ import { showCase } from "@/utils/mocks"
 export const Home = (): ReactElement => {
   const [tabs, setTabs] = useState<{ title: string, id: number | undefined }>({ title: "", id: 1 })
   const productArr = useFetch<AxiosResponse, AxiosError>(["products", tabs.title], `products/?type=${tabs.title}`, false)
-  const page = useFetch<AxiosResponse, AxiosError>(["page"], `banners/`, false)
   const reviews = useFetch<AxiosResponse, AxiosError>(["reviews"], "reviews/", false)
 
   return (
-    <CustomSuspanse
-      loading={page.isLoading}
-      loadingFallback={<PageLoader />}
-      error={page.isError}
-      errorFallback={page.error?.message}
-    >
+    <>
       <div className="">
         <Carusel />
         <br />
@@ -105,7 +99,7 @@ export const Home = (): ReactElement => {
           >
             <div className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 grid-cols-2 sm:gap-10 gap-5">
               {
-                productArr.data?.data.results.map((item: any) => (
+                productArr.data?.data.results.slice(0,10).map((item: any) => (
                   <ProductCard
                     key={Number(item.id)}
                     id={+item.id}
@@ -148,7 +142,7 @@ export const Home = (): ReactElement => {
               nextEl: '.swiper-button-next',
             }}
             pagination={false}
-            modules={[ Pagination, Navigation]}
+            modules={[Pagination, Navigation]}
             className=""
             breakpoints={{
               120: {
@@ -204,7 +198,6 @@ export const Home = (): ReactElement => {
 
         <br />
         <br />
-      </div>
-    </CustomSuspanse>
+      </div></>
   );
 };

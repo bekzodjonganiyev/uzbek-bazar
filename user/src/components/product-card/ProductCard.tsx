@@ -222,7 +222,7 @@ export const ProductCard = (props: Props): ReactElement => {
                 <Button
                     variant={'outline'}
                     size={'icon'}
-                    className={`rounded-none bg-transparent border-none max-md:block hidden absolute right-0 top-0 z-[9999]`}
+                    className={`rounded-none bg-transparent border-none max-md:block hidden absolute right-0 top-0 z-10`}
                     onClick={() => onLike()}
                 >
                     <span className='flex items-center justify-center'>

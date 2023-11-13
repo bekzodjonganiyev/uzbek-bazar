@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom"
-import { Heart, Home, SearchIcon, ShoppingCart, UserIcon } from "lucide-react"
+import { Heart, Home, ShoppingCart, Store, UserIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -8,7 +8,7 @@ type Props = {
 }
 
 export const BottomNav = ({ className }: Props) => {
-  const {pathname} = useLocation()
+  const { pathname } = useLocation()
 
   return (
     <div className={cn("z-[10] fixed -bottom-2 w-full bg-black py-5 min-w-[320px]", className)}>
@@ -23,10 +23,10 @@ export const BottomNav = ({ className }: Props) => {
         </li>
 
         <li className="">
-          <NavLink to={"/search"} className="">
+          <NavLink to={"/sellers"} className="">
             <p className="flex flex-col items-center">
-              <SearchIcon color={`${pathname === "/search" ? "red" : "white"}`} />
-              <span className="text-white text-xs">Qidiruv</span>
+              <Store color={`${pathname === "/sellers" ? "red" : "white"}`} />
+              <span className="text-white text-xs">Do'konlar</span>
             </p>
           </NavLink>
         </li>
@@ -49,7 +49,7 @@ export const BottomNav = ({ className }: Props) => {
         <li className="">
           <NavLink to={"/user-profile"} className="">
             <p className="flex flex-col items-center">
-              <UserIcon color={`${pathname === "/user-profile" ? "red" : "white"}`} />
+              <UserIcon color={`${pathname.split("/")[1] === "user-profile" ? "red" : "white"}`} />
               <span className="text-white text-xs">Kirish</span>
             </p>
           </NavLink>

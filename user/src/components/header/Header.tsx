@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { Link, useLocation } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
@@ -13,6 +13,11 @@ import { useAppDispatch, RootState } from "@/redux"
 import { setSheetContent } from "@/redux/actions"
 
 import { currencys } from "@/utils/mocks"
+import { seacrFc } from "@/utils/searchFn"
+import { Input } from "../ui/input"
+import { cn } from "@/lib/utils"
+import { Button } from "../ui/button"
+import { X } from "lucide-react"
 
 
 export const languages = [
@@ -25,11 +30,35 @@ export const Header = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const sheetContent = useSelector((state: RootState) => state.sheetContent)
   const cart = useSelector((state: RootState) => state.cart)
+  const { pathname } = useLocation()
 
   const [open, setOpen] = useState<boolean>(false)
+  const [suggestMobile, setSuggestMobile] = useState<string>(localStorage.getItem("suggestMobile") || "true")
+  const [searchTerm, setSearchTerm] = useState("")
+  const [searchedProductData, setSearchedProductData] = useState<any>({
+    loading: undefined,
+    data: null,
+    error: null
+  })
+  const [searchedCategoryData, setSearchedCategoryData] = useState<any>({
+    loading: undefined,
+    data: null,
+    error: null
+  })
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      searchTerm ? seacrFc("products", "search", searchTerm, setSearchedProductData) : null
+      searchTerm ? seacrFc("categories", "search", searchTerm, setSearchedCategoryData) : null
+    }, 1000)
+
+    return () => clearTimeout(delayDebounceFn)
+  }, [searchTerm])
+
+  console.log(searchedCategoryData, searchedProductData)
 
   return (
-    <header className="w-full">
+    <header className="w-full fixed top-0 z-50 bg-white">
       <Sheet>
         {/* begin::CUSTOM SHEET CONTENT */}
         <CustomSheetContent side={sheetContent.side}>
@@ -71,8 +100,26 @@ export const Header = (): JSX.Element => {
           </div>
           {/* end::TOP HEADER */}
 
+          {/* begin::SUGGEST ABOUT MOBILE APP */}
+          <div className={cn("fixed w-screen top-0 left-0", suggestMobile === "true" ? "block" : "hidden")}>
+            <div className="md:hidden flex items-center justify-between bg-card-bg py-5 container">
+              <Button variant={"outline"} className="border-none bg-transparent p-0" onClick={() => {
+                setSuggestMobile("false")
+                localStorage.setItem("suggestMobile", suggestMobile)
+              }}>
+                <X color="gray" />
+              </Button>
+              <div className="flex items-center gap-2 w-4/6">
+                <span>Logo</span>
+                <p>Ilovada qulayroq</p>
+              </div>
+              <Button variant={"destructive"} className="w-1/6 mr-5">Yuklash</Button>
+            </div>
+          </div>
+          {/* end::SUGGEST ABOUT MOBILE APP */}
+
           {/* begin::MAIN HEADER */}
-          <div className="flex justify-between items-center relative py-2">
+          <div className={cn("flex justify-between items-center relative py-2", suggestMobile === "true" && "max-md:mt-20")}>
             {/* |---LOGO---| */}
             <div><Link to="/">Logo</Link></div>
 
@@ -107,6 +154,27 @@ export const Header = (): JSX.Element => {
             </div>
           </div>
           {/* end::MAIN HEADER */}
+
+          {/* begin::RESPONSIVE SEARCH */}
+          {
+            pathname !== "/sellers"
+              ? <div className='max-md:flex hidden items-center justify-center my-3'>
+                <div className="relative max-md:w-full h-[40px]">
+                  {/* TODO - icon bosilganda search qilishi kerak */}
+                  <SearchIcon className="w-6 h-6 absolute right-3 top-1/2 -translate-y-1/2" />
+                  <Input className='md:w-[500px] w-full focus-visible:ring-transparent focus-visible:border-red-300' placeholder='Mahsulot izlash...' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                  <div className={cn("bg-white w-full px-3 py-10 absolute top-[100%] border-input border z-40 rounded-md", searchTerm ? "visible opacity-100 duration-300" : "invisible opacity-0 duration-300")}>
+                    oka
+                  </div>
+                </div>
+              </div>
+              : null
+          }
+          {
+
+          }
+
+          {/* end::RESPONSIVE SEARCH */}
 
         </div>
       </Sheet>
