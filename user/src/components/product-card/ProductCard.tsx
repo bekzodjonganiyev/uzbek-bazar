@@ -155,7 +155,9 @@ export const ProductCard = (props: Props): ReactElement => {
 
                 {/* NAME, RATE, ADDITIONAL INFO */}
                 <div className='md:w-4/12 sm:w-6/12 w-4/12 max-[365px]:mr-9'>
-                    <h3 className={cn("leading-none line-clamp-2 sm:text-base text-[14px]")}>{props.productName}</h3>
+                    <Link to={`/product/details/${props.id}`} className='hover:text-red-700'>
+                        <h3 className={cn("leading-none line-clamp-2 sm:text-base text-[14px]")}>{props.productName}</h3>
+                    </Link>
                     {
                         props.rating
                             ? <Rating initialValue={props.rating} size={17} readonly />

@@ -292,7 +292,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
 
       {/* begin:PRODUCT ADDITIONAL INFO */}
       <div>
-        <div className="border-b flex flex-wrap gap-10">
+        <div className="border-b flex flex-wrap md:gap-10 gap-4 ">
           {/* -----Description----- */}
           <button
             className={`${tabs.id === 1 ? "border-b-2 border-black" : ""}  pb-1`}
@@ -335,7 +335,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
               })
             }
           >
-            Reviwes(23)
+            Reviwes
           </button>
 
           {/* -----Questions----- */}
@@ -372,7 +372,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
       {/* begin:SAME PRODUCTS */}
 
       {/* begin:RECENTLT VIEWED PRODUCTS */}
-      <ProductsListCarusel array={[]} title="Yaqinda ko'rib chiqilgan" prevElClass='.swiper-button-prev-1' nextElClass='.swiper-button-next-1' />
+      {/* <ProductsListCarusel array={[]} title="Yaqinda ko'rib chiqilgan" prevElClass='.swiper-button-prev-1' nextElClass='.swiper-button-next-1' /> */}
       {/* begin:RECENTLT VIEWED PRODUCTS */}
     </div>
   )

@@ -90,7 +90,7 @@ export const SearchPage = (): ReactElement => {
               searchedProductData?.data?.length === 0 && searchedCategoryData?.data?.length === 0
                 ? <p className='text-center'>Qidiruvga mos natijalalar topilmadi</p>
                 : searchedProductData?.data?.map((item: any) => (
-                  <Link to={`product/details/${item.id}`} key={item.id}>
+                  <Link to={`/product/details/${item.id}`} key={item.id}>
                     <button className='w-full'>
                       <div className='flex items-center gap-5 p-2 hover:bg-stone-100 rounded-md cursor-pointer'>
                         <div className='w-11 h-12'>
