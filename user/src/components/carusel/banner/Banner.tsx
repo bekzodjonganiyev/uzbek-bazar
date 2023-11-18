@@ -62,7 +62,7 @@ export const Carusel = (): ReactElement => {
                                                 variant={"secondary"}
                                                 className="bg-white text-black rounded-none"
                                             >
-                                                <Link to={`catalog/${item.type}`} state={{category_id: item.id}} className="flex items-center gap-2 w-full h-full">
+                                                <Link to={`catalog/${item.url}`} state={{category_id: item.id}} className="flex items-center gap-2 w-full h-full">
                                                     <p>See Collection</p><NextItemIcon width={20} height={20} />
                                                 </Link>
                                             </Button>
