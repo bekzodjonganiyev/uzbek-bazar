@@ -140,15 +140,17 @@ export const ProductCard = (props: Props): ReactElement => {
             // Not Hoverable ProcutCard
             <div className={cn('sm:p-3 p-0 flex items-start min-[365px]:justify-between sm:gap-1 gap-0 border')}>
                 <div className='md:w-4/12 sm:w-3/12 w-3/12 sm:h-36 h-32 max-sm:mr-3'>
-                    <LazyLoadImage
-                        src={props.img ?? placeholderImg}
-                        alt={props.productName}
-                        // placeholderSrc={placeholderImg}
-                        // effect={'blur'}
-                        height="100%"
-                        width="100%"
-                        className='h-full w-full object-fill'
-                    />
+                    <Link to={`/product/details/${props.id}`}>
+                        <LazyLoadImage
+                            src={props.img ?? placeholderImg}
+                            alt={props.productName}
+                            // placeholderSrc={placeholderImg}
+                            // effect={'blur'}
+                            height="100%"
+                            width="100%"
+                            className='h-full w-full object-cover'
+                        />
+                    </Link>
                 </div>
 
                 {/* NAME, RATE, ADDITIONAL INFO */}

@@ -105,7 +105,7 @@ export const Home = (): ReactElement => {
           >
             <div className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 grid-cols-2 sm:gap-10 gap-5">
               {
-                productArr.data?.data.results.map((item: any) => (
+                productArr.data?.data.results.slice(0,10).map((item: any) => (
                   <ProductCard
                     key={Number(item.id)}
                     id={+item.id}
