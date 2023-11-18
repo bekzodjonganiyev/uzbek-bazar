@@ -1,5 +1,6 @@
-import img1 from "@/assets/images/3.png";
-import img2 from "@/assets/images/2.png";
+import img1 from "@/assets/images/sumka.png";
+import img2 from "@/assets/images/taqinchoq.png";
+import img3 from "@/assets/images/palto.png";
 
 export const products = [
   {
@@ -65,8 +66,8 @@ export const products = [
 ];
 
 export const showCase = [
-  { title: "Coats", type: "coats", link: { label: "Explore", href: "kun.uz" }, img: img1 },
-  { title: "Coats", type: "purses", link: { label: "Explore", href: "kun.uz" }, img: img2 },
+  { title: "Coats", type: "coats", link: { label: "Explore", href: "kun.uz" }, img: img3 },
+  { title: "Coats", type: "purses", link: { label: "Explore", href: "kun.uz" }, img: img1 },
   { title: "Coats", type: "accessories", link: { label: "Explore", href: "kun.uz" }, img: img2 },
 ];
 export const categories = [

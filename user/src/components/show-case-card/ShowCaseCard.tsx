@@ -21,7 +21,7 @@ export const ShowCaseCard = ({title, type, link, img, titlePosition, className, 
       </div>
       <div className=''>
         <div className={imgClassName}>
-          <img className='object-cover' src={img} alt={title} />
+          <img className='object-cover h-full' src={img} alt={title} />
         </div>
       </div>
     </div>
