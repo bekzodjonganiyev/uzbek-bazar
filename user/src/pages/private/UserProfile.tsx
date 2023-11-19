@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom"
+import { NavLink, Outlet, useNavigate, useLocation, Navigate } from "react-router-dom"
 
 import { useFetch } from "@/utils/api"
 import { CustomSuspanse } from "@/components/common"
@@ -17,7 +17,11 @@ export const UserProfile = (/*props: Props*/) => {
       navigate("/user-profile/orders")
     }
   }, [pathname])
-  
+
+  if (userData.error?.response?.status === 403){
+    return <Navigate to={"/auth/login"} replace />
+  }
+
   return (
     <div>
       <CustomSuspanse

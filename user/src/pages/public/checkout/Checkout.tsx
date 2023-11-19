@@ -19,7 +19,9 @@ import { CustomSuspanse } from '@/components/common'
 export const Checkout = (/*props: Props*/): ReactElement => {
   const cart = useSelector((state: RootState) => state.cart)
 
-  const userCarts = useFetch<AxiosResponse, AxiosError>(["user-carts"], `carts/?session_id=${getMachineId()}`, false)
+  const machineId = getMachineId()
+
+  const userCarts = useFetch<AxiosResponse, AxiosError>(["user-carts"], `carts/?session_id=${machineId}`, false)
 
   const totalPrice = () => {
     let summ: number = 0

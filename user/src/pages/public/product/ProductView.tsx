@@ -27,6 +27,8 @@ export const ProductView = (/*props: Props*/): ReactElement => {
   const wishlist = useSelector((state: RootState) => state.wishlist)
   const dispatch = useAppDispatch()
 
+  const machineId = getMachineId()
+
   const productById = useFetch<AxiosResponse, AxiosError>(["product-by-id", id], `products/${id ?? ""}`, false);
   const sameProducts = useFetch<AxiosResponse, AxiosError>(["same-products", id], `products/?type=${productById.data?.data.type}&season=${productById.data?.data.season}`, false, productById.isSuccess);
   const seller = useFetch<AxiosResponse, AxiosError>(["seller", productById.data?.data.organization], `/organizations/?id=${productById.data?.data.organization}`, false, productById.isFetched);
@@ -56,7 +58,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
       wishlistMutationPost.mutateAsync({
         url: "favorites/",
         data: {
-          session_id: getMachineId(), // TODO - login qilinganda null ketadi
+          session_id: machineId, // TODO - login qilinganda null ketadi
           product: productById.data?.data.id,
           user: null
         }
@@ -81,7 +83,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
       cartMutationPost.mutateAsync({
         url: "carts/",
         data: {
-          session_id: getMachineId(), // TODO - login qilinganda null ketadi
+          session_id: machineId, // TODO - login qilinganda null ketadi
           quantity: 1,
           product: productById.data?.data.id,
           user: null // TODO - login qilinganda user_id ketadi

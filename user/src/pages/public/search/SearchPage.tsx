@@ -91,7 +91,7 @@ export const SearchPage = (): ReactElement => {
                 ? <p className='text-center'>Qidiruvga mos natijalalar topilmadi</p>
                 : searchedProductData?.data?.map((item: any) => (
                   <Link to={`/product/details/${item.id}`} key={item.id}>
-                    <button className='w-full'>
+                    <button className='w-full border rounded-md'>
                       <div className='flex items-center gap-5 p-2 hover:bg-stone-100 rounded-md cursor-pointer'>
                         <div className='w-11 h-12'>
                           <LazyLoadImage

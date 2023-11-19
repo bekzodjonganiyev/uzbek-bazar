@@ -12,7 +12,6 @@ import { CustomSuspanse } from '@/components/common'
 
 import { RootState, useAppDispatch } from '@/redux'
 import { deleteCartId, setCartId } from '@/redux/actions/cart-action'
-// import { deleteWishlistId, setWishlistId } from '@/redux/actions/wishlist-action'
 import { usePost, useFetch } from '@/utils/api'
 import { getMachineId } from '@/utils/getSeesionId'
 
@@ -20,9 +19,11 @@ import { getMachineId } from '@/utils/getSeesionId'
 // type Props = {}
 
 export const Favourite = (/*props: Props*/): ReactElement => {
+    const machineId = getMachineId()
+
     const favourites = useFetch<AxiosResponse, AxiosError>(
         [`user-favourites`],
-        `favorites/?session_id=${getMachineId()}`,
+        `favorites/?session_id=${machineId}`,
         false
     )
     return (
@@ -66,6 +67,8 @@ const TableItem = (props: TableItemProps) => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const { toast } = useToast()
+
+    const machineId = getMachineId()
 
     const favouriteDelete = usePost("delete", () => {
         queryClient.invalidateQueries({ queryKey: ["user-favourites"] })
@@ -139,7 +142,7 @@ const TableItem = (props: TableItemProps) => {
                             cartMutate.mutate({
                                 url: `carts/`,
                                 data: {
-                                    session_id: getMachineId(), // TODO - login qilinganda null ketadi
+                                    session_id: machineId, // TODO - login qilinganda null ketadi
                                     quantity: 1,
                                     product: props.item.product.id,
                                     user: null // TODO - login qilinganda user_id ketadi

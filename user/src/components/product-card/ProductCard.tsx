@@ -47,6 +47,8 @@ export const ProductCard = (props: Props): ReactElement => {
     const wishlist = useSelector((state: RootState) => state.wishlist)
     const productIdsForWishlist = wishlist?.ids.map((i) => i.id)
 
+    const machineId = getMachineId()
+
     const createMutation = useMutation({
         mutationFn: (variables: { url: string, data: any }) => http().post(variables.url, variables.data),
         onSuccess: (data) => {
@@ -85,7 +87,7 @@ export const ProductCard = (props: Props): ReactElement => {
             createMutation.mutateAsync({
                 url: "favorites/",
                 data: {
-                    session_id: getMachineId(), // TODO - login qilinganda null ketadi
+                    session_id: machineId, // TODO - login qilinganda null ketadi
                     product: props.id,
                     user: null
                 }
@@ -112,7 +114,7 @@ export const ProductCard = (props: Props): ReactElement => {
             createMutation.mutateAsync({
                 url: "carts/",
                 data: {
-                    session_id: getMachineId(), // TODO - login qilinganda null ketadi
+                    session_id: machineId, // TODO - login qilinganda null ketadi
                     quantity: 1,
                     product: props.id,
                     user: null // TODO - login qilinganda user_id ketadi

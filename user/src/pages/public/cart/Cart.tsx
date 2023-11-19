@@ -15,9 +15,11 @@ import { getMachineId } from '@/utils/getSeesionId'
 
 // }
 export const Cart = (/*props: Props*/): ReactElement => {
+  const machineId = getMachineId()
+
   const carts = useFetch<AxiosResponse, AxiosError>(
     [`user-carts`],
-    `carts/?session_id=${getMachineId()}`,
+    `carts/?session_id=${machineId}`,
     false
   )
   return (
