@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
 import { Rating } from 'react-simple-star-rating'
 
-import { Carusel, ProductCard, ShowCaseCard, LikedBrands, ProductSkeleton, PageLoader } from "@/components";
+import { Carusel, ProductCard, ShowCaseCard, LikedBrands, ProductSkeleton } from "@/components";
 import { CustomSuspanse } from "@/components/common";
 import { NextItemIcon, PrevItemIcon } from "@/assets/icons";
 
