@@ -1,14 +1,15 @@
-import { useSelector } from 'react-redux';
-import { styled, ThemeProvider, useTheme } from '@mui/material/styles';
-import ReactApexChart from 'react-apexcharts';
-import { useState } from 'react';
-import Tabs from '@mui/material/Tabs';
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import { selectContrastMainTheme } from 'app/store/fuse/settingsSlice';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import { selectWidgets } from '../store/widgetsSlice';
+import { useSelector } from "react-redux";
+import { styled, ThemeProvider, useTheme } from "@mui/material/styles";
+import ReactApexChart from "react-apexcharts";
+import { useEffect, useState } from "react";
+import Tabs from "@mui/material/Tabs";
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import { selectContrastMainTheme } from "app/store/fuse/settingsSlice";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import { selectWidgets } from "../store/widgetsSlice";
+import { http } from "src/app/api/http";
 
 const Root = styled(Paper)(({ theme }) => ({
   background: theme.palette.primary.main,
@@ -17,12 +18,15 @@ const Root = styled(Paper)(({ theme }) => ({
 
 function VisitorsOverviewWidget() {
   const theme = useTheme();
-  const contrastTheme = useSelector(selectContrastMainTheme(theme.palette.primary.main));
+  const contrastTheme = useSelector(
+    selectContrastMainTheme(theme.palette.primary.main)
+  );
   const widgets = useSelector(selectWidgets);
   const { series, ranges } = widgets?.visitors;
   const [tabValue, setTabValue] = useState(0);
   const currentRange = Object.keys(ranges)[tabValue];
 
+  const [orderStat, setOrderStat] = useState({ isFetched: false, data: null });
   const chartOptions = {
     chart: {
       animations: {
@@ -31,11 +35,11 @@ function VisitorsOverviewWidget() {
           enabled: false,
         },
       },
-      fontFamily: 'inherit',
-      foreColor: 'inherit',
-      width: '100%',
-      height: '100%',
-      type: 'area',
+      fontFamily: "inherit",
+      foreColor: "inherit",
+      width: "100%",
+      height: "100%",
+      type: "area",
       toolbar: {
         show: false,
       },
@@ -59,7 +63,7 @@ function VisitorsOverviewWidget() {
         left: 0,
         right: 0,
       },
-      position: 'back',
+      position: "back",
       xaxis: {
         lines: {
           show: true,
@@ -71,9 +75,9 @@ function VisitorsOverviewWidget() {
     },
     tooltip: {
       followCursor: true,
-      theme: 'dark',
+      theme: "dark",
       x: {
-        format: 'MMM dd, yyyy',
+        format: "MMM dd, yyyy",
       },
       y: {
         formatter: (value) => `${value}`,
@@ -103,7 +107,7 @@ function VisitorsOverviewWidget() {
       tooltip: {
         enabled: false,
       },
-      type: 'datetime',
+      type: "datetime",
     },
     yaxis: {
       axisTicks: {
@@ -112,12 +116,26 @@ function VisitorsOverviewWidget() {
       axisBorder: {
         show: false,
       },
-      min: (min) => min - 1,
-      max: (max) => max + 1,
+      min: (min) => min - 10,
+      max: (max) => max + 10,
       tickAmount: 5,
       show: false,
     },
   };
+
+  useEffect(() => {
+    http(true)
+      .get("/order/monthly-order-statistics")
+      .then((res) =>
+        setOrderStat({
+          isFetched: true,
+          data: { name: "Orders", data: res.data?.data },
+        })
+      )
+      .catch((err) => console.log(err));
+  }, []);
+
+  // console.log(data)
 
   return (
     <ThemeProvider theme={contrastTheme}>
@@ -125,11 +143,11 @@ function VisitorsOverviewWidget() {
         <div className="flex items-center justify-between mt-40 ml-40 mr-24 sm:mr-40">
           <div className="flex flex-col">
             <Typography className="mr-16 text-2xl md:text-3xl font-semibold tracking-tight leading-7">
-              Visitors Overview
+              1 yilda qabul qilingan buyurtmalar
             </Typography>
-            <Typography className="font-medium" color="text.secondary">
+            {/* <Typography className="font-medium" color="text.secondary">
               Number of unique visitors
-            </Typography>
+            </Typography> */}
           </div>
           <div className="mt-12 sm:mt-0 sm:ml-8">
             <Tabs
@@ -163,12 +181,17 @@ function VisitorsOverviewWidget() {
         </div>
 
         <div className="flex flex-col flex-auto h-320">
-          <ReactApexChart
-            options={chartOptions}
-            series={series[currentRange]}
-            type={chartOptions.chart.type}
-            height={chartOptions.chart.height}
-          />
+          {
+            orderStat.isFetched 
+              ? <ReactApexChart
+                  options={chartOptions}
+                  // series={series[currentRange]}
+                  series={[orderStat.data]}
+                  type={chartOptions.chart.type}
+                  height={chartOptions.chart.height}
+              />
+           : null
+          }
         </div>
       </Root>
     </ThemeProvider>

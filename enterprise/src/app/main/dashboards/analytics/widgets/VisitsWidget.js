@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import ReactApexChart from 'react-apexcharts';
 import { useSelector } from 'react-redux';
@@ -6,11 +7,29 @@ import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { selectWidgets } from '../store/widgetsSlice';
+import { http } from 'src/app/api/http';
 
-function Impressions(props) {
+function Impressions() {
   const theme = useTheme();
   const widgets = useSelector(selectWidgets);
   const { series, amount, labels } = widgets?.visits;
+
+  const [monthlyProductCount, setMonthlyProductCount] = useState({
+    isFetched: false,
+    data: null,
+  });
+
+  useEffect(() => {
+    http(true)
+      .get("/order/last-month-cart-statistics")
+      .then((res) =>
+      setMonthlyProductCount({
+          isFetched: true,
+          data: { name: "Toatls", data: res.data?.products_count },
+        })
+      )
+      .catch((err) => console.log(err));
+  }, []);
 
   const chartOptions = {
     chart: {
@@ -39,7 +58,7 @@ function Impressions(props) {
     },
     xaxis: {
       type: 'category',
-      categories: labels,
+      categories: monthlyProductCount.isFetched && monthlyProductCount.data?.data.map(item => item.x),
     },
   };
 
@@ -47,7 +66,7 @@ function Impressions(props) {
     <Paper className="flex flex-col flex-auto shadow rounded-2xl overflow-hidden">
       <div className="flex items-start justify-between m-24 mb-0">
         <Typography className="text-lg font-medium tracking-tight leading-6 truncate">
-          Visits
+          1 oylik products_count
         </Typography>
         <div className="ml-8">
           <Chip size="small" className="font-medium text-sm" label=" 30 days" />
@@ -73,7 +92,11 @@ function Impressions(props) {
       <div className="flex flex-col flex-auto h-80">
         <ReactApexChart
           options={chartOptions}
-          series={series}
+          // series={series}
+          series={[{
+            name: monthlyProductCount.data?.name, 
+            data: monthlyProductCount.data?.data.map(item => item.y + 3)
+          }]}
           type={chartOptions.chart.type}
           height={chartOptions.chart.height}
         />

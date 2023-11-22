@@ -1,26 +1,45 @@
-import { useTheme } from '@mui/material/styles';
-import ReactApexChart from 'react-apexcharts';
-import { useSelector } from 'react-redux';
-import Paper from '@mui/material/Paper';
-import Chip from '@mui/material/Chip';
-import Typography from '@mui/material/Typography';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { selectWidgets } from '../store/widgetsSlice';
+import { useEffect, useState } from "react";
+import { useTheme } from "@mui/material/styles";
+import ReactApexChart from "react-apexcharts";
+import { useSelector } from "react-redux";
+import Paper from "@mui/material/Paper";
+import Chip from "@mui/material/Chip";
+import Typography from "@mui/material/Typography";
+import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
+import { selectWidgets } from "../store/widgetsSlice";
+import { http } from "src/app/api/http";
 
-function ConversionsWidget(props) {
+function ConversionsWidget() {
   const theme = useTheme();
   const widgets = useSelector(selectWidgets);
   const { series, amount, labels } = widgets?.conversions;
+
+  const [monthlyOrderds, setMonthlyOrders] = useState({
+    isFetched: false,
+    data: null,
+  });
+
+  useEffect(() => {
+    http(true)
+      .get("/order/last-month-cart-statistics")
+      .then((res) =>
+        setMonthlyOrders({
+          isFetched: true,
+          data: { name: "Orders", data: res.data?.orders_total },
+        })
+      )
+      .catch((err) => console.log(err));
+  }, []);
 
   const chartOptions = {
     chart: {
       animations: {
         enabled: false,
       },
-      fontFamily: 'inherit',
-      foreColor: 'inherit',
-      height: '100%',
-      type: 'area',
+      fontFamily: "inherit",
+      foreColor: "inherit",
+      height: "100%",
+      type: "area",
       sparkline: {
         enabled: true,
       },
@@ -31,15 +50,15 @@ function ConversionsWidget(props) {
       opacity: 0.5,
     },
     stroke: {
-      curve: 'smooth',
+      curve: "smooth",
     },
     tooltip: {
       followCursor: true,
-      theme: 'dark',
+      theme: "dark",
     },
     xaxis: {
-      type: 'category',
-      categories: labels,
+      type: "category",
+      categories: monthlyOrderds.isFetched && monthlyOrderds.data?.data.map(item => item.x),
     },
   };
 
@@ -47,15 +66,15 @@ function ConversionsWidget(props) {
     <Paper className="flex flex-col flex-auto shadow rounded-2xl overflow-hidden">
       <div className="flex items-start justify-between m-24 mb-0">
         <Typography className="text-lg font-medium tracking-tight leading-6 truncate">
-          Conversions
+          1 oylik buyurtmalar
         </Typography>
         <div className="ml-8">
-          <Chip size="small" className="font-medium text-sm" label=" 30 days" />
+          <Chip size="small" className="font-medium text-sm" label="30 days" />
         </div>
       </div>
       <div className="flex flex-col lg:flex-row lg:items-center mx-24 mt-12">
         <Typography className="text-7xl font-bold tracking-tighter leading-tight">
-          {amount.toLocaleString('en-US')}
+          {amount.toLocaleString("en-US")}
         </Typography>
         <div className="flex lg:flex-col lg:ml-12">
           <FuseSvgIcon size={20} className="text-red-500">
@@ -73,7 +92,11 @@ function ConversionsWidget(props) {
       <div className="flex flex-col flex-auto h-80">
         <ReactApexChart
           options={chartOptions}
-          series={series}
+          // series={series}
+          series={[{
+            name: monthlyOrderds.data?.name, 
+            data: monthlyOrderds.data?.data.map(item => item.y + 3)
+          }]}
           type={chartOptions.chart.type}
           height={chartOptions.chart.height}
         />

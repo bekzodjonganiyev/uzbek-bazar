@@ -69,9 +69,9 @@ function AnalyticsDashboardApp() {
                     <VisitsWidget />
                   </motion.div>
 
-                  <motion.div variants={item} className="sm:col-span-2 lg:col-span-3">
+                  {/* <motion.div variants={item} className="sm:col-span-2 lg:col-span-3">
                     <VisitorsVsPageViewsWidget />
-                  </motion.div>
+                  </motion.div> */}
 
                   <div className="w-full mt-16 sm:col-span-3">
                     <Typography className="text-2xl font-semibold tracking-tight leading-6">
