@@ -2,12 +2,15 @@ import { ReactElement, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { RotatingLines } from "react-loader-spinner";
+import { AxiosError, AxiosResponse } from 'axios';
 
 import { Input } from "@/components/ui/input"
 import { SearchIcon } from "@/assets/icons"
+import { ProductCard } from '@/components';
 
 import { seacrFc } from '@/utils/searchFn';
 import { CustomSuspanse } from '@/components/common';
+import { useFetch } from '@/utils/api';
 
 // type Props = {}
 
@@ -23,6 +26,8 @@ export const SearchPage = (): ReactElement => {
     data: null,
     error: null
   })
+
+  const productArr = useFetch<AxiosResponse, AxiosError>(["products"], `products/`, false)
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -65,24 +70,28 @@ export const SearchPage = (): ReactElement => {
         >
 
           {/* -----SEARCH RESULT BY CATEGORY----- */}
-          <div className='flex flex-wrap gap-2 mb-10'>
-            {
-              searchedCategoryData?.data?.length === 0 && searchedProductData?.data?.length === 0
-                ? ""
-                : searchedCategoryData?.data?.map((item: any) => (
-                  <Link
-                    key={item.id}
-                    to={{
-                      pathname: `/catalog/${item.slug}`,
-                    }}
-                    state={{ category_id: item.id }}
-                    className='py-2 px-4 rounded-lg bg-stone-100'
-                  >
-                    <button>🚧 {item.name}</button>
-                  </Link>
-                ))
-            }
-          </div>
+          {
+            searchedCategoryData?.data
+              ? <div className='flex flex-wrap gap-2 mb-10'>
+                {
+                  searchedCategoryData?.data?.length === 0 && searchedProductData?.data?.length === 0
+                    ? ""
+                    : searchedCategoryData?.data?.map((item: any) => (
+                      <Link
+                        key={item.id}
+                        to={{
+                          pathname: `/catalog/${item.slug}`,
+                        }}
+                        state={{ category_id: item.id }}
+                        className='py-2 px-4 rounded-lg bg-stone-100'
+                      >
+                        <button>🚧 {item.name}</button>
+                      </Link>
+                    ))
+                }
+              </div>
+              : null
+          }
 
           {/* -----SEARCH RESULT BY PRODUCT----- */}
           <div className='overflow-x-hidden overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-zinc-300 scrollbar-thumb-rounded-md scrollbar-thumb-r h-80  mb-10'>
@@ -111,7 +120,27 @@ export const SearchPage = (): ReactElement => {
                 ))
             }
           </div>
+          : null
+
         </CustomSuspanse>
+      </div>
+      {/* DEFAULT DATA FOR SEARCH PAGE */}
+      <div className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 grid-cols-2 sm:gap-10 gap-5">
+        {
+          productArr.data?.data.results.map((item: any) => (
+            <ProductCard
+              key={Number(item.id)}
+              id={+item.id}
+              img={item.photo}
+              price={item.price}
+              oldPrice={item.oldPice}
+              discount={item.discount}
+              productName={item.name}
+              newBadge={item.newBadge}
+              rating={item.rating ?? 2}
+            />
+          ))
+        }
       </div>
     </div>
   )
