@@ -10,12 +10,8 @@ import {
 } from "@/pages";
 import { MainContent } from "@/components/layout/MainContent";
 import { PageLoader, PrivateRoute } from "@/components";
-import { getMachineId } from "./utils/getSeesionId";
 
 function App(): JSX.Element {
-  const a = getMachineId()
-  console.log(a)
-
   return (
     <Fragment>
       <BrowserRouter>

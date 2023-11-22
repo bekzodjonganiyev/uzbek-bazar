@@ -2,15 +2,15 @@ import { ReactElement, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { RotatingLines } from "react-loader-spinner";
-import { AxiosError, AxiosResponse } from 'axios';
+// import { AxiosError, AxiosResponse } from 'axios';
 
 import { Input } from "@/components/ui/input"
 import { SearchIcon } from "@/assets/icons"
-import { ProductCard } from '@/components';
+// import { ProductCard } from '@/components';
 
 import { seacrFc } from '@/utils/searchFn';
 import { CustomSuspanse } from '@/components/common';
-import { useFetch } from '@/utils/api';
+// import { useFetch } from '@/utils/api';
 
 // type Props = {}
 
@@ -27,7 +27,7 @@ export const SearchPage = (): ReactElement => {
     error: null
   })
 
-  const productArr = useFetch<AxiosResponse, AxiosError>(["products"], `products/`, false)
+  // const productArr = useFetch<AxiosResponse, AxiosError>(["products"], `products/`, false)
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -120,12 +120,10 @@ export const SearchPage = (): ReactElement => {
                 ))
             }
           </div>
-          : null
-
         </CustomSuspanse>
       </div>
       {/* DEFAULT DATA FOR SEARCH PAGE */}
-      <div className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 grid-cols-2 sm:gap-10 gap-5">
+      {/* <div className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 grid-cols-2 sm:gap-10 gap-5">
         {
           productArr.data?.data.results.map((item: any) => (
             <ProductCard
@@ -141,7 +139,7 @@ export const SearchPage = (): ReactElement => {
             />
           ))
         }
-      </div>
+      </div> */}
     </div>
   )
 }

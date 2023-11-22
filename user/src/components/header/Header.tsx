@@ -16,8 +16,8 @@ import { currencys } from "@/utils/mocks"
 // import { seacrFc } from "@/utils/searchFn"
 // import { Input } from "../ui/input"
 import { cn } from "@/lib/utils"
-import { Button } from "../ui/button"
-import { X } from "lucide-react"
+// import { Button } from "../ui/button"
+// import { X } from "lucide-react"
 
 
 export const languages = [
@@ -33,7 +33,7 @@ export const Header = (): JSX.Element => {
   // const { pathname } = useLocation()
 
   const [open, setOpen] = useState<boolean>(false)
-  const [suggestMobile, setSuggestMobile] = useState<string>(localStorage.getItem("suggestMobile") || "true")
+  // const [suggestMobile, setSuggestMobile] = useState<string>(localStorage.getItem("suggestMobile") || "true")
   // const [searchTerm, setSearchTerm] = useState("")
   // const [searchedProductData, setSearchedProductData] = useState<any>({
   //   loading: undefined,
@@ -101,7 +101,7 @@ export const Header = (): JSX.Element => {
           {/* end::TOP HEADER */}
 
           {/* begin::SUGGEST ABOUT MOBILE APP */}
-          <div className={cn("fixed w-screen top-0 left-0 z-[9999]", suggestMobile === "true" ? "block" : "hidden")}>
+          {/* <div className={cn("fixed w-screen top-0 left-0 z-[9999]", suggestMobile === "true" ? "block" : "hidden")}>
             <div className="md:hidden flex items-center justify-between bg-card-bg py-5 container">
               <Button variant={"outline"} className="border-none bg-transparent p-0" onClick={() => {
                 setSuggestMobile("false")
@@ -115,11 +115,13 @@ export const Header = (): JSX.Element => {
               </div>
               <Button variant={"destructive"} className="w-1/6 mr-5">Yuklash</Button>
             </div>
-          </div>
+          </div> */}
           {/* end::SUGGEST ABOUT MOBILE APP */}
 
           {/* begin::MAIN HEADER */}
-          <div className={cn("flex justify-between items-center relative py-2", suggestMobile === "true" && "max-md:mt-20")}>
+          <div className={cn("flex justify-between items-center relative py-2",
+          //  suggestMobile === "true" && "max-md:mt-20"
+           )}>
             {/* |---LOGO---| */}
             <div><Link to="/">Logo</Link></div>
 

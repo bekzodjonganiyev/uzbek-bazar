@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom"
-import { Heart, Home, ShoppingCart, Store, UserIcon } from "lucide-react"
+import { Heart, Home, Search, ShoppingCart, UserIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -23,10 +23,10 @@ export const BottomNav = ({ className }: Props) => {
         </li>
 
         <li className="">
-          <NavLink to={"/sellers"} className="">
+          <NavLink to={"/search"} className="">
             <p className="flex flex-col items-center">
-              <Store color={`${pathname === "/sellers" ? "red" : "white"}`} />
-              <span className="text-white text-xs">Do'konlar</span>
+              <Search color={`${pathname === "/search" ? "red" : "white"}`} />
+              <span className="text-white text-xs">Qidiruv</span>
             </p>
           </NavLink>
         </li>
