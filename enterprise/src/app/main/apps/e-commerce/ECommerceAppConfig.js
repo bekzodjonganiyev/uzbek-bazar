@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom';
 const Product = lazy(() => import('./product/Product'));
 const Products = lazy(() => import('./products/Products'));
 const Order = lazy(() => import('./order/Order'));
+const FreshOrders = lazy(() => import('./fresh-orders/FreshOrders'))
 const Orders = lazy(() => import('./orders/Orders'));
 
 const ECommerceAppConfig = {
@@ -22,6 +23,10 @@ const ECommerceAppConfig = {
     {
       path: 'apps/e-commerce/orders',
       element: <Orders />,
+    },
+    {
+      path: 'apps/e-commerce/fresh-orders',
+      element: <FreshOrders />,
     },
     {
       path: 'apps/e-commerce/orders/:orderId',
