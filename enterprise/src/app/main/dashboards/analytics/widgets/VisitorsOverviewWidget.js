@@ -152,7 +152,8 @@ function VisitorsOverviewWidget() {
           <div className="mt-12 sm:mt-0 sm:ml-8">
             <Tabs
               value={tabValue}
-              onChange={(ev, value) => setTabValue(value)}
+              // onChange={(ev, value) => setTabValue(value)}
+              onChange={() => {}}
               indicatorColor="secondary"
               textColor="inherit"
               variant="scrollable"
@@ -168,14 +169,19 @@ function VisitorsOverviewWidget() {
                 ),
               }}
             >
-              {Object.entries(ranges).map(([key, label]) => (
+              {/* {Object.entries(ranges).map(([key, label]) => (
                 <Tab
                   className="text-14 font-semibold min-h-40 min-w-64 mx-4 px-12"
                   disableRipple
                   key={key}
                   label={label}
                 />
-              ))}
+              ))} */}
+              <Tab
+                  className="text-14 font-semibold min-h-40 min-w-64 mx-4 px-12"
+                  disableRipple
+                  label={"This year"}
+                />
             </Tabs>
           </div>
         </div>

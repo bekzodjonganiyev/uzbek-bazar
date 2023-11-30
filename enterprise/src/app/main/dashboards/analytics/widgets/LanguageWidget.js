@@ -7,12 +7,34 @@ import Chip from '@mui/material/Chip';
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 import { selectWidgets } from '../store/widgetsSlice';
+import { http } from 'src/app/api/http';
 
 function LanguageWidget(props) {
   const widgets = useSelector(selectWidgets);
   const { series, labels, uniqueVisitors } = widgets?.language;
-  const [awaitRender, setAwaitRender] = useState(true);
   const theme = useTheme();
+  
+  const [awaitRender, setAwaitRender] = useState(true);
+  const [monthlyStatByType, setMonthlyStatByType] = useState({
+    isFetched: false,
+    labels: [],
+    percents: [],
+    counts: [],
+  });
+
+  useEffect(() => {
+    http(true)
+      .get("products/statistics_by_type/")
+      .then((res) =>
+        setMonthlyStatByType({
+          isFetched: true,
+          labels: res.data?.map((item) => item.type),
+          percents: res.data?.map((item) => item.percent),
+          counts: res.data?.map((item) => item.count),
+        })
+      )
+      .catch((err) => console.log(err));
+  }, []);
 
   const chartOptions = {
     chart: {
@@ -31,7 +53,7 @@ function LanguageWidget(props) {
       },
     },
     colors: ['#805AD5', '#B794F4'],
-    labels,
+    labels: monthlyStatByType?.labels,
     plotOptions: {
       pie: {
         customScale: 0.9,
@@ -44,7 +66,7 @@ function LanguageWidget(props) {
     stroke: {
       colors: [theme.palette.background.paper],
     },
-    series,
+    series: monthlyStatByType?.counts,
     states: {
       hover: {
         filter: {
@@ -65,7 +87,7 @@ function LanguageWidget(props) {
         `<div class="flex items-center h-32 min-h-32 max-h-23 px-12">
             <div class="w-12 h-12 rounded-full" style="background-color: ${w.config.colors[seriesIndex]};"></div>
             <div class="ml-8 text-md leading-none">${w.config.labels[seriesIndex]}:</div>
-            <div class="ml-8 text-md font-bold leading-none">${w.config.series[seriesIndex]}%</div>
+            <div class="ml-8 text-md font-bold leading-none">${w.config.series[seriesIndex]} ta</div>
         </div>`,
     },
   };
@@ -81,7 +103,7 @@ function LanguageWidget(props) {
     <Paper className="flex flex-col flex-auto shadow rounded-2xl overflow-hidden p-24">
       <div className="flex flex-col sm:flex-row items-start justify-between">
         <Typography className="text-lg font-medium tracking-tight leading-6 truncate">
-          Language
+          products/statistics_by_type/
         </Typography>
         <div className="ml-8">
           <Chip size="small" className="font-medium text-sm" label=" 30 days" />
@@ -92,27 +114,27 @@ function LanguageWidget(props) {
         <ReactApexChart
           className="flex flex-auto items-center justify-center w-full h-full"
           options={chartOptions}
-          series={series}
+          series={monthlyStatByType?.counts}
           type={chartOptions.chart.type}
           height={chartOptions.chart.height}
         />
       </div>
       <div className="mt-32">
         <div className="-my-12 divide-y">
-          {series.map((dataset, i) => (
+          {monthlyStatByType.counts.map((_, i) => (
             <div className="grid grid-cols-3 py-12" key={i}>
               <div className="flex items-center">
                 <Box
                   className="flex-0 w-8 h-8 rounded-full"
                   sx={{ backgroundColor: chartOptions.colors[i] }}
                 />
-                <Typography className="ml-12 truncate">{labels[i]}</Typography>
+                <Typography className="ml-12 truncate">{monthlyStatByType.labels[i]}</Typography>
               </div>
               <Typography className="font-medium text-right">
-                {((uniqueVisitors * dataset) / 100).toLocaleString('en-US')}
+                {monthlyStatByType.counts[i]}
               </Typography>
               <Typography className="text-right" color="text.secondary">
-                {dataset}%
+                {monthlyStatByType.percents[i]}%
               </Typography>
             </div>
           ))}
