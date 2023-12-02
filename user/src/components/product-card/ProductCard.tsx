@@ -8,20 +8,17 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+import Modal from "./ProductModal";
 
 import placeholderImg from "@/assets/images/placeholder.png";
 import { CartIcon, EyeIcon, LikeIcon } from "@/assets/icons";
 
 import { useAppDispatch, RootState } from "@/redux";
 import { setCartId, deleteCartId } from "@/redux/actions/cart-action";
-import {
-  setWishlistId,
-  deleteWishlistId,
-} from "@/redux/actions/wishlist-action";
+import { setWishlistId, deleteWishlistId } from "@/redux/actions/wishlist-action";
 import { http } from "@/utils/api";
 import { getMachineId } from "@/utils/getSeesionId";
 import { cn } from "@/lib/utils";
-import Modal from "./ProductModal";
 
 type Props = {
   id: number;
