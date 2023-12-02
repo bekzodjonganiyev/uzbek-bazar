@@ -66,7 +66,7 @@ export const ProductCarusel = ({ images }: Props) => {
             images
               ? images.map((e, ind) => (
                 <SwiperSlide key={ind}>
-                  <img className="object-cover h-full w-full" src={e} alt="product image" />
+                  <img className="object-cover object-top h-full w-full" src={e} alt="product image" />
                 </SwiperSlide>
               ))
               : null
