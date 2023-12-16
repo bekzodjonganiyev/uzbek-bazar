@@ -124,6 +124,13 @@ const navigationConfig = [
             end: true,
           },
           {
+            id: 'e-commerce-fresh-orders',
+            title: 'Fresh Orders',
+            type: 'item',
+            url: 'apps/e-commerce/fresh-orders',
+            end: true,
+          },
+          {
             id: 'e-commerce-order-detail',
             title: 'Order Detail',
             type: 'item',
