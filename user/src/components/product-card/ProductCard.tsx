@@ -150,7 +150,7 @@ export const ProductCard = (props: Props): ReactElement => {
                             // effect={'blur'}
                             height="100%"
                             width="100%"
-                            className='h-full w-full object-cover'
+                            className='h-full w-full object-cover object-top'
                         />
                     </Link>
                 </div>
@@ -220,7 +220,7 @@ export const ProductCard = (props: Props): ReactElement => {
                         // effect={'blur'}
                         height="100%"
                         width="100%"
-                        className='h-full w-full object-cover'
+                        className='h-full w-full object-cover object-top'
                     />
                 </Link>
 

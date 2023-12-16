@@ -51,7 +51,7 @@ export const Carusel = (): ReactElement => {
                         banner.data?.data.results.map((item: any) => (
                             <SwiperSlide key={item.id}>
                                 <div className="w-full h-[500px] max-xl:h-[500px] max-lg:h-[400px] max-md:h-[300px] max-sm:h-fit text-black flex max-md:flex-col">
-                                    <div className="md:w-1/2"><img className="w-full h-full object-cover" src={item.image} alt="img" /></div>
+                                    <div className="md:w-1/2"><img className="w-full h-full object-cover object-top" src={item.image} alt="img" /></div>
                                     <div className="md:w-1/2 bg-red-500 flex md:items-center md:justify-center max-lg:p-4">
                                         <div className="text-white w-96">
                                             <p className="pb-4">{item.type}</p>
