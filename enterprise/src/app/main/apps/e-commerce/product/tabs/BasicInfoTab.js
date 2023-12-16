@@ -1,6 +1,7 @@
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { Controller, useFormContext } from "react-hook-form";
+import WYSIWYGEditor from "app/shared-components/WYSIWYGEditor";
 
 function BasicInfoTab(props) {
   const methods = useFormContext();
@@ -119,24 +120,10 @@ function BasicInfoTab(props) {
       </div>
 
       <Controller
-        name="desc"
+        className="mt-8 mb-16"
+        render={({ field }) => <WYSIWYGEditor {...field} />}
+        name="description"
         control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            className="mt-8 mb-16"
-            error={!!errors.desc}
-            required
-            helperText={errors?.desc?.message}
-            id="desc"
-            label="Description"
-            type="text"
-            multiline
-            rows={8}
-            variant="outlined"
-            fullWidth
-          />
-        )}
       />
 
       <Controller

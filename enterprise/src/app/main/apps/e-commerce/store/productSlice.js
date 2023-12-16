@@ -41,7 +41,9 @@ const productSlice = createSlice({
       prepare: (event) => ({
         payload: {
           id: FuseUtils.generateGUID(),
-          name: '',
+          nameUz: '',
+          nameRu: '',
+          nameEn: '',
           handle: '',
           description: '',
           categories: [],

@@ -49,7 +49,7 @@ const schema = yup.object().shape({
   minOrderCount: yup
     .number()
     .required("Minimum buyrtma sonini kiritish majburiy"),
-  desc: yup
+  description: yup
     .string()
     .required("Maxsulot haqida qisqacha malumot kiriting")
     .min(20, "Kamida 20 ta belgidan iborat malumot kiriting"),
@@ -68,7 +68,7 @@ function Product(props) {
     defaultValues: {},
     resolver: yupResolver(schema),
   });
-  const { reset, watch, control, onChange, formState } = methods;
+  const { reset, watch, control, onChange, formState, handleSubmit } = methods;
   const form = watch();
 
   useDeepCompareEffect(() => {
@@ -164,7 +164,7 @@ function Product(props) {
   }
 
   return (
-    <FormProvider {...methods}>
+    <FormProvider {...methods} handleSubmit={(e) => console.log(e)}>
       <FusePageCarded
         header={<ProductHeader />}
         content={

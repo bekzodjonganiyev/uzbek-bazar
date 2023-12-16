@@ -21,7 +21,9 @@ function ProductHeader(props) {
   const navigate = useNavigate();
 
   function handleSaveProduct() {
-    dispatch(saveProduct(getValues()));
+    // dispatch(saveProduct(getValues()));
+    const a = getValues()
+    console.log(a)
   }
 
   function handleRemoveProduct() {
