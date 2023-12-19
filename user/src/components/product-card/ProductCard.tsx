@@ -10,7 +10,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { ToastAction } from "@/components/ui/toast"
 
 import placeholderImg from "@/assets/images/placeholder.png"
-import { CartIcon, EyeIcon, LikeIcon } from '@/assets/icons'
+import { EyeIcon, LikeIcon } from '@/assets/icons'
 import { ProductCartModal } from '@/components'
 
 import { useAppDispatch, RootState } from "@/redux"
@@ -110,33 +110,33 @@ export const ProductCard = (props: Props): ReactElement => {
         }
     }
 
-    const onCart = () => {
-        if (!productIdsForCart.includes(props.id)) {
-            createMutation.mutateAsync({
-                url: "carts/",
-                data: {
-                    session_id: machineId, // TODO - login qilinganda null ketadi
-                    quantity: 1,
-                    product: props.id,
-                    user: null // TODO - login qilinganda user_id ketadi
-                }
-            })
-                .then(({ data }) => {
-                    dispatch(setCartId(props.id, data.id, ""))
-                })
+    // const onCart = () => {
+    //     if (!productIdsForCart.includes(props.id)) {
+    //         createMutation.mutateAsync({
+    //             url: "carts/",
+    //             data: {
+    //                 session_id: machineId, // TODO - login qilinganda null ketadi
+    //                 quantity: 1,
+    //                 product: props.id,
+    //                 user: null // TODO - login qilinganda user_id ketadi
+    //             }
+    //         })
+    //             .then(({ data }) => {
+    //                 dispatch(setCartId(props.id, data.id, ""))
+    //             })
 
-        } else {
-            const temp: any = cart.ids.find(item => item.id === props.id) // { id: <id>, cartId: <cartId> }
+    //     } else {
+    //         const temp: any = cart.ids.find(item => item.id === props.id) // { id: <id>, cartId: <cartId> }
 
-            deleteMutation.mutateAsync({
-                url: `carts/${temp.cartId}`,
-                data: {}
-            })
-                .then(() => {
-                    dispatch(deleteCartId(props.id, temp.cartId, ""))
-                })
-        }
-    }
+    //         deleteMutation.mutateAsync({
+    //             url: `carts/${temp.cartId}`,
+    //             data: {}
+    //         })
+    //             .then(() => {
+    //                 dispatch(deleteCartId(props.id, temp.cartId, ""))
+    //             })
+    //     }
+    // }
 
     if (props.row) {
         return (
