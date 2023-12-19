@@ -11,6 +11,7 @@ import { ToastAction } from "@/components/ui/toast"
 
 import placeholderImg from "@/assets/images/placeholder.png"
 import { CartIcon, EyeIcon, LikeIcon } from '@/assets/icons'
+import { ProductCartModal } from '@/components'
 
 import { useAppDispatch, RootState } from "@/redux"
 import { setCartId, deleteCartId } from "@/redux/actions/cart-action"
@@ -147,7 +148,7 @@ export const ProductCard = (props: Props): ReactElement => {
                             src={props.img ?? placeholderImg}
                             alt={props.productName}
                             // placeholderSrc={placeholderImg}
-                            // effect={'blur'}
+                            // effect={'black-and-white'}
                             height="100%"
                             width="100%"
                             className='h-full w-full object-cover object-top'
@@ -179,14 +180,15 @@ export const ProductCard = (props: Props): ReactElement => {
                         <div className='flex'>
                             <button className={`rounded-none border-none`} onClick={() => onLike()}><LikeIcon color={`${productIdsForWishlist?.includes(props.id) ? "#121212" : "white"}`} /></button>
                             <button className={"rounded-none border-none"}> <Link to={`/product/details/${props.id}`} className='w-full h-full flex items-center justify-center'><EyeIcon /></Link></button>
-                            <button className={`rounded-none border-none`} onClick={() => onCart()}>
+                            {/* <button className={`rounded-none border-none`} onClick={() => onCart()}>
                                 <CartIcon
                                     width={25}
                                     height={25}
                                     color={`${productIdsForCart.includes(props.id) ? "white" : "#121212"}`}
                                     type={`${productIdsForCart.includes(props.id) ? "in" : "add"}`}
                                 />
-                            </button>
+                            </button> */}
+                            <ProductCartModal img={props.img} isCartItem={productIdsForCart.includes(props.id)}/>
                         </div>
                     </div>
                 </div>
@@ -224,7 +226,7 @@ export const ProductCard = (props: Props): ReactElement => {
                     />
                 </Link>
 
-                {/* Visible on mobile */}
+                {/* Visible on mobile like btn*/}
                 <Button
                     variant={'outline'}
                     size={'icon'}
@@ -259,16 +261,17 @@ export const ProductCard = (props: Props): ReactElement => {
                         </div>
                     </div>
 
-                    {/* Visible on mobile */}
+                    {/* Visible on mobile cart btn */}
                     <div className='max-md:flex hidden w-3/12 justify-end'>
-                        <Button variant={'outline'} size={'icon'} className={`rounded-none border-none`} onClick={() => onCart()}>
+                        {/* <Button variant={'outline'} size={'icon'} className={`rounded-none border-none`} onClick={() => onCart()}>
                             <CartIcon
                                 width={20}
                                 height={20}
                                 color={`${productIdsForCart.includes(props.id) ? "white" : "#121212"}`}
                                 type={`${productIdsForCart.includes(props.id) ? "in" : "add"}`}
                             />
-                        </Button>
+                        </Button> */}
+                        <ProductCartModal img={props.img} isCartItem={productIdsForCart.includes(props.id)}/>
                     </div>
                 </div>
             </div>
@@ -279,14 +282,15 @@ export const ProductCard = (props: Props): ReactElement => {
                     {/* TODO - `test.includes(props.id)` ning o'rniga optimalroq yechim kerak */}
                     <Button variant={'outline'} size={'icon'} className={`rounded-none border-none`} onClick={() => onLike()}><LikeIcon color={`${productIdsForWishlist?.includes(props.id) ? "#121212" : "white"}`} /></Button>
                     <Button variant={'outline'} size={'icon'} className="rounded-none border-none"> <Link to={`/product/details/${props.id}`} className='w-full h-full flex items-center justify-center'><EyeIcon /></Link></Button>
-                    <Button variant={'outline'} size={'icon'} className={`rounded-none border-none`} onClick={() => onCart()}>
+                    {/* <Button variant={'outline'} size={'icon'} className={`rounded-none border-none`} onClick={() => onCart()}>
                         <CartIcon
                             width={25}
                             height={25}
                             color={`${productIdsForCart.includes(props.id) ? "white" : "#121212"}`}
                             type={`${productIdsForCart.includes(props.id) ? "in" : "add"}`}
                         />
-                    </Button>
+                    </Button> */}
+                     <ProductCartModal img={props.img} isCartItem={productIdsForCart.includes(props.id)} />
                 </div>
             </div>
         </div>
