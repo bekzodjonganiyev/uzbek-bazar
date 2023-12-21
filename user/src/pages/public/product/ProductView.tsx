@@ -14,7 +14,7 @@ import { setCartId, deleteCartId } from "@/redux/actions/cart-action"
 import { setWishlistId, deleteWishlistId } from "@/redux/actions/wishlist-action"
 import { useFetch, usePost } from "@/utils/api";
 import { cn } from "@/lib/utils";
-import { productColor, productMedia } from "@/interfaces/product";
+import { productVariable, productMedia } from "@/interfaces/product";
 import { review } from "@/interfaces/review";
 import { question } from "@/interfaces/question";
 import { getMachineId } from "@/utils/getSeesionId";
@@ -106,7 +106,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
   // HELPER FOR IMG CARUSEL
   const getActiveColor = (index: number) => {
     try {
-      const variables: productColor[] = productById.data?.data.variables;
+      const variables: productVariable[] = productById.data?.data.variables;
 
       if (variables.length > 0 && variables.length >= index) {
         return variables[index];
@@ -204,7 +204,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
               <p className="mb-[5px]">Color:</p>
               <div className="flex gap-2">
                 {productById.data?.data.variables.map(
-                  (item: productColor, ind: number) => (
+                  (item: productVariable, ind: number) => (
                     <div
                       className={`border-black rounded-full p-0.5 ${getActiveColor(activeColor) === item ? "border-2 border-dashed" : ""
                         }`}

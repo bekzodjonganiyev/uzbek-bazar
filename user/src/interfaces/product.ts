@@ -1,9 +1,15 @@
+export type productSize = {
+  id: number;
+  name: string;
+};
+
+
 export type productMedia = {
   id: number;
   file: string;
 };
 
-export type productColor = {
+export type productVariable = {
   id: number;
   color: string;
   quantity: number;

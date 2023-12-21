@@ -188,7 +188,7 @@ export const ProductCard = (props: Props): ReactElement => {
                                     type={`${productIdsForCart.includes(props.id) ? "in" : "add"}`}
                                 />
                             </button> */}
-                            <ProductCartModal img={props.img} isCartItem={productIdsForCart.includes(props.id)}/>
+                            <ProductCartModal img={props.img} isCartItem={productIdsForCart.includes(props.id)} id={props.id} />
                         </div>
                     </div>
                 </div>
@@ -271,7 +271,7 @@ export const ProductCard = (props: Props): ReactElement => {
                                 type={`${productIdsForCart.includes(props.id) ? "in" : "add"}`}
                             />
                         </Button> */}
-                        <ProductCartModal img={props.img} isCartItem={productIdsForCart.includes(props.id)}/>
+                        <ProductCartModal img={props.img} isCartItem={productIdsForCart.includes(props.id)} id={props.id} />
                     </div>
                 </div>
             </div>
@@ -290,7 +290,7 @@ export const ProductCard = (props: Props): ReactElement => {
                             type={`${productIdsForCart.includes(props.id) ? "in" : "add"}`}
                         />
                     </Button> */}
-                     <ProductCartModal img={props.img} isCartItem={productIdsForCart.includes(props.id)} />
+                     <ProductCartModal img={props.img} isCartItem={productIdsForCart.includes(props.id)} id={props.id} />
                 </div>
             </div>
         </div>
