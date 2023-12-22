@@ -37,8 +37,8 @@ export const ProductView = (/*props: Props*/): ReactElement => {
 
   const cartMutationPost = usePost("post", () => { }, () => { })
   const cartMutationDelete = usePost("delete", () => { }, () => { })
-  const wishlistMutationPost = usePost("post", () => { }, () => { })
-  const wishlistMutationDelete = usePost("delete", () => { }, () => { })
+  // const wishlistMutationPost = usePost("post", () => { }, () => { })
+  // const wishlistMutationDelete = usePost("delete", () => { }, () => { })
 
   const [activeColor, setActiveColor] = useState<number>(1);
   const [defaultImg, setDefaultImg] = useState<string[]>([]);
