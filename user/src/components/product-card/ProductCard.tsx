@@ -21,22 +21,6 @@ import { getMachineId } from "@/utils/getSeesionId"
 import { cn } from '@/lib/utils'
 import { productListType } from "@/interfaces/product"
 
-type Props = {
-    id: number,
-    img: string,
-    productName: string,
-    price: string,
-    oldPrice?: string | null,
-    rating?: number,
-    newBadge?: boolean,
-    discount?: string | null
-    gridClass?: string
-    row?: boolean
-    material?: string
-    minimumSold?: string
-    season?: string
-}
-
 export const ProductCard = (props: productListType): ReactElement => {
     const navigate = useNavigate()
     const { toast } = useToast()
