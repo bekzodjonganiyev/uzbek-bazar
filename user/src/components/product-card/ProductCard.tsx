@@ -29,7 +29,7 @@ export const ProductCard = (props: productListType): ReactElement => {
     const productIdsForCart = cart?.ids.map((i) => i.id)
 
     const wishlist = useSelector((state: RootState) => state.wishlist)
-    const isWishlist = wishlist.find(item => item.id === props.id)
+    const isWishlist = wishlist?.find(item => item.id === props.id)
 
     // const createMutation = useMutation({
     //     mutationFn: (variables: { url: string, data: any }) => http().post(variables.url, variables.data),
