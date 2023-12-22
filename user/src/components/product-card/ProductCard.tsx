@@ -19,6 +19,7 @@ import { setWishlistId, deleteWishlistId } from "@/redux/actions/wishlist-action
 import { http } from '@/utils/api'
 import { getMachineId } from "@/utils/getSeesionId"
 import { cn } from '@/lib/utils'
+import { productListType } from "@/interfaces/product"
 
 type Props = {
     id: number,
@@ -36,7 +37,7 @@ type Props = {
     season?: string
 }
 
-export const ProductCard = (props: Props): ReactElement => {
+export const ProductCard = (props: productListType): ReactElement => {
     const navigate = useNavigate()
     const { toast } = useToast()
     const dispatch = useAppDispatch()
@@ -145,8 +146,8 @@ export const ProductCard = (props: Props): ReactElement => {
                 <div className='md:w-4/12 sm:w-3/12 w-3/12 sm:h-36 h-32 max-sm:mr-3'>
                     <Link to={`/product/details/${props.id}`}>
                         <LazyLoadImage
-                            src={props.img ?? placeholderImg}
-                            alt={props.productName}
+                            src={props.photo ?? placeholderImg}
+                            alt={props.name}
                             // placeholderSrc={placeholderImg}
                             // effect={'black-and-white'}
                             height="100%"
@@ -159,7 +160,7 @@ export const ProductCard = (props: Props): ReactElement => {
                 {/* NAME, RATE, ADDITIONAL INFO */}
                 <div className='md:w-4/12 sm:w-6/12 w-4/12 max-[365px]:mr-9'>
                     <Link to={`/product/details/${props.id}`} className='hover:text-red-700'>
-                        <h3 className={cn("leading-none line-clamp-2 sm:text-base text-[14px]")}>{props.productName}</h3>
+                        <h3 className={cn("leading-none line-clamp-2 sm:text-base text-[14px]")}>{props.name}</h3>
                     </Link>
                     {
                         props.rating
@@ -168,7 +169,7 @@ export const ProductCard = (props: Props): ReactElement => {
                     }
                     <div className='flex flex-col'>
                         <div className='h-[12px]'><b className='text-xs'>Material:</b><span className='ml-1 text-xs'>{props.material}</span></div>
-                        <div className='h-[12px]'><b className='text-xs'>Minimum sold:</b><span className='ml-1 text-xs'>{props.minimumSold}</span></div>
+                        <div className='h-[12px]'><b className='text-xs'>Minimum sold:</b><span className='ml-1 text-xs'>{props.minimum_order_count}</span></div>
                         <div className='h-[12px]'><b className='text-xs'>Season:</b><span className='ml-1 text-xs'>{props.season}</span></div>
                     </div>
                 </div>
@@ -188,7 +189,7 @@ export const ProductCard = (props: Props): ReactElement => {
                                     type={`${productIdsForCart.includes(props.id) ? "in" : "add"}`}
                                 />
                             </button> */}
-                            <ProductCartModal img={props.img} isCartItem={productIdsForCart.includes(props.id)} id={props.id} />
+                            <ProductCartModal img={props.photo} isCartItem={productIdsForCart.includes(props.id)} id={props.id} />
                         </div>
                     </div>
                 </div>
@@ -200,15 +201,15 @@ export const ProductCard = (props: Props): ReactElement => {
         <div className={cn('group relative rounded-md mb-3 ')}>
 
             {/* |---POSITION ABSOLUTE ELEMENTS---| */}
-            {
+            {/* {
                 props.newBadge
                     ? <span className='absolute font-medium px-3 py-1 bg-white rounded left-2 top-2 md:text-sm text-xs'>NEW</span>
                     : null
-            }
+            } */}
 
             {
                 props.discount
-                    ? <span className={`absolute font-medium px-3 py-1 bg-green-400 text-white rounded left-2 md:text-sm text-xs ${props.newBadge ? "top-12" : "top-2"}`}>{props.discount}</span>
+                    ? <span className={`absolute font-medium px-3 py-1 bg-green-400 text-white rounded left-2 md:text-sm text-xs top-2`}>{props.discount}</span>
                     : null
             }
 
@@ -216,8 +217,8 @@ export const ProductCard = (props: Props): ReactElement => {
             <div className='w-full md:h-80 sm:h-64 h-56 relative'>
                 <Link to={`/product/details/${props.id}`}>
                     <LazyLoadImage
-                        src={props.img ?? placeholderImg}
-                        alt={props.productName}
+                        src={props.photo ?? placeholderImg}
+                        alt={props.name}
                         // placeholderSrc={placeholderImg}
                         // effect={'blur'}
                         height="100%"
@@ -250,12 +251,12 @@ export const ProductCard = (props: Props): ReactElement => {
                                 ? <Rating initialValue={props.rating ?? 2} size={20} readonly />
                                 : null
                         }
-                        <h3 className={`md:text-sm text-xs ${props.rating ? "text-left" : "text-center"} line-clamp-1`}>{props.productName}</h3>
+                        <h3 className={`md:text-sm text-xs ${props.rating ? "text-left" : "text-center"} line-clamp-1`}>{props.name}</h3>
                         <div className={`${props.rating ? "" : "justify-center"} flex gap-2`}>
                             <p className='md:text-sm text-xs'>{props.price}$</p>
                             {
-                                props.oldPrice
-                                    ? <del className='text-stone-300 font-thin md:text-sm text-xs'>{props.oldPrice}$</del>
+                                props.discount > 0
+                                    ? <del className='text-stone-300 font-thin md:text-sm text-xs'>{props.price}$</del>
                                     : null
                             }
                         </div>
@@ -271,7 +272,7 @@ export const ProductCard = (props: Props): ReactElement => {
                                 type={`${productIdsForCart.includes(props.id) ? "in" : "add"}`}
                             />
                         </Button> */}
-                        <ProductCartModal img={props.img} isCartItem={productIdsForCart.includes(props.id)} id={props.id} />
+                        <ProductCartModal img={props.photo} isCartItem={productIdsForCart.includes(props.id)} id={props.id} />
                     </div>
                 </div>
             </div>
@@ -290,7 +291,7 @@ export const ProductCard = (props: Props): ReactElement => {
                             type={`${productIdsForCart.includes(props.id) ? "in" : "add"}`}
                         />
                     </Button> */}
-                     <ProductCartModal img={props.img} isCartItem={productIdsForCart.includes(props.id)} id={props.id} />
+                     <ProductCartModal img={props.photo} isCartItem={productIdsForCart.includes(props.id)} id={props.id} />
                 </div>
             </div>
         </div>

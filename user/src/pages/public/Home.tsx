@@ -10,6 +10,7 @@ import { NextItemIcon, PrevItemIcon } from "@/assets/icons";
 
 import { useFetch } from "@/utils/api";
 import { showCase } from "@/utils/mocks"
+import { productListType } from "@/interfaces/product"
 
 export const Home = (): ReactElement => {
   const [tabs, setTabs] = useState<{ title: string, id: number | undefined }>({ title: "", id: 1 })
@@ -99,17 +100,20 @@ export const Home = (): ReactElement => {
           >
             <div className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 grid-cols-2 sm:gap-10 gap-5">
               {
-                productArr.data?.data.results.slice(0,10).map((item: any) => (
+                productArr.data?.data.results.slice(0, 10).map((item: productListType) => (
                   <ProductCard
-                    key={Number(item.id)}
-                    id={+item.id}
-                    img={item.photo}
+                    key={item.id}
+                    id={item.id}
+                    photo={item.photo}
                     price={item.price}
-                    oldPrice={item.oldPice}
+                    new_price={item.new_price}
                     discount={item.discount}
-                    productName={item.name}
-                    newBadge={item.newBadge}
+                    name={item.name}
+                    // newBadge={item.newBadge}
                     rating={item.rating ?? 2}
+                    material={item.material}
+                    minimum_order_count={item.minimum_order_count}
+                    season={item.season}
                   />
                 ))
               }

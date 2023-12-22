@@ -8,10 +8,11 @@ import 'swiper/css/pagination';
 import "./product-list-carusel.css"
 
 import { ProductCard } from '@/components/product-card/ProductCard';
+import { productListType } from '@/interfaces/product';
 
 
 type Props = {
-    array: any[],
+    array: productListType[],
     title: string
     prevElClass: string
     nextElClass: string
@@ -39,49 +40,52 @@ export const ProductsListCarusel = (props: Props) => {
                     nextEl: `${props.nextElClass}`,
                 }}
                 pagination={false}
-                modules={[ Pagination, Navigation]}
+                modules={[Pagination, Navigation]}
                 breakpoints={{
                     120: {
-                      slidesPerView: 1,
-                      spaceBetween: 24,
-                      resistanceRatio: 0.85
+                        slidesPerView: 1,
+                        spaceBetween: 24,
+                        resistanceRatio: 0.85
                     },
                     480: {
-                      slidesPerView: 2,
-                      spaceBetween: 24,
-                      resistanceRatio: 0.85
+                        slidesPerView: 2,
+                        spaceBetween: 24,
+                        resistanceRatio: 0.85
                     },
                     768: {
-                      slidesPerView: 3,
-                      spaceBetween: 28,
-                      resistanceRatio: 0.85
+                        slidesPerView: 3,
+                        spaceBetween: 28,
+                        resistanceRatio: 0.85
                     },
                     980: {
-                      slidesPerView: 4,
-                      spaceBetween: 28,
-                      resistanceRatio: 0.85
+                        slidesPerView: 4,
+                        spaceBetween: 28,
+                        resistanceRatio: 0.85
                     },
                     1280: {
-                      slidesPerView: 4,
-                      spaceBetween: 32,
-                      resistanceRatio: 0
+                        slidesPerView: 4,
+                        spaceBetween: 32,
+                        resistanceRatio: 0
                     },
-                  }}
-                
+                }}
+
             >
                 {
-                    props.array.map((i: any) => (
-                        <SwiperSlide key={i.id}>
+                    props.array.map((item: productListType) => (
+                        <SwiperSlide key={item.id}>
                             <ProductCard
-                                key={Number(i.id)}
-                                id={+i.id}
-                                img={i.photo}
-                                price={i.price}
-                                oldPrice={i.oldPice}
-                                discount={i.discount}
-                                productName={i.name}
-                                newBadge={i.newBadge}
-                                rating={i.rating}
+                                key={item.id}
+                                id={item.id}
+                                photo={item.photo}
+                                price={item.price}
+                                new_price={item.new_price}
+                                discount={item.discount}
+                                name={item.name}
+                                // newBadge={item.newBadge}
+                                rating={item.rating ?? 2}
+                                material={item.material}
+                                minimum_order_count={item.minimum_order_count}
+                                season={item.season}
                             />
                         </SwiperSlide>
                     ))

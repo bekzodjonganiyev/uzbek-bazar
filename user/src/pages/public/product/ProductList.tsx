@@ -18,6 +18,7 @@ import { setSheetContent } from "@/redux/actions"
 import { useFetch } from '@/utils/api'
 import { productSortItems } from "@/utils/mocks"
 import { cn } from '@/lib/utils';
+import { productListType } from "@/interfaces/product"
 
 // type Props = {}
 
@@ -365,21 +366,21 @@ export const ProductList = (/*props: Props*/): ReactElement => {
                         >
                             <div className={cn("grid gap-4", gridClass.class)}>
                                 {
-                                    productsByCaregory.data?.data.results.map((item: any) => (
+                                    productsByCaregory.data?.data.results.map((item: productListType) => (
                                         <ProductCard
-                                            key={Number(item.id)}
-                                            id={+item.id}
-                                            img={item.photo}
+                                            key={item.id}
+                                            id={item.id}
+                                            photo={item.photo}
                                             price={item.price}
-                                            oldPrice={item.oldPice}
+                                            new_price={item.new_price}
                                             discount={item.discount}
-                                            productName={item.name}
-                                            newBadge={item.newBadge}
+                                            name={item.name}
+                                            // newBadge={item.newBadge}
                                             rating={item.rating ?? 2}
                                             row={gridClass.row}
-                                            material={item.material?.name}
-                                            minimumSold={item.minimum_order_count}
-                                            season={item.season}
+                                            material={item.material}
+                                            minimum_order_count={item.minimum_order_count}
+                                            season={item.season}                                         
                                         />
                                     ))
                                 }
