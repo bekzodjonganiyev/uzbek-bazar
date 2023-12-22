@@ -16,7 +16,7 @@ export const MainContent = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(storeAllCarts(1, 1, ''))
-    dispatch(storeAllWishlist(1, 1, ''))
+    dispatch(storeAllWishlist())
   }, [])
 
   return (

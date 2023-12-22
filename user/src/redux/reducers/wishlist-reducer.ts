@@ -1,60 +1,35 @@
 import { WISHLIST } from "@/redux/contants";
-
-interface IWishlist {
-  ids: { id: number; wishlistId: number }[];
-  wishlistIds: number[];
-  extra: any;
-}
+import { productListType } from "@/interfaces/product";
 
 interface IAction {
   type: string;
-  payload: {
-    ids: { id: number; wishlistId: number };
-    wishlistId: number;
-    extra: any;
-  };
+  payload: productListType
 }
 
-const initialState: IWishlist = {
-  ids: [],
-  wishlistIds: [],
-  extra: null,
-};
+const initialState: productListType[] = [] 
 
 export const wishlistReducer = (state = initialState, action: IAction) => {
   switch (action.type) {
     case WISHLIST.SET: {
-      const obj = {
-        ...state,
-        ids: [...state.ids, action.payload.ids],
-        wishlistIds: [...state.wishlistIds, action.payload.wishlistId],
-        extra: action.payload.extra,
-      };
+      const arr = [
+        ...state, 
+        action.payload
+      ];
 
-      localStorage.setItem("wishlists", JSON.stringify(obj));
+      localStorage.setItem("wishlists", JSON.stringify(arr));
 
-      return obj;
+      return arr;
     }
     case WISHLIST.DEL: {
-      const arr = [...state.ids];
-      const filteredArr = arr.filter(
-        (item) => item.id !== action.payload.ids.id
-      );
+      const filteredArr = state.filter((item) => item.id !== action.payload.id);
 
-      const arr1 = [...state.wishlistIds];
-      const filteredArr1 = arr1.filter((item) => item !== action.payload.wishlistId);
+      localStorage.setItem("wishlists", JSON.stringify(filteredArr));
 
-      const obj = { ...state, ids: filteredArr, wishlistIds: filteredArr1 };
-
-      localStorage.setItem("wishlists", JSON.stringify(obj));
-
-      return obj;
+      return filteredArr;
     }
     case WISHLIST.SET_ALL: {
-      const wishlists: IWishlist = JSON.parse(localStorage.getItem("wishlists") || `{"ids":[],"wishlistIds":[],"extra":null}`);
-      if(wishlists)
-        return wishlists;
-      return initialState
+      const wishlists: productListType[] = JSON.parse(localStorage.getItem("wishlists") || `[]`);
+      return wishlists;
     }
     default:
       return state;

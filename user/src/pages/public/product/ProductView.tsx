@@ -48,32 +48,16 @@ export const ProductView = (/*props: Props*/): ReactElement => {
     ({ data: <div>{productById.data?.data.gender}</div>, id: 1 });
 
   const productIdsForCart = cart?.ids.map((i) => i.id)
-  const productIdsForWishlist = wishlist?.ids.map((i) => i.id)
   const isCart = productIdsForCart.includes(productById.data?.data.id)
-  const isWishlist = productIdsForWishlist.includes(productById.data?.data.id)
+  const isWishlist = wishlist.find(item => item.id === productById.data?.data.id)
 
   // ADD TO WISHLIST
   const addToWishlist = () => {
     if (!isWishlist) {
-      wishlistMutationPost.mutateAsync({
-        url: "favorites/",
-        data: {
-          session_id: machineId, // TODO - login qilinganda null ketadi
-          product: productById.data?.data.id,
-          user: null
-        }
-      })
-        .then(res => dispatch(setWishlistId(productById.data?.data.id, res.data.id, "")))
-        .catch(err => console.log(err))
-    } else {
-      const temp: any = wishlist.ids.find(item => item.id === productById.data?.data.id) // { id: <id>, wishlistId: <wishlistId> }
+      dispatch(setWishlistId(productById.data?.data))
 
-      wishlistMutationDelete.mutateAsync({
-        url: `favorites/${temp.wishlistId}`,
-        data: {}
-      })
-        .then(() => { dispatch(deleteWishlistId(productById.data?.data.id, temp.wishlistId, "")) })
-        .catch(err => console.log(err))
+    } else {
+      dispatch(deleteWishlistId(productById.data?.data))
     }
   }
 
@@ -284,7 +268,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
                 <text className="font-semibold">Sotuvchi:</text>
               </span>
               <Link to={`/seller/details/${sellerData?.id}`} className="text-stone-400 underline">
-                { sellerData?.name }
+                {sellerData?.name}
               </Link>
             </div>
           </div>
