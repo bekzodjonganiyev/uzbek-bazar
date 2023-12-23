@@ -24,11 +24,10 @@ import {
 import { ToastAction } from "@/components/ui/toast"
 
 import { useAppDispatch } from "@/redux"
-import { productVariable, productSize } from "@/interfaces/product"
+import { productVariable, productSize, productListType } from "@/interfaces/product"
 import { CartIcon } from '@/assets/icons'
-import { useFetch, usePost } from "@/utils/api"
+import { useFetch } from "@/utils/api"
 import { useWindowSize } from "@/utils/Hooks"
-import { getMachineId } from "@/utils/getSeesionId"
 import { cn } from "@/lib/utils"
 import { setCartId } from "@/redux/actions/cart-action"
 import { useToast } from "@/components/ui/use-toast"
@@ -36,14 +35,13 @@ import { useToast } from "@/components/ui/use-toast"
 type IProductCartModal = {
     img: string,
     isCartItem: boolean,
-    id: number
+    id: number,
+    item: productListType
 }
 
 export function ProductCartModal(props: IProductCartModal) {
-    const productById = useFetch<AxiosResponse, AxiosError>(["product-cart-modal", props.id], `products/${props.id ?? ""}`, false);
-    const productCartMutation = usePost("post", onSuccessCartPost,)
+    const productById = useFetch<AxiosResponse, AxiosError>(["product-cart-modal", props.id], `products/${props.id ?? ""}`, false, false);
     const { width } = useWindowSize();
-    const machineId = getMachineId()
     const dispatch = useAppDispatch()
     const { toast } = useToast()
 
@@ -54,19 +52,28 @@ export function ProductCartModal(props: IProductCartModal) {
 
     const onPostCart = () => {
         if (!props.isCartItem) {
-            const obj = {
-                url: "carts/",
-                data: {
-                    quantity: 1,
-                    product: props.id,
-                    session_id: machineId, // TODO - login qilinganda user_id ketadi
-                    product_variable: productVariables?.id,
-                    size: size?.id
-                }
-            }
 
             if (size && productVariables) {
-                productCartMutation.mutate(obj)
+                dispatch(setCartId(props.item))
+
+                setTimeout(() => {
+                    setOpen(false)
+                }, 300)
+        
+                setTimeout(() => {
+                    toast({
+                        description: "Maxsulot savatga qo'shildi",
+                        variant: "success",
+                        action: <ToastAction
+                            className="bg-white text-black text-xs font-bold"
+                            altText="Try again"
+                            onClick={() => window.location.replace("/cart")}
+                        >
+                            Savatga o'tish
+                        </ToastAction>,
+                    })
+                }, 400)
+        
             } else {
                 setValidateErrMsg({ color: "Rang tanlang", size: "O'lcham tanlang" })
             }
@@ -89,29 +96,6 @@ export function ProductCartModal(props: IProductCartModal) {
     useMemo(() => {
         setValidateErrMsg({ color: "", size: "" })
     }, [size, productVariables])
-
-    function onSuccessCartPost(e: AxiosResponse) {
-        const { data } = e
-        dispatch(setCartId(props.id, data.id, ""))
-
-        setTimeout(() => {
-            setOpen(false)
-        }, 300)
-
-        setTimeout(() => {
-            toast({
-                description: "Maxsulot savatga qo'shildi",
-                variant: "success",
-                action: <ToastAction
-                    className="bg-white text-black text-xs font-bold"
-                    altText="Try again"
-                    onClick={() => window.location.replace("/cart")}
-                >
-                    Savatga o'tish
-                </ToastAction>,
-            })
-        }, 400)
-    }
 
 
     const modalContent =
@@ -186,7 +170,7 @@ export function ProductCartModal(props: IProductCartModal) {
     if (width <= 640) return <div className="max-sm:block hidden">
         <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-                <Button variant="outline" size={"icon"} className="rounded-none border-none p-0">
+                <Button variant="outline" size={"icon"} onClick={() => productById.refetch()} className="rounded-none border-none p-0">
                     <CartIcon
                         width={25}
                         height={25}
@@ -212,7 +196,7 @@ export function ProductCartModal(props: IProductCartModal) {
     else return <div className="sm:block hidden">
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="outline" size={"icon"} className="rounded-none border-none p-0">
+                <Button variant="outline" size={"icon"} onClick={() => productById.refetch()} className="rounded-none border-none p-0">
                     <CartIcon
                         width={25}
                         height={25}
@@ -230,7 +214,7 @@ export function ProductCartModal(props: IProductCartModal) {
                 </DialogHeader>
                 {modalContent}
                 <DialogFooter className="mt-5">
-                    <Button onClick={onPostCart} type="submit" disabled={productCartMutation.isLoading}>Savatga qo'shish</Button>
+                    <Button onClick={onPostCart} type="submit" >Savatga qo'shish</Button>
                 </DialogFooter>
 
             </DialogContent>

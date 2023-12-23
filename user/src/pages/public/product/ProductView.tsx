@@ -12,12 +12,11 @@ import { ProductCarusel, ProductsListCarusel, ProductReview } from "@/components
 import { RootState, useAppDispatch } from "@/redux"
 import { setCartId, deleteCartId } from "@/redux/actions/cart-action"
 import { setWishlistId, deleteWishlistId } from "@/redux/actions/wishlist-action"
-import { useFetch, usePost } from "@/utils/api";
+import { useFetch } from "@/utils/api";
 import { cn } from "@/lib/utils";
 import { productVariable, productMedia } from "@/interfaces/product";
 import { review } from "@/interfaces/review";
 import { question } from "@/interfaces/question";
-import { getMachineId } from "@/utils/getSeesionId";
 
 // type Props = {}
 
@@ -27,18 +26,11 @@ export const ProductView = (/*props: Props*/): ReactElement => {
   const wishlist = useSelector((state: RootState) => state.wishlist)
   const dispatch = useAppDispatch()
 
-  const machineId = getMachineId()
-
   const productById = useFetch<AxiosResponse, AxiosError>(["product-by-id", id], `products/${id ?? ""}`, false);
   const sameProducts = useFetch<AxiosResponse, AxiosError>(["same-products", id], `products/?type=${productById.data?.data.type}&season=${productById.data?.data.season}`, false, productById.isSuccess);
   const seller = useFetch<AxiosResponse, AxiosError>(["seller", productById.data?.data.organization], `/organizations/?id=${productById.data?.data.organization}`, false, productById.isFetched);
   const questions = useFetch<AxiosResponse, AxiosError>(["ions"], "questions/", false);
   const reviews = useFetch<AxiosResponse, AxiosError>(["product_reviews"], "reviews/", false);
-
-  const cartMutationPost = usePost("post", () => { }, () => { })
-  const cartMutationDelete = usePost("delete", () => { }, () => { })
-  // const wishlistMutationPost = usePost("post", () => { }, () => { })
-  // const wishlistMutationDelete = usePost("delete", () => { }, () => { })
 
   const [activeColor, setActiveColor] = useState<number>(1);
   const [defaultImg, setDefaultImg] = useState<string[]>([]);
@@ -47,8 +39,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
   const [tabs, setTabs] = useState<{ data: ReactElement; id: number | undefined; }>
     ({ data: <div>{productById.data?.data.gender}</div>, id: 1 });
 
-  const productIdsForCart = cart?.ids.map((i) => i.id)
-  const isCart = productIdsForCart.includes(productById.data?.data.id)
+  const isCart = cart.find(item => item.id === productById.data?.data.id)
   const isWishlist = wishlist.find(item => item.id === productById.data?.data.id)
 
   // ADD TO WISHLIST
@@ -64,26 +55,9 @@ export const ProductView = (/*props: Props*/): ReactElement => {
   // ADD TO CART
   const addToCart = () => {
     if (!isCart) {
-      cartMutationPost.mutateAsync({
-        url: "carts/",
-        data: {
-          session_id: machineId, // TODO - login qilinganda null ketadi
-          quantity: 1,
-          product: productById.data?.data.id,
-          user: null // TODO - login qilinganda user_id ketadi
-        }
-      })
-        .then(res => dispatch(setCartId(productById.data?.data.id, res.data.id, "")))
-        .catch(err => console.log(err))
+      dispatch(setCartId(productById.data?.data))
     } else {
-      const temp: any = cart.ids.find(item => item.id === productById.data?.data.id) // { id: <id>, cartId: <cartId> }
-
-      cartMutationDelete.mutateAsync({
-        url: `carts/${temp.cartId}`,
-        data: {}
-      })
-        .then(() => { dispatch(deleteCartId(productById.data?.data.id, temp.cartId, "")) })
-        .catch(err => console.log(err))
+      dispatch(deleteCartId(productById.data?.data))
     }
   }
 

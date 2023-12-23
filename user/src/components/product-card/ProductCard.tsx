@@ -26,7 +26,7 @@ export const ProductCard = (props: productListType): ReactElement => {
     // const queryClient = useQueryClient()
 
     const cart = useSelector((state: RootState) => state.cart)
-    const productIdsForCart = cart?.ids.map((i) => i.id)
+    const isCart = cart?.find(item => item.id === props.id) ? true : false
 
     const wishlist = useSelector((state: RootState) => state.wishlist)
     const isWishlist = wishlist?.find(item => item.id === props.id)
@@ -122,7 +122,7 @@ export const ProductCard = (props: productListType): ReactElement => {
                             src={props.photo ?? placeholderImg}
                             alt={props.name}
                             // placeholderSrc={placeholderImg}
-                            effect={'blur'}
+                            // effect={'blur'}
                             height="100%"
                             width="100%"
                             className='h-full w-full object-cover object-top'
@@ -162,7 +162,7 @@ export const ProductCard = (props: productListType): ReactElement => {
                                     type={`${productIdsForCart.includes(props.id) ? "in" : "add"}`}
                                 />
                             </button> */}
-                            <ProductCartModal img={props.photo} isCartItem={productIdsForCart.includes(props.id)} id={props.id} />
+                            <ProductCartModal img={props.photo} isCartItem={isCart} id={props.id} item={props} />
                         </div>
                     </div>
                 </div>
@@ -193,7 +193,7 @@ export const ProductCard = (props: productListType): ReactElement => {
                         src={props.photo ?? placeholderImg}
                         alt={props.name}
                         // placeholderSrc={placeholderImg}
-                        effect={'blur'}
+                        // effect={'blur'}
                         height="100%"
                         width="100%"
                         className='h-full w-full object-cover object-top'
@@ -245,7 +245,7 @@ export const ProductCard = (props: productListType): ReactElement => {
                                 type={`${productIdsForCart.includes(props.id) ? "in" : "add"}`}
                             />
                         </Button> */}
-                        <ProductCartModal img={props.photo} isCartItem={productIdsForCart.includes(props.id)} id={props.id} />
+                        <ProductCartModal img={props.photo} isCartItem={isCart} id={props.id} item={props} />
                     </div>
                 </div>
             </div>
@@ -264,7 +264,7 @@ export const ProductCard = (props: productListType): ReactElement => {
                             type={`${productIdsForCart.includes(props.id) ? "in" : "add"}`}
                         />
                     </Button> */}
-                    <ProductCartModal img={props.photo} isCartItem={productIdsForCart.includes(props.id)} id={props.id} />
+                    <ProductCartModal img={props.photo} isCartItem={isCart} id={props.id} item={props} />
                 </div>
             </div>
         </div>

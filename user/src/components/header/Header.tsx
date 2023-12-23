@@ -147,7 +147,7 @@ export const Header = (): JSX.Element => {
 
               <SheetTrigger className="flex md:gap-1 items-center " onClick={() => dispatch(setSheetContent("right", <CartSheet />))}>
                 <ShopCardIcon />
-                <p className="bg-black rounded-full text-white text-xs md:w-6 w-5 md:h-6 h-5 flex items-center justify-center">{cart?.ids.length}</p>
+                <p className="bg-black rounded-full text-white text-xs md:w-6 w-5 md:h-6 h-5 flex items-center justify-center">{cart.length}</p>
               </SheetTrigger>
 
               <SheetTrigger className="md:hidden flex items-center justify-center" onClick={() => dispatch(setSheetContent("right", <MobileMenuSheet />))}>
