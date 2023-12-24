@@ -122,7 +122,7 @@ export const ProductCard = (props: productListType): ReactElement => {
                             src={props.photo ?? placeholderImg}
                             alt={props.name}
                             // placeholderSrc={placeholderImg}
-                            effect={'blur'}
+                            // effect={'blur'}
                             height="100%"
                             width="100%"
                             className='h-full w-full object-cover object-top'
@@ -193,7 +193,7 @@ export const ProductCard = (props: productListType): ReactElement => {
                         src={props.photo ?? placeholderImg}
                         alt={props.name}
                         // placeholderSrc={placeholderImg}
-                        effect={'blur'}
+                        // effect={'blur'}
                         height="100%"
                         width="100%"
                         className='h-full w-full object-cover object-top'
