@@ -40,7 +40,7 @@ type IProductCartModal = {
 }
 
 export function ProductCartModal(props: IProductCartModal) {
-    const productById = useFetch<AxiosResponse, AxiosError>(["product-cart-modal", props.id], `products/${props.id ?? ""}`, false);
+    const productById = useFetch<AxiosResponse, AxiosError>(["product-cart-modal", props.id], `products/${props.id ?? ""}`, false, false);
     const productCartMutation = usePost("post", onSuccessCartPost,)
     const { width } = useWindowSize();
     const machineId = getMachineId()
@@ -186,7 +186,7 @@ export function ProductCartModal(props: IProductCartModal) {
     if (width <= 640) return <div className="max-sm:block hidden">
         <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-                <Button variant="outline" size={"icon"} className="rounded-none border-none p-0">
+                <Button variant="outline" size={"icon"}onClick={() => productById.refetch()}  className="rounded-none border-none p-0">
                     <CartIcon
                         width={25}
                         height={25}
@@ -212,7 +212,7 @@ export function ProductCartModal(props: IProductCartModal) {
     else return <div className="sm:block hidden">
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="outline" size={"icon"} className="rounded-none border-none p-0">
+                <Button variant="outline" size={"icon"} onClick={() => productById.refetch()} className="rounded-none border-none p-0">
                     <CartIcon
                         width={25}
                         height={25}
