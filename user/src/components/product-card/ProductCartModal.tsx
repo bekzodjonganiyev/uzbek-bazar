@@ -77,7 +77,7 @@ export function ProductCartModal(props: IProductCartModal) {
                 variant: "success",
                 action: <ToastAction
                     className="bg-white text-black text-xs font-bold"
-                    altText="Try again"
+                    altText="Tushunarli"
                     onClick={() => setOpen(false)}
                 >
                     Tushunarli

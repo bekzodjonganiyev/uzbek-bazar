@@ -16,8 +16,6 @@ import { useFetch } from '@/utils/api'
 import { getMachineId } from '@/utils/getSeesionId'
 import { CustomSuspanse } from '../common'
 
-// interface Props {}
-
 export const CartSheet = (/*props: Props*/): ReactElement => {
     const navigate = useNavigate()
     const cart = useSelector((state: RootState) => state.cart)
@@ -29,7 +27,7 @@ export const CartSheet = (/*props: Props*/): ReactElement => {
     const totalPrice = () => {
         let summ: number = 0
         userCarts.isFetched && userCarts.data?.data?.results.forEach(
-            (item:any) => {
+            (item: any) => {
                 summ = summ + item.quantity * item.product.price
             }
         )
@@ -53,7 +51,7 @@ export const CartSheet = (/*props: Props*/): ReactElement => {
             >
                 <div className='overflow-y-scroll scrollbar-none scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100 h-[430px]'>
                     {
-                        userCarts.data?.data?.results?.map((item:any) => (
+                        userCarts.data?.data?.results?.map((item: any) => (
                             <ProductCartItem
                                 key={item.id}
                                 id={item.id}
@@ -69,13 +67,20 @@ export const CartSheet = (/*props: Props*/): ReactElement => {
             </CustomSuspanse>
 
             {/* TOTAL COUNT */}
-            <div className='rounded-lg sm:border-2 border border-[#CBCBCB] sm:p-3 p-2 w-full'>
-                <p className='font-bold sm:text-lg text-sm mb-3'>Jami</p>
-                <p className='font-medium flex justify-between mb-3 max-sm:text-xs'><span>{cart?.ids.length} ta maxsulot narxi</span> <span>${totalPrice()}</span></p>
-                <SheetClose className='w-full'><Button size={'lg'} className='w-full max-sm:text-xs' onClick={() => navigate("/checkout")}>Buyurtma berish</Button></SheetClose>
-            </div>
+            {
+                cart.ids.length > 0
+                    ? <>
+                        <div className='rounded-lg sm:border-2 border border-[#CBCBCB] sm:p-3 p-2 w-full'>
+                            <p className='font-bold sm:text-lg text-sm mb-3'>Jami</p>
+                            <p className='font-medium flex justify-between mb-3 max-sm:text-xs'><span>{cart?.ids.length} ta maxsulot narxi</span> <span>${totalPrice()}</span></p>
+                            <SheetClose className='w-full'><Button size={'lg'} className='w-full max-sm:text-xs' onClick={() => navigate("/checkout")}>Buyurtma berish</Button></SheetClose>
+                        </div>
+                        <Link to="/cart" className='border-b-2 border-black w-fit font-medium'><SheetClose>Savatni ko’rish</SheetClose></Link>
+                    </>
+                    : <p className='mb-96'>Savatingizda hech narsa yo'q</p>
+            }
 
-            <Link to="/cart" className='border-b-2 border-black w-fit font-medium'><SheetClose>Savatni ko’rish</SheetClose></Link>
+
         </aside>
     )
 }

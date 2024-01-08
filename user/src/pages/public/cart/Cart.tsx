@@ -86,7 +86,7 @@ const TableItem = (props: TableItemProps) => {
             {/*product name and info */}
             <div className='flex flex-col gap-1'>
               <h3 className='sm:text-base text-sm font-semibold line-clamp-2 w-64'>{props.item.product.name}</h3>
-              <p className='sm:text-sm text-xs'>Color: {props.item.product.color?.name ?? '|color|'}, Size: {props.item.product.size ?? "|size|"}</p>
+              <p className='sm:text-sm text-xs'>Color: {props.item.product.color?.name ?? '|color|'}, Size: {props.item.size.name ?? "|size|"}</p>
             </div>
 
             {/* delete */}

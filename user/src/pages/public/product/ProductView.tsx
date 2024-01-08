@@ -1,5 +1,5 @@
-import { ReactElement, useState, Fragment, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { ReactElement, useState, Fragment, useEffect, useMemo } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { AxiosResponse, AxiosError } from "axios";
 import { Rating } from "react-simple-star-rating";
 import { useSelector } from "react-redux";
@@ -10,19 +10,20 @@ import { CustomSuspanse } from "@/components/common";
 import { ProductCarusel, ProductsListCarusel, ProductReview } from "@/components";
 
 import { RootState, useAppDispatch } from "@/redux"
-import { setCartId, deleteCartId } from "@/redux/actions/cart-action"
+import { setCartId } from "@/redux/actions/cart-action"
 import { setWishlistId, deleteWishlistId } from "@/redux/actions/wishlist-action"
 import { useFetch, usePost } from "@/utils/api";
 import { cn } from "@/lib/utils";
-import { productVariable, productMedia } from "@/interfaces/product";
+import { productVariable, productMedia, productSize } from "@/interfaces/product";
 import { review } from "@/interfaces/review";
 import { question } from "@/interfaces/question";
 import { getMachineId } from "@/utils/getSeesionId";
-
-// type Props = {}
+import { toast } from "@/components/ui/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 
 export const ProductView = (/*props: Props*/): ReactElement => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const cart = useSelector((state: RootState) => state.cart)
   const wishlist = useSelector((state: RootState) => state.wishlist)
   const dispatch = useAppDispatch()
@@ -35,17 +36,16 @@ export const ProductView = (/*props: Props*/): ReactElement => {
   const questions = useFetch<AxiosResponse, AxiosError>(["ions"], "questions/", false);
   const reviews = useFetch<AxiosResponse, AxiosError>(["product_reviews"], "reviews/", false);
 
-  const cartMutationPost = usePost("post", () => { }, () => { })
-  const cartMutationDelete = usePost("delete", () => { }, () => { })
-  // const wishlistMutationPost = usePost("post", () => { }, () => { })
-  // const wishlistMutationDelete = usePost("delete", () => { }, () => { })
+  const cartMutationPost = usePost("post", onSuccessCartPost, () => { })
 
-  const [activeColor, setActiveColor] = useState<number>(1);
-  const [defaultImg, setDefaultImg] = useState<string[]>([]);
+  const [defaultImgs] = useState<productMedia[]>([]);
+  const [activeColor, setActiveColor] = useState<number>(0);
   const [sellerData, setSellerData] = useState<any>(null);
-  const [size, setSize] = useState<{ size: string; id: number | undefined }>({ size: "", id: undefined });
   const [tabs, setTabs] = useState<{ data: ReactElement; id: number | undefined; }>
     ({ data: <div>{productById.data?.data.gender}</div>, id: 1 });
+  const [validateErrMsg, setValidateErrMsg] = useState<{ color: string, size: string }>();
+  const [size, setSize] = useState<productSize>();
+  const [productVariables, setProductVariables] = useState<productVariable>();
 
   const productIdsForCart = cart?.ids.map((i) => i.id)
   const isCart = productIdsForCart.includes(productById.data?.data.id)
@@ -64,54 +64,58 @@ export const ProductView = (/*props: Props*/): ReactElement => {
   // ADD TO CART
   const addToCart = () => {
     if (!isCart) {
-      cartMutationPost.mutateAsync({
+      const obj = {
         url: "carts/",
         data: {
           session_id: machineId, // TODO - login qilinganda null ketadi
           quantity: 1,
           product: productById.data?.data.id,
-          user: null // TODO - login qilinganda user_id ketadi
+          product_variable: productVariables?.id,
+          size: size?.id
         }
-      })
-        .then(res => dispatch(setCartId(productById.data?.data.id, res.data.id, "")))
-        .catch(err => console.log(err))
-    } else {
-      const temp: any = cart.ids.find(item => item.id === productById.data?.data.id) // { id: <id>, cartId: <cartId> }
+      }
 
-      cartMutationDelete.mutateAsync({
-        url: `carts/${temp.cartId}`,
-        data: {}
-      })
-        .then(() => { dispatch(deleteCartId(productById.data?.data.id, temp.cartId, "")) })
-        .catch(err => console.log(err))
+      if (size && productVariables) {
+        cartMutationPost.mutate(obj)
+      } else {
+        setValidateErrMsg({ color: "Rang tanlang", size: "O'lcham tanlang" })
+      }
+
+    } else {
+      navigate("/cart")
     }
   }
 
-  // HELPER FOR IMG CARUSEL
-  const getActiveColor = (index: number) => {
+  function onSuccessCartPost(res: AxiosResponse) {
+    console.log(res.data)
+    dispatch(setCartId(productById.data?.data.id, res.data.id, ""))
+
+    setTimeout(() => {
+      toast({
+        description: "Maxsulot savatga qo'shildi",
+        variant: "success",
+        action: <ToastAction
+          className="bg-white text-black text-xs font-bold"
+          altText="Try again"
+          onClick={() => window.location.replace("/cart")}
+        >
+          Savatga o'tish
+        </ToastAction>,
+      })
+    }, 400)
+  }
+
+  const getActiveMedia = (): any[] => {
     try {
       const variables: productVariable[] = productById.data?.data.variables;
-
-      if (variables.length > 0 && variables.length >= index) {
-        return variables[index];
-      } else {
-        return false;
-      }
-    } catch {
-      return false;
-    }
-  };
-
-  const getActiveMedia = (): string[] => {
-    try {
-      const currentColor = getActiveColor(activeColor);
-      if (currentColor) {
-        const matchedMedia = currentColor.media.map((e: productMedia) => {
+      const currentColorMedias = variables.find((item: productVariable) => item.id === activeColor)
+      if (currentColorMedias) {
+        const matchedMedia = currentColorMedias.media.map((e: productMedia) => {
           return e.file;
         });
         return matchedMedia;
       } else {
-        return defaultImg;
+        return defaultImgs.map((item: productMedia) => item.file);
       }
     } catch {
       return [];
@@ -124,10 +128,21 @@ export const ProductView = (/*props: Props*/): ReactElement => {
     setSellerData(sellerData[0])
   }, [seller.isFetched])
 
+  // GET DEFAULT IMAGES
   useEffect(() => {
-    const arr = productById.isFetched && productById.data?.data.variables?.map((item: any, id: number) => item.media[id]?.file)
-    setDefaultImg(arr)
-  }, [productById.isFetched])
+    if (productById.isFetched) {
+      productById.data?.data.variables?.forEach((element: productVariable) => {
+        element.media.forEach((item: productMedia) => defaultImgs.push(item))
+      });
+    } else {
+      defaultImgs.length = 0
+    }
+  }, [productById.isFetched, id])
+
+  // Size and color change trigger
+  useMemo(() => {
+    setValidateErrMsg({ color: "", size: "" })
+  }, [size, productVariables])
 
   return (
     <div className="flex flex-col gap-16 py-10 w-[90%] mx-auto">
@@ -181,46 +196,62 @@ export const ProductView = (/*props: Props*/): ReactElement => {
                 product
               </p>
             </div>
+
             <hr />
 
-            {/* Color */}
-            <div>
-              <p className="mb-[5px]">Color:</p>
-              <div className="flex gap-2">
-                {productById.data?.data.variables.map(
-                  (item: productVariable, ind: number) => (
-                    <div
-                      className={`border-black rounded-full p-0.5 ${getActiveColor(activeColor) === item ? "border-2 border-dashed" : ""
-                        }`}
-                    >
-                      <button
-                        style={{ backgroundColor: item.color }}
-                        key={item.id}
-                        className={`p-4 border-2 rounded-full`}
-                        onClick={() => setActiveColor(ind)}
-                      ></button>
-                    </div>
-                  )
-                )}
+            <div className="md:w-1/2">
+              {/* Color */}
+              <div>
+                <p className="mb-[5px]">Color:</p>
+                <div className="flex flex-wrap gap-1 product-color">
+                  {productById.data?.data.variables.map(
+                    (item: productVariable, ind: number) => (
+                      <Fragment key={ind}>
+                        <input
+                          type="radio"
+                          name="color"
+                          id={`productSingleColor${ind}`}
+                          onChange={() => { setActiveColor(item.id); setProductVariables(item) }}
+                          className="hidden"
+                        />
+                        <label htmlFor={`productSingleColor${ind}`} className="w-8 h-8 rounded-full border-2 border-gray-200 mr-1 flex items-center justify-center group-hover:hidden">
+                          <i className="w-6 h-6 rounded-full block" style={{ backgroundColor: item.color }} />
+                        </label>
+                      </Fragment>
+                    )
+                  )}
+                </div>
+                <p className={cn("text-red-600", validateErrMsg ? "block" : "hidden")}>{validateErrMsg?.color}</p>
               </div>
-            </div>
 
-            {/* Size */}
-            <div>
-              <p className="mb-[5px]">Size:</p>
-              <div className="space-x-3">
-                {productById.data?.data?.size
-                  ? productById.data?.data?.size.map((item: any) => (
-                    <button
-                      key={item.id}
-                      className={`rounded-md p-2 border-2 ${size.id === item.id ? "border-black  border-dashed" : ""
-                        }`}
-                      onClick={() => setSize({ size: item, id: item.id })}
-                    >
-                      {item.name}
-                    </button>
-                  ))
-                  : null}
+              <br />
+
+              {/* Size  */}
+              <div>
+                <p className="my-[5px]">Size:</p>
+                <div className="flex gap-1 flex-wrap">
+                  {productById.data?.data?.size
+                    ? productById.data?.data?.size.map((item: productSize, ind: number) => (
+                      <Fragment key={ind}>
+                        <input
+                          type="radio"
+                          name="size"
+                          id={`productSingleSize${ind}`}
+                          onChange={() => setSize({ ...item })}
+                          className="hidden"
+                        />
+                        <label
+                          htmlFor={`productSingleSize${ind}`}
+                          className="w-[35px] h-[35px] border-2 overflow-hidden border-gray-400 mr-1 flex items-center justify-center group-hover:hidden cursor-pointer"
+                        >
+                          {item.name}
+                        </label>
+                      </Fragment>
+                    ))
+                    : null}
+                </div>
+                <p className={cn("text-red-600", validateErrMsg ? "block" : "hidden")}>{validateErrMsg?.size}</p>
+
               </div>
             </div>
 
@@ -230,7 +261,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
               className={cn("rounded-none py-5")}
               onClick={() => addToCart()}
             >
-              {isCart ? "Savatda" : "Savatga qo’shish"}
+              {isCart ? "Savatga o'tish" : "Savatga qo’shish"}
             </Button>
 
             <div className="flex gap-5">
