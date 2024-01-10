@@ -3,7 +3,7 @@
 export const UserProfileOrders = (/*props: Props*/) => {
   return (
     <div className="">
-        UserProfileOrders
+        Sizda buyurmalar yo'q
     </div>
   )
 }

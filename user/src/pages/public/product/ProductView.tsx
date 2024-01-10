@@ -87,7 +87,6 @@ export const ProductView = (/*props: Props*/): ReactElement => {
   }
 
   function onSuccessCartPost(res: AxiosResponse) {
-    console.log(res.data)
     dispatch(setCartId(productById.data?.data.id, res.data.id, ""))
 
     setTimeout(() => {
@@ -140,7 +139,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
   }, [productById.isFetched, id])
 
   // Size and color change trigger
-  useMemo(() => {
+  useEffect(() => {
     setValidateErrMsg({ color: "", size: "" })
   }, [size, productVariables])
 

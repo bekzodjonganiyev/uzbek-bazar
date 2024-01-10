@@ -37,7 +37,7 @@ export const UserProfile = (/*props: Props*/) => {
         <div className="py-10 flex max-md:flex-col md:gap-10 gap-5">
 
           {/* SIDEBAR */}
-          <div className="md:w-1/4 max-md:p-5 max-md:pl-0">
+          <div className="md:w-1/6 max-md:p-5 max-md:pl-0">
             <ul className="max-md:flex max-md:gap-5 max-md:[&>li>a]:bg-slate-100">
               <li className="user-profile-link__item text-gray-500 font-medium md:text-lg md:pb-2">
                 <NavLink to={"/user-profile/orders"} className="max-md:p-2 max-md:rounded-md">Buyurmalarim</NavLink>
@@ -49,7 +49,7 @@ export const UserProfile = (/*props: Props*/) => {
           </div>
 
           {/* CONTENT */}
-          <div className="md:w-3/4">
+          <div className="md:w-5/6">
             <Outlet />
           </div>
         </div>
