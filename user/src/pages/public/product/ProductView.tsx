@@ -1,4 +1,4 @@
-import { ReactElement, useState, Fragment, useEffect, useMemo } from "react";
+import { ReactElement, useState, Fragment, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { AxiosResponse, AxiosError } from "axios";
 import { Rating } from "react-simple-star-rating";
