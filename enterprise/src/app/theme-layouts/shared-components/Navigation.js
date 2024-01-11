@@ -8,6 +8,7 @@ import { navbarCloseMobile } from 'app/store/fuse/navbarSlice';
 
 function Navigation(props) {
   const navigation = useSelector(selectNavigation);
+  console.log(navigation)
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ function Navigation(props) {
         dense={props.dense}
         active={props.active}
         onItemClick={handleItemClick}
-      />
+      />  
     );
   }, [dispatch, isMobile, navigation, props.active, props.className, props.dense, props.layout]);
 }

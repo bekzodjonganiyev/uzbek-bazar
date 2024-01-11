@@ -19,7 +19,6 @@ const Root = styled(ListItem)(({ theme, itempadding, ...props }) => ({
   color: alpha(theme.palette.text.primary, 0.7),
   fontWeight: 600,
   letterSpacing: '0.025em',
-  backgroundColor: "brown"
 }));
 
 function FuseNavVerticalGroup(props) {

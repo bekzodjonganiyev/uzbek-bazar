@@ -49,6 +49,7 @@ function NavbarStyle1Content(props) {
       >
         <UserNavbarHeader />
 
+        {/* Sidebar shu yerda */}
         <Navigation layout="vertical" />
 
         <div className="flex flex-0 items-center justify-center py-48 opacity-10">
