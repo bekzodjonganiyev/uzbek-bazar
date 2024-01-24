@@ -33,30 +33,30 @@ import ProductImagesTab from "./tabs/ProductImagesTab";
  * Form Validation Schema
  */
 const schema = yup.object().shape({
-  nameUz: yup
-    .string()
-    .required("Maxsulotning nomini kiritish majburiy")
-    .min(5, "Kamida 5ta belgidan iborat bo'lishi kerak"),
-  nameRu: yup
-    .string()
-    .required("Maxsulotning nomini kiritish majburiy")
-    .min(5, "Kamida 5ta belgidan iborat bo'lishi kerak"),
-  nameEn: yup
-    .string()
-    .required("Maxsulotning nomini kiritish majburiy")
-    .min(5, "Kamida 5ta belgidan iborat bo'lishi kerak"),
-  price: yup.number().required("Maxsulotning narxi kiritish majburiy"),
-  discount: yup
-    .number()
-    .required()
-    .min(0, "Chegirma miqdori minimal 0 bo'lishi kerak"),
-  minOrderCount: yup
-    .number()
-    .required("Minimum buyrtma sonini kiritish majburiy"),
-  description: yup
-    .string()
-    .required("Maxsulot haqida qisqacha malumot kiriting")
-    .min(20, "Kamida 20 ta belgidan iborat malumot kiriting"),
+  // nameUz: yup
+  //   .string()
+  //   .required("Maxsulotning nomini kiritish majburiy")
+  //   .min(5, "Kamida 5ta belgidan iborat bo'lishi kerak"),
+  // nameRu: yup
+  //   .string()
+  //   .required("Maxsulotning nomini kiritish majburiy")
+  //   .min(5, "Kamida 5ta belgidan iborat bo'lishi kerak"),
+  // nameEn: yup
+  //   .string()
+  //   .required("Maxsulotning nomini kiritish majburiy")
+  //   .min(5, "Kamida 5ta belgidan iborat bo'lishi kerak"),
+  // price: yup.number().required("Maxsulotning narxi kiritish majburiy"),
+  // discount: yup
+  //   .number()
+  //   .required()
+  //   .min(0, "Chegirma miqdori minimal 0 bo'lishi kerak"),
+  // minOrderCount: yup
+  //   .number()
+  //   .required("Minimum buyrtma sonini kiritish majburiy"),
+  // description: yup
+  //   .string()
+  //   .required("Maxsulot haqida qisqacha malumot kiriting")
+  //   .min(20, "Kamida 20 ta belgidan iborat malumot kiriting"),
 });
 
 function Product(props) {

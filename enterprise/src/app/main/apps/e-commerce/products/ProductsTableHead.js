@@ -50,14 +50,7 @@ const rows = [
     id: 'quantity',
     align: 'right',
     disablePadding: false,
-    label: 'Quantity',
-    sort: true,
-  },
-  {
-    id: 'active',
-    align: 'right',
-    disablePadding: false,
-    label: 'Active',
+    label: 'Min Order Count',
     sort: true,
   },
 ];

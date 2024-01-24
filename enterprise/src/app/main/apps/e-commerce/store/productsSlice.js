@@ -1,20 +1,28 @@
-import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import {
+  createAsyncThunk,
+  createEntityAdapter,
+  createSlice,
+} from "@reduxjs/toolkit";
+import { http } from "../../../../api/http";
 
-export const getProducts = createAsyncThunk('eCommerceApp/products/getProducts', async () => {
-  const response = await axios.get('/api/ecommerce/products');
-  const data = await response.data;
+export const getProducts = createAsyncThunk(
+  "eCommerceApp/products/getProducts",
+  async () => {
+    const response = await http(false).get("products/");
+    console.log(response)
+    const data = await response.data?.results;
 
-  return data;
-});
+    return data;
+  }
+);
 
 export const removeProducts = createAsyncThunk(
-  'eCommerceApp/products',
-  async (productIds, { dispatch, getState }) => {
-    await axios.delete('/api/ecommerce/products', { data: productIds });
+  "eCommerceApp/products", () => console.log("all removed")
+  // async (productIds, { dispatch, getState }) => {
+  //   await axios.delete("products/", { data: productIds });
 
-    return productIds;
-  }
+  //   return productIds;
+  // }
 );
 
 const productsAdapter = createEntityAdapter({});
@@ -23,16 +31,16 @@ export const { selectAll: selectProducts, selectById: selectProductById } =
   productsAdapter.getSelectors((state) => state.eCommerceApp.products);
 
 const productsSlice = createSlice({
-  name: 'eCommerceApp/products',
+  name: "eCommerceApp/products",
   initialState: productsAdapter.getInitialState({
-    searchText: '',
+    searchText: "",
   }),
   reducers: {
     setProductsSearchText: {
       reducer: (state, action) => {
         state.searchText = action.payload;
       },
-      prepare: (event) => ({ payload: event.target.value || '' }),
+      prepare: (event) => ({ payload: event.target.value || "" }),
     },
   },
   extraReducers: {
@@ -44,6 +52,7 @@ const productsSlice = createSlice({
 
 export const { setProductsSearchText } = productsSlice.actions;
 
-export const selectProductsSearchText = ({ eCommerceApp }) => eCommerceApp.products.searchText;
+export const selectProductsSearchText = ({ eCommerceApp }) =>
+  eCommerceApp.products.searchText;
 
 export default productsSlice.reducer;

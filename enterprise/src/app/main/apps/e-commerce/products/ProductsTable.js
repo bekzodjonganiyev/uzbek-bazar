@@ -1,26 +1,31 @@
-import FuseScrollbars from '@fuse/core/FuseScrollbars';
-import _ from '@lodash';
-import Checkbox from '@mui/material/Checkbox';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import clsx from 'clsx';
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import FuseScrollbars from "@fuse/core/FuseScrollbars";
+import _ from "@lodash";
+import Checkbox from "@mui/material/Checkbox";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import clsx from "clsx";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
-import { useDispatch, useSelector } from 'react-redux';
-import withRouter from '@fuse/core/withRouter';
-import FuseLoading from '@fuse/core/FuseLoading';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { getProducts, selectProducts, selectProductsSearchText } from '../store/productsSlice';
-import ProductsTableHead from './ProductsTableHead';
+import { useDispatch, useSelector } from "react-redux";
+import withRouter from "@fuse/core/withRouter";
+import FuseLoading from "@fuse/core/FuseLoading";
+import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
+import {
+  getProducts,
+  selectProducts,
+  selectProductsSearchText,
+} from "../store/productsSlice";
+import ProductsTableHead from "./ProductsTableHead";
 
 function ProductsTable(props) {
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
+  console.log(products);
   const searchText = useSelector(selectProductsSearchText);
 
   const [loading, setLoading] = useState(true);
@@ -29,7 +34,7 @@ function ProductsTable(props) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState({
-    direction: 'asc',
+    direction: "asc",
     id: null,
   });
 
@@ -40,7 +45,9 @@ function ProductsTable(props) {
   useEffect(() => {
     if (searchText.length !== 0) {
       setData(
-        _.filter(products, (item) => item.name.toLowerCase().includes(searchText.toLowerCase()))
+        _.filter(products, (item) =>
+          item.name.toLowerCase().includes(searchText.toLowerCase())
+        )
       );
       setPage(0);
     } else {
@@ -50,10 +57,10 @@ function ProductsTable(props) {
 
   function handleRequestSort(event, property) {
     const id = property;
-    let direction = 'desc';
+    let direction = "desc";
 
-    if (order.id === property && order.direction === 'desc') {
-      direction = 'asc';
+    if (order.id === property && order.direction === "desc") {
+      direction = "asc";
     }
 
     setOrder({
@@ -147,7 +154,7 @@ function ProductsTable(props) {
               [
                 (o) => {
                   switch (order.id) {
-                    case 'categories': {
+                    case "categories": {
                       return o.categories[0];
                     }
                     default: {
@@ -172,7 +179,10 @@ function ProductsTable(props) {
                     selected={isSelected}
                     onClick={(event) => handleClick(n)}
                   >
-                    <TableCell className="w-40 md:w-64 text-center" padding="none">
+                    <TableCell
+                      className="w-40 md:w-64 text-center"
+                      padding="none"
+                    >
                       <Checkbox
                         checked={isSelected}
                         onClick={(event) => event.stopPropagation()}
@@ -186,56 +196,54 @@ function ProductsTable(props) {
                       scope="row"
                       padding="none"
                     >
-                      {n.images.length > 0 && n.featuredImageId ? (
-                        <img
-                          className="w-full block rounded"
-                          src={_.find(n.images, { id: n.featuredImageId }).url}
-                          alt={n.name}
-                        />
-                      ) : (
-                        <img
-                          className="w-full block rounded"
-                          src="assets/images/apps/ecommerce/product-image-placeholder.png"
-                          alt={n.name}
-                        />
-                      )}
-                    </TableCell>
-
-                    <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      {n.name}
-                    </TableCell>
-
-                    <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">
-                      {n.categories.join(', ')}
-                    </TableCell>
-
-                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      <span>$</span>
-                      {n.priceTaxIncl}
-                    </TableCell>
-
-                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      {n.quantity}
-                      <i
-                        className={clsx(
-                          'inline-block w-8 h-8 rounded mx-8',
-                          n.quantity <= 5 && 'bg-red',
-                          n.quantity > 5 && n.quantity <= 25 && 'bg-orange',
-                          n.quantity > 25 && 'bg-green'
-                        )}
+                      <img
+                        className="w-full block rounded"
+                        src={n.photo}
+                        alt={n.name}
                       />
                     </TableCell>
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      {n.active ? (
-                        <FuseSvgIcon className="text-green" size={20}>
-                          heroicons-outline:check-circle
-                        </FuseSvgIcon>
-                      ) : (
-                        <FuseSvgIcon className="text-red" size={20}>
-                          heroicons-outline:minus-circle
-                        </FuseSvgIcon>
-                      )}
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                    >
+                      {n.name}
+                    </TableCell>
+
+                    <TableCell
+                      className="p-4 md:p-16 truncate"
+                      component="th"
+                      scope="row"
+                    >
+                      {n.category}
+                    </TableCell>
+
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                      align="right"
+                    >
+                      <span>$</span>
+                      {n.price}
+                    </TableCell>
+
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                      align="right"
+                    >
+                      {n.minimum_order_count}
+                      {/* <i
+                        className={clsx(
+                          "inline-block w-8 h-8 rounded mx-8",
+                          n.quantity <= 5 && "bg-red",
+                          n.quantity > 5 && n.quantity <= 25 && "bg-orange",
+                          n.quantity > 25 && "bg-green"
+                        )}
+                      /> */}
                     </TableCell>
                   </TableRow>
                 );
@@ -251,10 +259,10 @@ function ProductsTable(props) {
         rowsPerPage={rowsPerPage}
         page={page}
         backIconButtonProps={{
-          'aria-label': 'Previous Page',
+          "aria-label": "Previous Page",
         }}
         nextIconButtonProps={{
-          'aria-label': 'Next Page',
+          "aria-label": "Next Page",
         }}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
