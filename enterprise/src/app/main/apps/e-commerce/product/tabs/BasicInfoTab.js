@@ -76,7 +76,7 @@ function BasicInfoTab(props) {
       {/* Maxsulot nomi 3 ta tilda */}
 
       <div className="flex gap-4">
-        {/* Maxsulot narxi */}
+        {/* Product price */}
         <Controller
           name="price"
           control={control}
@@ -95,9 +95,30 @@ function BasicInfoTab(props) {
             />
           )}
         />
-        {/* Maxsulot narxi */}
+        {/* Product price */}
 
-        {/* Minimum buyurtmalar soni */}
+        {/* Discount value */}
+        <Controller
+          name="discount"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              className="mt-8 mb-16"
+              error={!!errors.discount}
+              required
+              helperText={errors?.discount?.message}
+              id="discount"
+              label="Chegirma"
+              type="number"
+              variant="outlined"
+              fullWidth
+            />
+          )}
+        />
+        {/* Discount value */}
+
+        {/* Minimum orders count */}
         <Controller
           name="minOrderCount"
           control={control}
@@ -116,7 +137,7 @@ function BasicInfoTab(props) {
             />
           )}
         />
-        {/* Minimum buyurtmalar soni */}
+        {/* Minimum orders count */}
       </div>
 
       <Controller

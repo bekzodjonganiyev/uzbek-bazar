@@ -24,10 +24,10 @@ import {
 import reducer from "../store";
 import ProductHeader from "./ProductHeader";
 import BasicInfoTab from "./tabs/BasicInfoTab";
-import InventoryTab from "./tabs/InventoryTab";
-import PricingTab from "./tabs/PricingTab";
+// import InventoryTab from "./tabs/InventoryTab";
+// import PricingTab from "./tabs/PricingTab";
 import ProductImagesTab from "./tabs/ProductImagesTab";
-import ShippingTab from "./tabs/ShippingTab";
+// import ShippingTab from "./tabs/ShippingTab";
 
 /**
  * Form Validation Schema
@@ -46,6 +46,10 @@ const schema = yup.object().shape({
     .required("Maxsulotning nomini kiritish majburiy")
     .min(5, "Kamida 5ta belgidan iborat bo'lishi kerak"),
   price: yup.number().required("Maxsulotning narxi kiritish majburiy"),
+  discount: yup
+    .number()
+    .required()
+    .min(0, "Chegirma miqdori minimal 0 bo'lishi kerak"),
   minOrderCount: yup
     .number()
     .required("Minimum buyrtma sonini kiritish majburiy"),
@@ -178,11 +182,11 @@ function Product(props) {
               scrollButtons="auto"
               classes={{ root: "w-full h-64 border-b-1" }}
             >
-              <Tab className="h-64" label="Basic Info" />
-              <Tab className="h-64" label="Product Images" />
-              <Tab className="h-64" label="Pricing" />
-              <Tab className="h-64" label="Inventory" />
-              <Tab className="h-64" label="Shipping" />
+              <Tab className="h-64" label="Maxsulot malumotlari" />
+              <Tab className="h-64" label="Maxsulot rasmlari" />
+              {/* <Tab className="h-64" label="Pricing" /> */}
+              {/* <Tab className="h-64" label="Inventory" /> */}
+              {/* <Tab className="h-64" label="Shipping" /> */}
             </Tabs>
             <div className="p-16 sm:p-24 max-w-3xl">
               <div className={tabValue !== 0 ? "hidden" : ""}>
@@ -193,7 +197,7 @@ function Product(props) {
                 <ProductImagesTab />
               </div>
 
-              <div className={tabValue !== 2 ? "hidden" : ""}>
+              {/* <div className={tabValue !== 2 ? "hidden" : ""}>
                 <PricingTab />
               </div>
 
@@ -203,7 +207,7 @@ function Product(props) {
 
               <div className={tabValue !== 4 ? "hidden" : ""}>
                 <ShippingTab />
-              </div>
+              </div> */}
             </div>
           </>
         }
