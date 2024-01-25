@@ -99,7 +99,7 @@ function Order(props) {
             <motion.div
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1, transition: { delay: 0.3 } }}
-              className="flex flex-col items-center sm:items-start min-w-0 items-center sm:items-start"
+              className="flex flex-col items-center sm:items-start min-w-0"
             >
               <Typography className="text-20 truncate font-semibold">
                 {`Order ${order.reference}`}
