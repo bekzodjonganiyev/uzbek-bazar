@@ -1,40 +1,43 @@
-import TextField from '@mui/material/TextField';
-import { Controller, useFormContext } from 'react-hook-form';
+import TextField from "@mui/material/TextField";
+import { Controller, useFormContext } from "react-hook-form";
 
-function InventoryTab(props) {
+function EnTab(props) {
   const methods = useFormContext();
   const { control } = methods;
 
   return (
     <div>
       <Controller
-        name="sku"
+        name="name"
         control={control}
         render={({ field }) => (
           <TextField
             {...field}
             className="mt-8 mb-16"
-            required
-            label="SKU"
-            autoFocus
-            id="sku"
+            label="Maxsulto nomi inglizcha"
+            id="name"
+            type="text"
             variant="outlined"
+            autoFocus
             fullWidth
           />
         )}
       />
 
       <Controller
-        name="quantity"
+        name="desc"
         control={control}
         render={({ field }) => (
           <TextField
             {...field}
             className="mt-8 mb-16"
-            label="Quantity"
-            id="quantity"
+            label="Maxsulto haqida inglizcha"
+            id="desc"
+            type="text"
             variant="outlined"
-            type="number"
+            multiline
+            rows={10}
+            autoFocus
             fullWidth
           />
         )}
@@ -43,4 +46,4 @@ function InventoryTab(props) {
   );
 }
 
-export default InventoryTab;
+export default EnTab;

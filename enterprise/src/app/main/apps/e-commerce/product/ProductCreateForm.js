@@ -9,7 +9,7 @@ function BasicInfoTab(props) {
   const { errors } = formState;
 
   return (
-    <div>
+    <div className="p-32">
       {/* Maxsulot nomi 3 ta tilda */}
       <div className="flex gap-4">
         <Controller
@@ -140,12 +140,12 @@ function BasicInfoTab(props) {
         {/* Minimum orders count */}
       </div>
 
-      <Controller
+      {/* <Controller
         className="mt-8 mb-16"
         render={({ field }) => <WYSIWYGEditor {...field} />}
         name="description"
         control={control}
-      />
+      /> */}
 
       <Controller
         name="categories"

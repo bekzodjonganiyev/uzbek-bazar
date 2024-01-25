@@ -23,10 +23,10 @@ import {
 } from "../store/productSlice";
 import reducer from "../store";
 import ProductHeader from "./ProductHeader";
-import BasicInfoTab from "./tabs/BasicInfoTab";
+import ProductCreateForm from "./ProductCreateForm";
 // import InventoryTab from "./tabs/InventoryTab";
 // import PricingTab from "./tabs/PricingTab";
-import ProductImagesTab from "./tabs/ProductImagesTab";
+import ProductImagesTab from "./tabs/ProductVariablesTab";
 // import ShippingTab from "./tabs/ShippingTab";
 
 /**
@@ -171,9 +171,8 @@ function Product(props) {
     <FormProvider {...methods} handleSubmit={(e) => console.log(e)}>
       <FusePageCarded
         header={<ProductHeader />}
-        content={
-          <>
-            <Tabs
+        content={<ProductCreateForm />}
+            /* <Tabs
               value={tabValue}
               onChange={handleTabChange}
               indicatorColor="secondary"
@@ -184,9 +183,6 @@ function Product(props) {
             >
               <Tab className="h-64" label="Maxsulot malumotlari" />
               <Tab className="h-64" label="Maxsulot rasmlari" />
-              {/* <Tab className="h-64" label="Pricing" /> */}
-              {/* <Tab className="h-64" label="Inventory" /> */}
-              {/* <Tab className="h-64" label="Shipping" /> */}
             </Tabs>
             <div className="p-16 sm:p-24 max-w-3xl">
               <div className={tabValue !== 0 ? "hidden" : ""}>
@@ -196,21 +192,7 @@ function Product(props) {
               <div className={tabValue !== 1 ? "hidden" : ""}>
                 <ProductImagesTab />
               </div>
-
-              {/* <div className={tabValue !== 2 ? "hidden" : ""}>
-                <PricingTab />
-              </div>
-
-              <div className={tabValue !== 3 ? "hidden" : ""}>
-                <InventoryTab />
-              </div>
-
-              <div className={tabValue !== 4 ? "hidden" : ""}>
-                <ShippingTab />
-              </div> */}
-            </div>
-          </>
-        }
+            </div> */
         scroll={isMobile ? "normal" : "content"}
       />
     </FormProvider>
