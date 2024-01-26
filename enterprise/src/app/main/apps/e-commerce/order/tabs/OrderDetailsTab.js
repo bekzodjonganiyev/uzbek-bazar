@@ -22,6 +22,7 @@ function Marker(props) {
 
 function OrderDetailsTab() {
   const order = useSelector(selectOrder);
+  console.log(order, "orderdetailstab")
   const [map, setMap] = useState('shipping');
 
   return (
@@ -42,9 +43,9 @@ function OrderDetailsTab() {
                   <th>
                     <Typography className="font-semibold">Name</Typography>
                   </th>
-                  <th>
+                  {/* <th>
                     <Typography className="font-semibold">Email</Typography>
-                  </th>
+                  </th> */}
                   <th>
                     <Typography className="font-semibold">Phone</Typography>
                   </th>
@@ -57,27 +58,24 @@ function OrderDetailsTab() {
                 <tr>
                   <td>
                     <div className="flex items-center">
-                      <Avatar src={order.customer.avatar} />
+                      <Avatar src={order.user} />
                       <Typography className="truncate mx-8">
-                        {`${order.customer.firstName} ${order.customer.lastName}`}
+                        {`${order.user}`}
                       </Typography>
                     </div>
                   </td>
                   <td>
-                    <Typography className="truncate">{order.customer.email}</Typography>
+                    <Typography className="truncate">{order.phone}</Typography>
                   </td>
                   <td>
-                    <Typography className="truncate">{order.customer.phone}</Typography>
-                  </td>
-                  <td>
-                    <span className="truncate">{order.customer.company}</span>
+                    <span className="truncate">{order.user}</span>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <Accordion
+          {/* <Accordion
             className="border-0 shadow-0 overflow-hidden"
             expanded={map === 'shipping'}
             onChange={() => setMap(map !== 'shipping' ? 'shipping' : false)}
@@ -90,7 +88,7 @@ function OrderDetailsTab() {
             </AccordionSummary>
             <AccordionDetails className="flex flex-col md:flex-row -mx-8">
               <Typography className="w-full md:max-w-256 mb-16 md:mb-0 mx-8 text-16">
-                {order.customer.shippingAddress.address}
+                {order.user}
               </Typography>
               <div className="w-full h-320 rounded-16 overflow-hidden mx-8">
                 <GoogleMap
@@ -99,14 +97,14 @@ function OrderDetailsTab() {
                   }}
                   defaultZoom={15}
                   defaultCenter={[
-                    order.customer.shippingAddress.lat,
-                    order.customer.shippingAddress.lng,
+                    order.user,
+                    order.user,
                   ]}
                 >
                   <Marker
-                    text={order.customer.shippingAddress.address}
-                    lat={order.customer.shippingAddress.lat}
-                    lng={order.customer.shippingAddress.lng}
+                    text={order.user}
+                    lat={order.user}
+                    lng={order.user}
                   />
                 </GoogleMap>
               </div>
@@ -126,7 +124,7 @@ function OrderDetailsTab() {
             </AccordionSummary>
             <AccordionDetails className="flex flex-col md:flex-row -mx-8">
               <Typography className="w-full md:max-w-256 mb-16 md:mb-0 mx-8 text-16">
-                {order.customer.invoiceAddress.address}
+                {order.user}
               </Typography>
               <div className="w-full h-320 rounded-16 overflow-hidden mx-8">
                 <GoogleMap
@@ -135,19 +133,19 @@ function OrderDetailsTab() {
                   }}
                   defaultZoom={15}
                   defaultCenter={[
-                    order.customer.invoiceAddress.lat,
-                    order.customer.invoiceAddress.lng,
+                    order.user,
+                    order.user,
                   ]}
                 >
                   <Marker
-                    text={order.customer.invoiceAddress.address}
-                    lat={order.customer.invoiceAddress.lat}
-                    lng={order.customer.invoiceAddress.lng}
+                    text={order.user}
+                    lat={order.user}
+                    lng={order.user}
                   />
                 </GoogleMap>
               </div>
             </AccordionDetails>
-          </Accordion>
+          </Accordion> */}
         </div>
       </div>
 
@@ -171,16 +169,16 @@ function OrderDetailsTab() {
                 </th>
               </tr>
             </thead>
-            <tbody>
+            {/* <tbody>
               {order.status.map((status) => (
-                <tr key={status.id}>
+                <tr>
                   <td>
-                    <OrdersStatus name={status.name} />
+                    <OrdersStatus name={status} />
                   </td>
-                  <td>{status.date}</td>
+                  <td>{order.status}</td>
                 </tr>
-              ))}
-            </tbody>
+              )}
+            </tbody> */}
           </table>
         </div>
       </div>
@@ -214,16 +212,16 @@ function OrderDetailsTab() {
             <tbody>
               <tr>
                 <td>
-                  <span className="truncate">{order.payment.transactionId}</span>
+                  <span className="truncate">{order.user}</span>
                 </td>
                 <td>
-                  <span className="truncate">{order.payment.method}</span>
+                  <span className="truncate">{order.total}</span>
                 </td>
                 <td>
-                  <span className="truncate">{order.payment.amount}</span>
+                  <span className="truncate">{order.total_quantity}</span>
                 </td>
                 <td>
-                  <span className="truncate">{order.payment.date}</span>
+                  <span className="truncate">{order.created_at}</span>
                 </td>
               </tr>
             </tbody>
@@ -231,7 +229,7 @@ function OrderDetailsTab() {
         </div>
       </div>
 
-      <div className="pb-48">
+      {/* <div className="pb-48">
         <div className="pb-16 flex items-center">
           <FuseSvgIcon color="action">heroicons-outline:truck</FuseSvgIcon>
           <Typography className="h2 mx-12 font-medium" color="text.secondary">
@@ -283,7 +281,7 @@ function OrderDetailsTab() {
             </tbody>
           </table>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

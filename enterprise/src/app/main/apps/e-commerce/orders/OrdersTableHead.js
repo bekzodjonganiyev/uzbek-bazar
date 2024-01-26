@@ -26,13 +26,6 @@ const rows = [
     sort: true,
   },
   {
-    id: 'reference',
-    align: 'left',
-    disablePadding: false,
-    label: 'Reference',
-    sort: true,
-  },
-  {
     id: 'customer',
     align: 'left',
     disablePadding: false,
@@ -44,6 +37,13 @@ const rows = [
     align: 'right',
     disablePadding: false,
     label: 'Total',
+    sort: true,
+  },
+  {
+    id: 'quantity',
+    align: 'right',
+    disablePadding: false,
+    label: 'Quantity',
     sort: true,
   },
   {

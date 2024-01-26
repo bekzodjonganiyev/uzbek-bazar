@@ -5,7 +5,7 @@ import { selectOrder } from '../../store/orderSlice';
 
 function ProductsTab() {
   const order = useSelector(selectOrder);
-
+  console.log(order.order_items, "order items")
   return (
     <div className="table-responsive">
       <table className="simple">
@@ -29,11 +29,11 @@ function ProductsTab() {
           </tr>
         </thead>
         <tbody>
-          {order.products.map((product) => (
+          {order.order_items.map((product) => (
             <tr key={product.id}>
               <td className="w-64">{product.id}</td>
               <td className="w-80">
-                <img className="product-image" src={product.image} alt="product" />
+                <img className="product-image" src={product.product.photo} alt="product" />
               </td>
               <td>
                 <Typography
@@ -45,7 +45,7 @@ function ProductsTab() {
                     textDecoration: 'underline',
                   }}
                 >
-                  {product.name}
+                  {product.product.name}
                 </Typography>
               </td>
               <td className="w-64 text-right">

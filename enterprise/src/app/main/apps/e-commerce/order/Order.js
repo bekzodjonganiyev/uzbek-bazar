@@ -21,6 +21,7 @@ import ProductsTab from './tabs/ProductsTab';
 function Order(props) {
   const dispatch = useDispatch();
   const order = useSelector(selectOrder);
+  console.log(order)
   const theme = useTheme();
   const isMobile = useThemeMediaQuery((_theme) => _theme.breakpoints.down('lg'));
 
@@ -102,10 +103,10 @@ function Order(props) {
               className="flex flex-col items-center sm:items-start min-w-0 items-center sm:items-start"
             >
               <Typography className="text-20 truncate font-semibold">
-                {`Order ${order.reference}`}
+                {`Order ${order.user}`}
               </Typography>
               <Typography variant="caption" className="font-medium">
-                {`From ${order.customer.firstName} ${order.customer.lastName}`}
+                {`From ${order.user}`}
               </Typography>
             </motion.div>
           </div>

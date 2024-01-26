@@ -1,8 +1,11 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { http } from "../../../../api/http";
 
-export const getOrders = createAsyncThunk('eCommerceApp/orders/getOrders', async () => {
-  const response = await axios.get('/api/ecommerce/orders');
+export const getOrders = createAsyncThunk(
+  'eCommerceApp/orders/getOrders',
+ async () => {
+  const response = await http(true).get("/orders/");
   const data = await response.data;
 
   return data;
@@ -11,7 +14,7 @@ export const getOrders = createAsyncThunk('eCommerceApp/orders/getOrders', async
 export const removeOrders = createAsyncThunk(
   'eCommerceApp/orders/removeOrders',
   async (orderIds, { dispatch, getState }) => {
-    await axios.delete('/api/ecommerce/orders', { data: orderIds });
+    await http(true).delete('/orders/', { data: orderIds });
 
     return orderIds;
   }
