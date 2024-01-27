@@ -2,8 +2,6 @@ import FuseLoading from "@fuse/core/FuseLoading";
 import FusePageCarded from "@fuse/core/FusePageCarded";
 import { useDeepCompareEffect } from "@fuse/hooks";
 import Button from "@mui/material/Button";
-import Tab from "@mui/material/Tab";
-import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
 import withReducer from "app/store/withReducer";
 import { motion } from "framer-motion";
@@ -24,40 +22,11 @@ import {
 import reducer from "../store";
 import ProductHeader from "./ProductHeader";
 import ProductCreateForm from "./ProductCreateForm";
-// import InventoryTab from "./tabs/InventoryTab";
-// import PricingTab from "./tabs/PricingTab";
-import ProductImagesTab from "./tabs/ProductVariablesTab";
-// import ShippingTab from "./tabs/ShippingTab";
 
 /**
  * Form Validation Schema
  */
-const schema = yup.object().shape({
-  // nameUz: yup
-  //   .string()
-  //   .required("Maxsulotning nomini kiritish majburiy")
-  //   .min(5, "Kamida 5ta belgidan iborat bo'lishi kerak"),
-  // nameRu: yup
-  //   .string()
-  //   .required("Maxsulotning nomini kiritish majburiy")
-  //   .min(5, "Kamida 5ta belgidan iborat bo'lishi kerak"),
-  // nameEn: yup
-  //   .string()
-  //   .required("Maxsulotning nomini kiritish majburiy")
-  //   .min(5, "Kamida 5ta belgidan iborat bo'lishi kerak"),
-  // price: yup.number().required("Maxsulotning narxi kiritish majburiy"),
-  // discount: yup
-  //   .number()
-  //   .required()
-  //   .min(0, "Chegirma miqdori minimal 0 bo'lishi kerak"),
-  // minOrderCount: yup
-  //   .number()
-  //   .required("Minimum buyrtma sonini kiritish majburiy"),
-  // description: yup
-  //   .string()
-  //   .required("Maxsulot haqida qisqacha malumot kiriting")
-  //   .min(20, "Kamida 20 ta belgidan iborat malumot kiriting"),
-});
+const schema = yup.object().shape({});
 
 function Product(props) {
   const dispatch = useDispatch();

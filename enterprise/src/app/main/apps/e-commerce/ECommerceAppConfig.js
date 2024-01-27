@@ -6,6 +6,7 @@ const Products = lazy(() => import('./products/Products'));
 const Order = lazy(() => import('./order/Order'));
 const FreshOrders = lazy(() => import('./fresh-orders/FreshOrders'))
 const Orders = lazy(() => import('./orders/Orders'));
+const ProductVariablesForm = lazy(() => import('./product/ProductVariablesForm'));
 
 const ECommerceAppConfig = {
   settings: {
@@ -15,6 +16,10 @@ const ECommerceAppConfig = {
     {
       path: 'apps/e-commerce/products',
       element: <Products />,
+    },
+    {
+      path: 'apps/e-commerce/product/variables',
+      element: <ProductVariablesForm />,
     },
     {
       path: 'apps/e-commerce/products/:productId/*',

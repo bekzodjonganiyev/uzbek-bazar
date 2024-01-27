@@ -42,6 +42,14 @@ const navigationConfig = [
         // end: true,
       },
       {
+        id: 'e-commerce-products-variables',
+        title: 'Products variables',
+        type: 'item',
+        icon: 'heroicons-outline:hashtag',
+        url: 'apps/e-commerce/product/variables',
+        // end: true,
+      },
+      {
         id: 'e-commerce-orders',
         title: 'Orders',
         type: 'item',
