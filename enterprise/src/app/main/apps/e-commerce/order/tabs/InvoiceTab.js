@@ -41,9 +41,8 @@ const Root = styled("div")(({ theme }) => ({
 }));
 
 const InvoiceTab = (props) => {
-  
-  console.log(props.order, "invoice tab")
-  
+  console.log(props.order, "invoice tab");
+
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -78,7 +77,7 @@ const InvoiceTab = (props) => {
                           variant="h6"
                           color="inherit"
                         >
-                          {props.order.user}
+                          {/* {props.order.user} */}
                         </Typography>
                       </td>
                     </tr>
@@ -87,23 +86,18 @@ const InvoiceTab = (props) => {
                 <Typography color="text.secondary">
                   {`${props.order.user}`}
                 </Typography>
-                {/* {props.order.customer.invoiceAddress.address && (
-                  <Typography color="text.secondary">
-                    {props.order.user}
-                  </Typography>
-                )} */}
                 {props.order.phone && (
                   <Typography color="text.secondary">
-                    {props.order.phone}
+                    {/* {props.order.phone} */}
                   </Typography>
                 )}
                 {props.order.user && (
                   <Typography color="text.secondary">
-                    {props.order.user}
+                    {/* {props.order.user} */}
                   </Typography>
                 )}
               </div>
-              {/* <div className="seller flex items-center p-16">
+              <div className="seller flex items-center p-16">
                 <img
                   className="w-80"
                   src="assets/images/logo/logo.svg"
@@ -122,16 +116,16 @@ const InvoiceTab = (props) => {
                   <Typography color="inherit">hello@fuseinc.com</Typography>
                   <Typography color="inherit">www.fuseinc.com</Typography>
                 </div>
-              </div> */}
+              </div>
             </div>
             <div className="mt-64">
               <Table className="simple">
                 <TableHead>
                   <TableRow>
-                    <TableCell>PRODUCT</TableCell>
-                    <TableCell>PRICE</TableCell>
-                    <TableCell align="right">QUANTITY</TableCell>
-                    <TableCell align="right">TOTAL</TableCell>
+                    <TableCell>MAHSULOT</TableCell>
+                    <TableCell>NARXI</TableCell>
+                    <TableCell align="right">MIQDORI</TableCell>
+                    <TableCell align="right">UMUMIY</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -156,66 +150,6 @@ const InvoiceTab = (props) => {
 
               <Table className="simple mt-32">
                 <TableBody>
-                  <TableRow>
-                    <TableCell>
-                      <Typography
-                        className="font-normal"
-                        variant="subtitle1"
-                        color="text.secondary"
-                      >
-                        SUBTOTAL
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="right">
-                      <Typography
-                        className="font-normal"
-                        variant="subtitle1"
-                        color="text.secondary"
-                      >
-                        {formatter.format(props.order.total)}
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <Typography
-                        className="font-normal"
-                        variant="subtitle1"
-                        color="text.secondary"
-                      >
-                        TAX
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="right">
-                      <Typography
-                        className="font-normal"
-                        variant="subtitle1"
-                        color="text.secondary"
-                      >
-                        {formatter.format(props.order.total)}
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <Typography
-                        className="font-normal"
-                        variant="subtitle1"
-                        color="text.secondary"
-                      >
-                        DISCOUNT
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="right">
-                      <Typography
-                        className="font-normal"
-                        variant="subtitle1"
-                        color="text.secondary"
-                      >
-                        {formatter.format(props.order.total)}
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
                   <TableRow>
                     <TableCell>
                       <Typography

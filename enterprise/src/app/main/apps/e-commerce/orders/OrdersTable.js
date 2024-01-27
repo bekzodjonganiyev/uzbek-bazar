@@ -28,8 +28,9 @@ function OrdersTable(props) {
 
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState([]);
+
   const [data, setData] = useState(orders);
-  console.log(data);
+  console.log(data, "from orders.js");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState({
@@ -169,7 +170,7 @@ function OrdersTable(props) {
                   </TableCell>
 
                   <TableCell className="p-4 md:p-16" component="th" scope="row">
-                    {n.id}
+                    {/* {n.id} */}
                   </TableCell>
 
                   <TableCell className="p-4 md:p-16" component="th" scope="row">
@@ -177,20 +178,14 @@ function OrdersTable(props) {
                   </TableCell>
 
                   <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">
+                      <span>$</span>
                       {`${n.total}`}
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      <span>$</span>
                       {n.total_quantity}
                     </TableCell>
-
-
-                    <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      <OrdersStatus name={n.total_quantity} />
-                    </TableCell>
                     
-
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
                       {n.status}
                     </TableCell>

@@ -15,16 +15,16 @@ function ProductsTab() {
               <Typography className="font-semibold">ID</Typography>
             </th>
             <th>
-              <Typography className="font-semibold">Image</Typography>
+              <Typography className="font-semibold">Rasm</Typography>
             </th>
             <th>
-              <Typography className="font-semibold">Name</Typography>
+              <Typography className="font-semibold">Nomi</Typography>
             </th>
             <th>
-              <Typography className="font-semibold">Price</Typography>
+              <Typography className="font-semibold">Narxi</Typography>
             </th>
             <th>
-              <Typography className="font-semibold">Quantity</Typography>
+              <Typography className="font-semibold">Miqdori</Typography>
             </th>
           </tr>
         </thead>
