@@ -8,13 +8,13 @@ function AnalyticsDashboardAppHeader(props) {
       <div className="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 p-24 md:p-32 pb-0 md:pb-0">
         <div className="flex flex-col flex-auto">
           <Typography className="text-3xl font-semibold tracking-tight leading-8">
-            Analytics dashboard
+            Umumiy statistika
           </Typography>
           <Typography className="font-medium tracking-tight" color="text.secondary">
-            Monitor metrics, check reports and review performance
+            Buyurtmalar, ro'yxatdan o'tgan foydalanuvchilar, oylik va yillik staistika 
           </Typography>
         </div>
-        <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
+        {/* <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
           <Button
             className="whitespace-nowrap"
             startIcon={<FuseSvgIcon size={20}>heroicons-solid:cog</FuseSvgIcon>}
@@ -29,7 +29,7 @@ function AnalyticsDashboardAppHeader(props) {
           >
             Export
           </Button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
