@@ -8,14 +8,14 @@ function EnTab(props) {
   return (
     <div>
       <Controller
-        name="name"
+        name="nameEn"
         control={control}
         render={({ field }) => (
           <TextField
             {...field}
             className="mt-8 mb-16"
             label="Maxsulto nomi inglizcha"
-            id="name"
+            id="nameEn"
             type="text"
             variant="outlined"
             autoFocus
@@ -25,14 +25,14 @@ function EnTab(props) {
       />
 
       <Controller
-        name="desc"
+        name="descEn"
         control={control}
         render={({ field }) => (
           <TextField
             {...field}
             className="mt-8 mb-16"
             label="Maxsulto haqida inglizcha"
-            id="desc"
+            id="descEn"
             type="text"
             variant="outlined"
             multiline

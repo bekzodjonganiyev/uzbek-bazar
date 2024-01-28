@@ -8,14 +8,14 @@ function UzTab(props) {
   return (
     <div>
       <Controller
-        name="name"
+        name="nameUz"
         control={control}
         render={({ field }) => (
           <TextField
             {...field}
             className="mt-8 mb-16"
             label="Maxsulto nomi o'zbekcha"
-            id="name"
+            id="nameUz"
             type="text"
             variant="outlined"
             autoFocus
@@ -25,14 +25,14 @@ function UzTab(props) {
       />
 
       <Controller
-        name="desc"
+        name="descUz"
         control={control}
         render={({ field }) => (
           <TextField
             {...field}
             className="mt-8 mb-16"
             label="Maxsulto haqida o'zbekcha"
-            id="desc"
+            id="descUz"
             type="text"
             variant="outlined"
             multiline

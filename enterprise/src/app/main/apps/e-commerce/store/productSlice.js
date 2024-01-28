@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { http } from 'src/app/api/http';
 import FuseUtils from '@fuse/utils';
 
 export const getProduct = createAsyncThunk('eCommerceApp/product/getProduct', async (productId) => {
@@ -20,10 +21,8 @@ export const removeProduct = createAsyncThunk(
 
 export const saveProduct = createAsyncThunk(
   'eCommerceApp/product/saveProduct',
-  async (productData, { dispatch, getState }) => {
-    const { id } = getState().eCommerceApp;
-
-    const response = await axios.put(`/api/ecommerce/products/${id}`, productData);
+  async (productData) => {
+    const response = await http(true).post(`/products/`, productData);
 
     const data = await response.data;
 
@@ -41,16 +40,8 @@ const productSlice = createSlice({
       prepare: (event) => ({
         payload: {
           id: FuseUtils.generateGUID(),
-          nameUz: '',
-          nameRu: '',
-          nameEn: '',
-          handle: '',
-          descriptionUz: '',
-          descriptionRu: '',
-          descriptionEn: '',
           images: [],
-          quantity: 0,
-          minimumOrderCount: 0,
+          translations: {},
           price: 0,
           discount: 0,
           gender: "",

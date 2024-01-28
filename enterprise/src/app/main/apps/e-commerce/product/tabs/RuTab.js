@@ -8,14 +8,14 @@ function RuTab(props) {
   return (
     <div>
       <Controller
-        name="name"
+        name="nameRu"
         control={control}
         render={({ field }) => (
           <TextField
             {...field}
             className="mt-8 mb-16"
             label="Maxsulto nomi ruscha"
-            id="name"
+            id="nameRu"
             type="text"
             variant="outlined"
             autoFocus
@@ -25,14 +25,14 @@ function RuTab(props) {
       />
 
       <Controller
-        name="desc"
+        name="descRu"
         control={control}
         render={({ field }) => (
           <TextField
             {...field}
             className="mt-8 mb-16"
             label="Maxsulto haqida ruscha"
-            id="desc"
+            id="descRu"
             type="text"
             variant="outlined"
             multiline
