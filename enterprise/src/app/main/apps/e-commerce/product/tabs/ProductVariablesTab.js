@@ -137,7 +137,8 @@
 // export default ProductVariablesTab;
 
 import React, { useEffect, useState } from "react";
-import { getter } from "../ProductVariablesForm";
+import { getter, poster } from "../ProductVariablesForm";
+import { http } from "src/app/api/http";
 
 const ProductVariablesTab = () => {
   const uniqueId = Date.now();
@@ -145,41 +146,71 @@ const ProductVariablesTab = () => {
   const [colors, setColors] = useState([]);
 
   useEffect(() => {
-    getter("colors/", setColors, false)
-  }, [])
+    getter("colors/", setColors, false);
+  }, []);
 
-  console.log(colors)
+  console.log(colors);
 
   return (
     <ul className="">
-      <h3 className="text-xl font-medium mt-20">Maxsulot media malumotlarni biriktiring</h3>
+      <h3 className="text-xl font-medium mt-20">
+        Maxsulot media malumotlarni biriktiring
+      </h3>
       <p className="text-grey-400 mb-20">Rang, maxsulot soni va rasm</p>
       {items.map((media) => (
-        <li
+        <VariableItem
           key={media}
-          className=" py-10 shadow-md rounded-md px-14 flex justify-between gap-20 mb-20"
-        >
-          <select>
-            <option value="" hidden>---</option>
-            {
-              !colors?.loading && colors?.data?.results?.map(item => (<option>{item?.name}</option>))
-            }
-          </select>
-          <p>quantity{media}</p>
-          <p>rasm{media}</p>
-          <button
-            onClick={() => {
-              const filteredItem = items.filter((item) => item !== media);
-              setItem(filteredItem);
-            }}
-          >
-            X
-          </button>
-        </li>
+          colors={colors}
+          deleteItem={() => {
+            const filteredItem = items.filter((item) => item !== media);
+            setItem(filteredItem);
+          }}
+        />
       ))}
-      <button className="text-center bg-red-400 text-white font-medium rounded-md px-20 py-10 block mx-auto" onClick={() => setItem([...items, uniqueId])}>Yana qo'shish</button>
+      <button
+        className="text-center bg-red-400 text-white font-medium rounded-md px-20 py-10 block mx-auto"
+        onClick={() => setItem([...items, uniqueId])}
+      >
+        Yana qo'shish
+      </button>
     </ul>
   );
 };
 
 export default ProductVariablesTab;
+
+const VariableItem = ({ colors, deleteItem }) => {
+  const [file, setFile] = useState([]);
+
+  const handleFile = (e) => {
+    const file = e.target.files[0];
+
+    const fm = new FormData();
+    fm.append("file", file);
+
+    if (file) {
+      poster("write_file/", fm, ({data}) => setFile(prev => ([...prev, data?.msg])), () => alert("Nomalum xatolik"));
+    } else {
+      alert("Fayl tanlang");
+    }
+  };
+
+  return (
+    <li className=" py-10 shadow-md rounded-md px-14 flex justify-between gap-20 mb-20">
+      <select>
+        <option value="" hidden>
+          Rang tanlang
+        </option>
+        {!colors?.loading &&
+          colors?.data?.results?.map((item) => <option>{item?.name}</option>)}
+      </select>
+      <label htmlFor="product-quantity">
+        <input type="number" />
+      </label>
+      <label htmlFor="product-image">
+        <input type="file" name="file" onChange={handleFile} />
+      </label>
+      <button onClick={() => deleteItem()}>X</button>
+    </li>
+  );
+};

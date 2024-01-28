@@ -10,7 +10,7 @@ export async function poster(url, data, onSuccess, onError) {
       return;
     }
 
-    onSuccess();
+    onSuccess(res);
   } catch (error) {
     onError();
     throw new Error("Server bilan aloqa uzildi");
