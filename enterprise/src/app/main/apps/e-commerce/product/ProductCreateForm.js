@@ -205,7 +205,7 @@ function BasicInfoTab(props) {
           control={control}
           render={({ field }) => (
             <TextField
-              className="w-1/3"
+              className="w-1/4"
               select
               fullWidth
               defaultValue=""
@@ -227,7 +227,7 @@ function BasicInfoTab(props) {
           render={({ field: { ref, onChange, value } }) => {
             return (
               <Autocomplete
-                className="mt-8 mb-16"
+                className="w-1/4"
                 multiple
                 /**
                  * Autocomplete da multiselect funksiyasini tog'ri ishlashi uchun
@@ -273,6 +273,7 @@ function BasicInfoTab(props) {
           render={({ field }) => (
             <TextField
               {...field}
+              className="w-1/4"
               select
               placeholder="Mavsumni tanlang"
               label="Mavsum"
@@ -296,6 +297,7 @@ function BasicInfoTab(props) {
           render={({ field }) => (
             <TextField
               {...field}
+              className="w-1/4"
               select
               placeholder="Bir nechta material tanglang"
               label="Material"
