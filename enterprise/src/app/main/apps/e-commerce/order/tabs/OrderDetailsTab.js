@@ -22,6 +22,7 @@ function Marker(props) {
 
 function OrderDetailsTab() {
   const order = useSelector(selectOrder);
+  console.log(order, "orderdetailstab")
   const [map, setMap] = useState('shipping');
 
   return (
@@ -30,7 +31,7 @@ function OrderDetailsTab() {
         <div className="pb-16 flex items-center">
           <FuseSvgIcon color="action">heroicons-outline:user-circle</FuseSvgIcon>
           <Typography className="h2 mx-12 font-medium" color="text.secondary">
-            Customer
+            Mijoz
           </Typography>
         </div>
 
@@ -40,122 +41,47 @@ function OrderDetailsTab() {
               <thead>
                 <tr>
                   <th>
-                    <Typography className="font-semibold">Name</Typography>
+                    <Typography className="font-semibold">Ism Familiya</Typography>
                   </th>
-                  <th>
+                  {/* <th>
                     <Typography className="font-semibold">Email</Typography>
-                  </th>
+                  </th> */}
                   <th>
                     <Typography className="font-semibold">Phone</Typography>
                   </th>
-                  <th>
+                  {/* <th>
                     <Typography className="font-semibold">Company</Typography>
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>
                     <div className="flex items-center">
-                      <Avatar src={order.customer.avatar} />
+                      {/* <Avatar src={order.user} /> */}
                       <Typography className="truncate mx-8">
-                        {`${order.customer.firstName} ${order.customer.lastName}`}
+                        {`${order.user.first_name + order.user.last_name}`}
                       </Typography>
                     </div>
                   </td>
                   <td>
-                    <Typography className="truncate">{order.customer.email}</Typography>
+                    <Typography className="truncate">{order.phone}</Typography>
                   </td>
                   <td>
-                    <Typography className="truncate">{order.customer.phone}</Typography>
-                  </td>
-                  <td>
-                    <span className="truncate">{order.customer.company}</span>
+                    {/* <span className="truncate">{order.user}</span> */}
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-
-          <Accordion
-            className="border-0 shadow-0 overflow-hidden"
-            expanded={map === 'shipping'}
-            onChange={() => setMap(map !== 'shipping' ? 'shipping' : false)}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              classes={{ root: 'border border-solid rounded-16 mb-16' }}
-            >
-              <Typography className="font-semibold">Shipping Address</Typography>
-            </AccordionSummary>
-            <AccordionDetails className="flex flex-col md:flex-row -mx-8">
-              <Typography className="w-full md:max-w-256 mb-16 md:mb-0 mx-8 text-16">
-                {order.customer.shippingAddress.address}
-              </Typography>
-              <div className="w-full h-320 rounded-16 overflow-hidden mx-8">
-                <GoogleMap
-                  bootstrapURLKeys={{
-                    key: process.env.REACT_APP_MAP_KEY,
-                  }}
-                  defaultZoom={15}
-                  defaultCenter={[
-                    order.customer.shippingAddress.lat,
-                    order.customer.shippingAddress.lng,
-                  ]}
-                >
-                  <Marker
-                    text={order.customer.shippingAddress.address}
-                    lat={order.customer.shippingAddress.lat}
-                    lng={order.customer.shippingAddress.lng}
-                  />
-                </GoogleMap>
-              </div>
-            </AccordionDetails>
-          </Accordion>
-
-          <Accordion
-            className="shadow-0 border-0 overflow-hidden"
-            expanded={map === 'invoice'}
-            onChange={() => setMap(map !== 'invoice' ? 'invoice' : false)}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              classes={{ root: 'border border-solid rounded-16 mb-16' }}
-            >
-              <Typography className="font-semibold">Invoice Address</Typography>
-            </AccordionSummary>
-            <AccordionDetails className="flex flex-col md:flex-row -mx-8">
-              <Typography className="w-full md:max-w-256 mb-16 md:mb-0 mx-8 text-16">
-                {order.customer.invoiceAddress.address}
-              </Typography>
-              <div className="w-full h-320 rounded-16 overflow-hidden mx-8">
-                <GoogleMap
-                  bootstrapURLKeys={{
-                    key: process.env.REACT_APP_MAP_KEY,
-                  }}
-                  defaultZoom={15}
-                  defaultCenter={[
-                    order.customer.invoiceAddress.lat,
-                    order.customer.invoiceAddress.lng,
-                  ]}
-                >
-                  <Marker
-                    text={order.customer.invoiceAddress.address}
-                    lat={order.customer.invoiceAddress.lat}
-                    lng={order.customer.invoiceAddress.lng}
-                  />
-                </GoogleMap>
-              </div>
-            </AccordionDetails>
-          </Accordion>
         </div>
       </div>
 
-      <div className="pb-48">
+      {/* <div className="pb-48">
         <div className="pb-16 flex items-center">
           <FuseSvgIcon color="action">heroicons-outline:clock</FuseSvgIcon>
           <Typography className="h2 mx-12 font-medium" color="text.secondary">
-            Order Status
+            Buyurtma Statusi
           </Typography>
         </div>
 
@@ -167,25 +93,25 @@ function OrderDetailsTab() {
                   <Typography className="font-semibold">Status</Typography>
                 </th>
                 <th>
-                  <Typography className="font-semibold">Updated On</Typography>
+                  <Typography className="font-semibold">Yangilangan vaqti</Typography>
                 </th>
               </tr>
             </thead>
             <tbody>
               {order.status.map((status) => (
-                <tr key={status.id}>
+                <tr>
                   <td>
-                    <OrdersStatus name={status.name} />
+                    <OrdersStatus name={status} />
                   </td>
-                  <td>{status.date}</td>
+                  <td>{order.status}</td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>
-      </div>
+      </div> */}
 
-      <div className="pb-48">
+      {/* <div className="pb-48">
         <div className="pb-16 flex items-center">
           <FuseSvgIcon color="action">heroicons-outline:currency-dollar</FuseSvgIcon>
           <Typography className="h2 mx-12 font-medium" color="text.secondary">
@@ -214,76 +140,23 @@ function OrderDetailsTab() {
             <tbody>
               <tr>
                 <td>
-                  <span className="truncate">{order.payment.transactionId}</span>
+                  <span className="truncate">{order.user}</span>
                 </td>
                 <td>
-                  <span className="truncate">{order.payment.method}</span>
+                  <span className="truncate">{order.total}</span>
                 </td>
                 <td>
-                  <span className="truncate">{order.payment.amount}</span>
+                  <span className="truncate">{order.total_quantity}</span>
                 </td>
                 <td>
-                  <span className="truncate">{order.payment.date}</span>
+                  <span className="truncate">{order.created_at}</span>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-      </div>
+      </div> */}
 
-      <div className="pb-48">
-        <div className="pb-16 flex items-center">
-          <FuseSvgIcon color="action">heroicons-outline:truck</FuseSvgIcon>
-          <Typography className="h2 mx-12 font-medium" color="text.secondary">
-            Shipping
-          </Typography>
-        </div>
-
-        <div className="table-responsive">
-          <table className="simple">
-            <thead>
-              <tr>
-                <th>
-                  <Typography className="font-semibold">Tracking Code</Typography>
-                </th>
-                <th>
-                  <Typography className="font-semibold">Carrier</Typography>
-                </th>
-                <th>
-                  <Typography className="font-semibold">Weight</Typography>
-                </th>
-                <th>
-                  <Typography className="font-semibold">Fee</Typography>
-                </th>
-                <th>
-                  <Typography className="font-semibold">Date</Typography>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {order.shippingDetails.map((shipping) => (
-                <tr key={shipping.date}>
-                  <td>
-                    <span className="truncate">{shipping.tracking}</span>
-                  </td>
-                  <td>
-                    <span className="truncate">{shipping.carrier}</span>
-                  </td>
-                  <td>
-                    <span className="truncate">{shipping.weight}</span>
-                  </td>
-                  <td>
-                    <span className="truncate">{shipping.fee}</span>
-                  </td>
-                  <td>
-                    <span className="truncate">{shipping.date}</span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
   );
 }
