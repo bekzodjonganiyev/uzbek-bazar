@@ -41,7 +41,12 @@ const ProductVariablesTab = () => {
             const media = file;
             setProductVariables((prev) => [
               ...prev,
-              { color: color, quantity: quantity, media: media, is_active: true },
+              {
+                color: color,
+                quantity: quantity,
+                media: media,
+                is_active: true,
+              },
             ]);
           }}
         />
@@ -82,7 +87,7 @@ const VariableItem = ({ colors, deleteItem, getItemValue }) => {
       poster(
         "write_file/",
         fm,
-        ({ data }) => setFile((prev) => [...prev, data?.msg]),
+        ({ data }) => setFile((prev) => [...prev, { is_main: false, file: data?.msg }]),
         () => alert("Nomalum xatolik")
       );
     } else {

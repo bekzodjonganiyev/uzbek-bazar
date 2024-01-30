@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
@@ -10,6 +10,8 @@ import UzTab from "./tabs/UzTab";
 import RuTab from "./tabs/RuTab";
 import EnTab from "./tabs/EnTab";
 import ProductVariablesTab from "./tabs/ProductVariablesTab";
+import { getter } from "./ProductVariablesForm";
+import { matchRoutes } from "react-router-dom";
 
 function BasicInfoTab(props) {
   const methods = useFormContext();
@@ -17,6 +19,31 @@ function BasicInfoTab(props) {
   const { errors } = formState;
 
   const [tabValue, setTabValue] = useState(0);
+  const [brands, setBrands] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [sizes, setSizes] = useState([]);
+  const [materials, setMaterials] = useState([]);
+  const gender = [
+    { value: "female", label: "Ayol" },
+    { value: "male", label: "Erkak" },
+  ];
+  const type = [
+    { value: "uniform", label: "Uniform" },
+    { value: "wedding", label: "Wedding" },
+  ];
+  const season = [
+    { value: "spring_summer", label: "Spring-Summer" },
+    { value: "winter_autumn", label: "Winter-Autumn" },
+  ];
+
+  useEffect(() => {
+    getter("brands/", setBrands, false);
+    getter("categories/", setCategories, false);
+    getter("sizes/", setSizes, false);
+    getter("materials/", setMaterials, false);
+  }, []);
+
+  console.log(materials)
 
   function handleTabChange(event, value) {
     setTabValue(value);
@@ -118,11 +145,12 @@ function BasicInfoTab(props) {
               // helperText={errors.currency?.message}
               {...field}
             >
-              {["as", "ss"].map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
+              {!categories?.loading &&
+                categories?.data?.results.map((option) => (
+                  <MenuItem key={option.id} value={option.id}>
+                    {option.name}
+                  </MenuItem>
+                ))}
             </TextField>
           )}
         />
@@ -139,9 +167,9 @@ function BasicInfoTab(props) {
               label="Genderni tanlang"
               {...field}
             >
-              {["as", "ss"].map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
+              {gender.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
                 </MenuItem>
               ))}
             </TextField>
@@ -160,11 +188,12 @@ function BasicInfoTab(props) {
               label="Brendni tanlang"
               {...field}
             >
-              {["as", "ss"].map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
+              {!brands?.loading &&
+                brands?.data?.results.map((option) => (
+                  <MenuItem key={option.id} value={option.id}>
+                    {option.name}
+                  </MenuItem>
+                ))}
             </TextField>
           )}
         />
@@ -174,116 +203,114 @@ function BasicInfoTab(props) {
         <Controller
           name="type"
           control={control}
-          defaultValue={[]}
-          render={({ field: { onChange, value } }) => (
-            <Autocomplete
-              className="w-1/4"
-              multiple
-              freeSolo
-              options={[]}
-              value={value}
-              onChange={(event, newValue) => {
-                onChange(newValue);
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  placeholder="Bir nechta tukum tanlang"
-                  label="Turi"
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              )}
-            />
+          render={({ field }) => (
+            <TextField
+              className="w-1/3"
+              select
+              fullWidth
+              defaultValue=""
+              label="Turkumni tanlang"
+              {...field}
+            >
+              {type.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
           )}
         />
 
         <Controller
           name="size"
           control={control}
-          defaultValue={[]}
-          render={({ field: { onChange, value } }) => (
-            <Autocomplete
-              className="w-1/4"
-              multiple
-              freeSolo
-              options={[]}
-              value={value}
-              onChange={(event, newValue) => {
-                onChange(newValue);
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  placeholder="Bir nechta o'lcham tanlang"
-                  label="O'lcham"
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              )}
-            />
-          )}
+          render={({ field: { ref, onChange, value } }) => {
+            return (
+              <Autocomplete
+                className="mt-8 mb-16"
+                multiple
+                /**
+                 * Autocomplete da multiselect funksiyasini tog'ri ishlashi uchun
+                 * value propsga qiymat berilishi shart ekan
+                 */
+                value={value}
+                options={sizes?.data?.results ?? []}
+                getOptionLabel={(option) => option.name}
+                onChange={(_, newValue) => {
+                  /**
+                   * Tanlanayotgan itemlar object(referance value) bo'lgani
+                   * uchun alohida uniqueValues yasaldi. Sababi AutoComplate ni o'zi
+                   * valueni set qilganda set qilinmagan value bilan set qilinmaganini tekshirishda
+                   * referance tipdagi malumumotlar doim false qaytaradi. Ya'ni set qilingan qiymat
+                   * yana set bo'lib qoladi
+                   */
+                  const uniqueValues = newValue.filter(
+                    (v, index, self) =>
+                      self.findIndex((s) => s.id === v.id) === index
+                  );
+                  onChange(uniqueValues);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    placeholder="Bir nechta o'lcham tanlang"
+                    label="O'lcham"
+                    variant="outlined"
+                    inputRef={ref}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                )}
+              />
+            );
+          }}
         />
 
         <Controller
           name="season"
           control={control}
-          defaultValue={[]}
-          render={({ field: { onChange, value } }) => (
-            <Autocomplete
-              className="w-1/4"
-              multiple
-              freeSolo
-              options={[]}
-              value={value}
-              onChange={(event, newValue) => {
-                onChange(newValue);
+          render={({ field }) => (
+            <TextField
+              {...field}
+              select
+              placeholder="Mavsumni tanlang"
+              label="Mavsum"
+              variant="outlined"
+              InputLabelProps={{
+                shrink: true,
               }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  placeholder="Bir nechta mavsum"
-                  label="Mavsum"
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              )}
-            />
+            >
+              {season.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
           )}
         />
 
         <Controller
           name="material"
           control={control}
-          defaultValue={[]}
-          render={({ field: { onChange, value } }) => (
-            <Autocomplete
-              className="w-1/4"
-              multiple
-              freeSolo
-              options={[]}
-              value={value}
-              onChange={(event, newValue) => {
-                onChange(newValue);
+          render={({ field }) => (
+            <TextField
+              {...field}
+              select
+              placeholder="Bir nechta material tanglang"
+              label="Material"
+              variant="outlined"
+              InputLabelProps={{
+                shrink: true,
               }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  placeholder="Bir nechta material tanglang"
-                  label="Material"
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              )}
-            />
+            >
+              {!materials?.loading &&
+                materials?.data?.results.map((option) => (
+                  <MenuItem key={option.id} value={option.id}>
+                    {option.name}
+                  </MenuItem>
+                ))}
+            </TextField>
           )}
         />
       </div>

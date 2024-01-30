@@ -19,10 +19,10 @@ function ProductHeader(props) {
   const name = watch("name");
   const theme = useTheme();
   const navigate = useNavigate();
-  
+
   function handleSaveProduct() {
     const { nameUz, nameRu, nameEn, descUz, descRu, descEn } = watch();
-    const prevProduct = getValues()
+    const prevProduct = getValues();
 
     const translations = {
       uz: { name: nameUz, desc: descUz },
@@ -30,9 +30,19 @@ function ProductHeader(props) {
       en: { name: nameEn, desc: descEn },
     };
 
-    const nextProduct = {...prevProduct, translations: translations}
-    
-    console.log(nextProduct);
+    delete prevProduct.nameUz;
+    delete prevProduct.nameRu;
+    delete prevProduct.nameEn;
+    delete prevProduct.descUz;
+    delete prevProduct.descRu;
+    delete prevProduct.descEn;
+
+    const reCreatedSize = prevProduct.size.map((item) => item.id);
+    const nextProduct = {
+      ...prevProduct,
+      translations: translations,
+      size: reCreatedSize,
+    };
 
     dispatch(saveProduct(nextProduct));
   }
@@ -72,19 +82,11 @@ function ProductHeader(props) {
             initial={{ scale: 0 }}
             animate={{ scale: 1, transition: { delay: 0.3 } }}
           >
-            {images.length > 0 && featuredImageId ? (
-              <img
-                className="w-32 sm:w-48 rounded"
-                src={_.find(images, { id: featuredImageId }).url}
-                alt={name}
-              />
-            ) : (
-              <img
-                className="w-32 sm:w-48 rounded"
-                src="assets/images/apps/ecommerce/product-image-placeholder.png"
-                alt={name}
-              />
-            )}
+            <img
+              className="w-32 sm:w-48 rounded"
+              src="assets/images/apps/ecommerce/product-image-placeholder.png"
+              alt={name}
+            />
           </motion.div>
           <motion.div
             className="flex flex-col items-center sm:items-start min-w-0 mx-8 sm:mx-16"
