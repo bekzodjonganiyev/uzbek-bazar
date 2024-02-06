@@ -46,7 +46,7 @@ function ProductsTable(props) {
     if (searchText.length !== 0) {
       setData(
         _.filter(products, (item) =>
-          item.name.toLowerCase().includes(searchText.toLowerCase())
+          item?.translations?.uz?.name.toLowerCase().includes(searchText.toLowerCase())
         )
       );
       setPage(0);

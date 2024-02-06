@@ -5,7 +5,7 @@ import FuseUtils from '@fuse/utils';
 
 
 export const getProduct = createAsyncThunk('eCommerceApp/product/getProduct', async (productId) => {
-  const response = await http(false).get(`/products/${productId}/`);
+  const response = await http(false).get(`/products/${productId}/details/`);
   const data = await response.data;
 
   return data === undefined ? null : data;

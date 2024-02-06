@@ -3,13 +3,16 @@ import { Controller, useFormContext } from "react-hook-form";
 
 function UzTab(props) {
   const methods = useFormContext();
-  const { control } = methods;
+  const { control, getValues } = methods;
+
+  const {translations} = getValues()
 
   return (
     <div>
       <Controller
         name="nameUz"
         control={control}
+        defaultValue={translations?.uz?.name}
         render={({ field }) => (
           <TextField
             {...field}
@@ -27,6 +30,7 @@ function UzTab(props) {
       <Controller
         name="descUz"
         control={control}
+        defaultValue={translations?.uz?.desc}
         render={({ field }) => (
           <TextField
             {...field}

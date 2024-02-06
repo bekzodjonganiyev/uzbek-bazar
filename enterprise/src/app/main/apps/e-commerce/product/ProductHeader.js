@@ -3,22 +3,25 @@ import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { motion } from "framer-motion";
 import { useFormContext } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import _ from "@lodash";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
-import { removeProduct, saveProduct, updateProduct } from "../store/productSlice";
+import {
+  removeProduct,
+  saveProduct,
+  updateProduct,
+} from "../store/productSlice";
+import { selectUser } from "app/store/userSlice";
 
 function ProductHeader(props) {
-  const pk = useParams()
-  console.log(pk, "pk")
+  const pk = useParams();
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
   const methods = useFormContext();
   const { formState, watch, getValues, setValue } = methods;
   const { isValid, dirtyFields } = formState;
-  const featuredImageId = watch("featuredImageId");
-  const images = watch("images");
-  const name = watch("name");
+  const { uz } = watch("translations");
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -38,6 +41,7 @@ function ProductHeader(props) {
     delete prevProduct.descUz;
     delete prevProduct.descRu;
     delete prevProduct.descEn;
+    prevProduct.organization = user.id
 
     const reCreatedSize = prevProduct.size.map((item) => item.id);
     const nextProduct = {
@@ -51,7 +55,7 @@ function ProductHeader(props) {
 
   //update function
 
-  function handleUpdateProduct () {
+  function handleUpdateProduct() {
     const { nameUz, nameRu, nameEn, descUz, descRu, descEn } = watch();
     const prevProduct = getValues();
 
@@ -67,8 +71,9 @@ function ProductHeader(props) {
     delete prevProduct.descUz;
     delete prevProduct.descRu;
     delete prevProduct.descEn;
-    delete prevProduct.id
-    delete prevProduct.variables
+    // delete prevProduct.variables
+    delete prevProduct.quantity;
+    prevProduct.organization = 0
 
     const reCreatedSize = prevProduct.size.map((item) => item.id);
     const nextProduct = {
@@ -77,9 +82,18 @@ function ProductHeader(props) {
       size: reCreatedSize,
     };
 
-    dispatch(updateProduct({productData: nextProduct, id: pk.productId}));
-  }
+    // console.log(nextProduct)
 
+    dispatch(
+      updateProduct({ productData: nextProduct, id: pk.productId })
+    ).then((e) => {
+      if (!e.payload) alert("Xatolik sodir bo'ldi, qaytadan urinib k'ring");
+      else {
+        alert("Muvaffaqiyatli tahrirlandi")
+        setTimeout(() => navigate("/apps/e-commerce/products"), 200)
+      }
+    });
+  }
 
   function handleRemoveProduct() {
     dispatch(removeProduct()).then(() => {
@@ -128,7 +142,7 @@ function ProductHeader(props) {
             animate={{ x: 0, transition: { delay: 0.3 } }}
           >
             <Typography className="text-16 sm:text-20 truncate font-semibold">
-              {name || "New Product"}
+              {uz?.name || "New Product"}
             </Typography>
             <Typography variant="caption" className="font-medium">
               Product Detail
@@ -136,13 +150,13 @@ function ProductHeader(props) {
           </motion.div>
         </div>
       </div>
-      {pk.productId==="new" ? (
+      {pk.productId === "new" ? (
         <motion.div
-        className="flex"
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
-      >
-        {/* <Button
+          className="flex"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
+        >
+          {/* <Button
           className="whitespace-nowrap mx-4"
           variant="contained"
           color="secondary"
@@ -155,47 +169,46 @@ function ProductHeader(props) {
         >
           Remove
         </Button> */}
-        <Button
-          className="whitespace-nowrap mx-4"
-          variant="contained"
-          color="secondary"
-          disabled={_.isEmpty(dirtyFields) || !isValid}
-          onClick={handleSaveProduct}
-        >
-          Save
-        </Button>
-      </motion.div>
+          <Button
+            className="whitespace-nowrap mx-4"
+            variant="contained"
+            color="secondary"
+            disabled={_.isEmpty(dirtyFields) || !isValid}
+            onClick={handleSaveProduct}
+          >
+            Save
+          </Button>
+        </motion.div>
       ) : (
         <motion.div
-        className="flex"
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
-      >
-        <Button
-          className="whitespace-nowrap mx-4"
-          variant="contained"
-          color="secondary"
-          onClick={handleRemoveProduct}
-          startIcon={
-            <FuseSvgIcon className="hidden sm:flex">
-              heroicons-outline:trash
-            </FuseSvgIcon>
-          }
+          className="flex"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
         >
-          Remove
-        </Button>
-        <Button
-          className="whitespace-nowrap mx-4"
-          variant="contained"
-          color="secondary"
-          disabled={_.isEmpty(dirtyFields) || !isValid}
-          onClick={handleUpdateProduct}
-        >
-          Update
-        </Button>
-      </motion.div>
+          <Button
+            className="whitespace-nowrap mx-4"
+            variant="contained"
+            color="secondary"
+            onClick={handleRemoveProduct}
+            startIcon={
+              <FuseSvgIcon className="hidden sm:flex">
+                heroicons-outline:trash
+              </FuseSvgIcon>
+            }
+          >
+            Remove
+          </Button>
+          <Button
+            className="whitespace-nowrap mx-4"
+            variant="contained"
+            color="secondary"
+            disabled={_.isEmpty(dirtyFields) || !isValid}
+            onClick={handleUpdateProduct}
+          >
+            Update
+          </Button>
+        </motion.div>
       )}
-      
     </div>
   );
 }

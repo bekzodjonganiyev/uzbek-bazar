@@ -3,13 +3,16 @@ import { Controller, useFormContext } from "react-hook-form";
 
 function EnTab(props) {
   const methods = useFormContext();
-  const { control } = methods;
+  const { control, getValues } = methods;
+
+  const {translations} = getValues()
 
   return (
     <div>
       <Controller
         name="nameEn"
         control={control}
+        defaultValue={translations?.en?.name}
         render={({ field }) => (
           <TextField
             {...field}
@@ -27,6 +30,7 @@ function EnTab(props) {
       <Controller
         name="descEn"
         control={control}
+        defaultValue={translations?.en?.desc}
         render={({ field }) => (
           <TextField
             {...field}

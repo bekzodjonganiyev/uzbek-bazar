@@ -3,13 +3,16 @@ import { Controller, useFormContext } from "react-hook-form";
 
 function RuTab(props) {
   const methods = useFormContext();
-  const { control } = methods;
+  const { control, getValues } = methods;
+
+  const {translations} = getValues()
 
   return (
     <div>
       <Controller
         name="nameRu"
         control={control}
+        defaultValue={translations?.ru?.name}
         render={({ field }) => (
           <TextField
             {...field}
@@ -27,6 +30,7 @@ function RuTab(props) {
       <Controller
         name="descRu"
         control={control}
+        defaultValue={translations?.ru?.desc}
         render={({ field }) => (
           <TextField
             {...field}

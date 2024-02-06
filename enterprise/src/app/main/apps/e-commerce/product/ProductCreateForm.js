@@ -11,11 +11,10 @@ import RuTab from "./tabs/RuTab";
 import EnTab from "./tabs/EnTab";
 import ProductVariablesTab from "./tabs/ProductVariablesTab";
 import { getter } from "./ProductVariablesForm";
-import { matchRoutes } from "react-router-dom";
 
 function BasicInfoTab(props) {
   const methods = useFormContext();
-  const { control, formState } = methods;
+  const { control, formState, getValues } = methods;
   const { errors } = formState;
 
   const [tabValue, setTabValue] = useState(0);
@@ -36,6 +35,8 @@ function BasicInfoTab(props) {
     { value: "winter_autumn", label: "Winter-Autumn" },
   ];
 
+  const temp = getValues()
+  console.log(temp)
   useEffect(() => {
     getter("brands/", setBrands, false);
     getter("categories/", setCategories, false);

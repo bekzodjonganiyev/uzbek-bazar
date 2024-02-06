@@ -6,10 +6,10 @@ import FuseSvgIcon from "@fuse/core/FuseSvgIcon/FuseSvgIcon";
 import { useSelector } from "react-redux";
 import { selectProduct } from "../../store/productSlice";
 import { useParams } from "react-router-dom";
+import { baseUrl } from "src/app/api/http";
 
 const ProductVariablesTab = () => {
   const pk = useParams()
-  console.log(pk, "pk")
   const { setValue } = useFormContext();
   const product = useSelector(selectProduct);
   const uniqueId = Date.now();
@@ -19,12 +19,12 @@ const ProductVariablesTab = () => {
   
   useEffect(() => {
     getter("colors/", setColors, false);
-    // if(pk.productId !== "new") {
-    //   const a = product.variables?.map(item => item?.id)
-    //   setItem(a)
-    //   setProductVariableArray(product.variables)
-    //   // items.length = product.variables.length
-    // }
+
+    
+    if (pk.productId !== "new"){
+      const variableIds = product?.variables.map(item => item.id)
+      setItem(variableIds)
+    }
   }, []);
 
   useEffect(() => {
@@ -53,21 +53,27 @@ const ProductVariablesTab = () => {
           saveItem={({ colorAndQuantity, file }) => {
             const color = colorAndQuantity.color;
             const quantity = colorAndQuantity.quantity;
-            const media = file;
 
             const findedItem = productVariableArray.find(
               (item) => item.color === color
             );
 
             if (!findedItem) {
+              const obj = {
+                id: media,
+                color: color,
+                quantity: quantity,
+                media: file,
+                is_active: true,
+              }
+
+              if (pk.productId === "new") {
+                delete obj.id
+              }
+
               setProductVariableArray((prev) => [
                 ...prev,
-                {
-                  color: color,
-                  quantity: quantity,
-                  media: media,
-                  is_active: true,
-                },
+                obj
               ]);
             } else {
               alert("BU KO'RSATGISCHLAR ALLAQACHON QOSHILGAN");
@@ -108,7 +114,7 @@ const VariableItem = ({ colors, deleteItem, saveItem }) => {
         "write_file/",
         fm,
         ({ data }) =>
-          setFile((prev) => [...prev, { is_main: false, file: data?.msg }]),
+          setFile((prev) => [...prev, { is_main: false, file: baseUrl + data?.msg }]),
         () => alert("Nomalum xatolik")
       );
     } else {
