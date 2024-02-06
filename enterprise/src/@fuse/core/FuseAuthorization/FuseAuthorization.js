@@ -88,3 +88,11 @@ class FuseAuthorization extends Component {
 FuseAuthorization.contextType = AppContext;
 
 export default withRouter(FuseAuthorization);
+
+// import React from 'react'
+
+// const FuseAuthorization = ({children}) => {
+//   return children
+// }
+
+// export default FuseAuthorization

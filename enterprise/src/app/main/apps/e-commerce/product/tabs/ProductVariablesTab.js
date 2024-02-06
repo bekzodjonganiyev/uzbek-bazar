@@ -1,23 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import _ from "@lodash";
 import { getter, poster } from "../ProductVariablesForm";
+import FuseSvgIcon from "@fuse/core/FuseSvgIcon/FuseSvgIcon";
+import { useSelector } from "react-redux";
+import { selectProduct } from "../../store/productSlice";
+import { useParams } from "react-router-dom";
 
 const ProductVariablesTab = () => {
+  const pk = useParams()
+  console.log(pk, "pk")
   const { setValue } = useFormContext();
-
+  const product = useSelector(selectProduct);
   const uniqueId = Date.now();
-  const [items, setItem] = useState([0]);
+  const [items, setItem] = useState([]);
   const [colors, setColors] = useState([]);
-  const [productVariables, setProductVariables] = useState([]);
-  const [test, setTest] = useState([]);
-
+  const [productVariableArray, setProductVariableArray] = useState([]);
+  
   useEffect(() => {
     getter("colors/", setColors, false);
+    // if(pk.productId !== "new") {
+    //   const a = product.variables?.map(item => item?.id)
+    //   setItem(a)
+    //   setProductVariableArray(product.variables)
+    //   // items.length = product.variables.length
+    // }
   }, []);
 
   useEffect(() => {
-    setValue("product_variables", test);
-  }, [test]);
+    setValue("product_variables", productVariableArray);
+  }, [productVariableArray]);
+
 
   return (
     <ul className="">
@@ -29,25 +42,36 @@ const ProductVariablesTab = () => {
         <VariableItem
           key={media}
           colors={colors}
-          deleteItem={() => {
-            const filteredItem = items.filter((item) => item !== media);
-            setItem(filteredItem);
-
-            // TODO test state manipulate on delete item
+          deleteItem={(color) => {
+            const filteredItem = productVariableArray.filter(
+              (item) => item.color !== color
+            );
+            setProductVariableArray(filteredItem);
+            const filteredItemMapper = items.filter((item) => item !== media);
+            setItem(filteredItemMapper);
           }}
-          getItemValue={({ file, colorAndQuantity }) => {
-            const color = colorAndQuantity?.color;
-            const quantity = colorAndQuantity?.qunatity;
+          saveItem={({ colorAndQuantity, file }) => {
+            const color = colorAndQuantity.color;
+            const quantity = colorAndQuantity.quantity;
             const media = file;
-            setProductVariables((prev) => [
-              ...prev,
-              {
-                color: color,
-                quantity: quantity,
-                media: media,
-                is_active: true,
-              },
-            ]);
+
+            const findedItem = productVariableArray.find(
+              (item) => item.color === color
+            );
+
+            if (!findedItem) {
+              setProductVariableArray((prev) => [
+                ...prev,
+                {
+                  color: color,
+                  quantity: quantity,
+                  media: media,
+                  is_active: true,
+                },
+              ]);
+            } else {
+              alert("BU KO'RSATGISCHLAR ALLAQACHON QOSHILGAN");
+            }
           }}
         />
       ))}
@@ -55,11 +79,6 @@ const ProductVariablesTab = () => {
         className="text-center bg-red-400 text-white font-medium rounded-md px-20 py-10 block mx-auto"
         onClick={() => {
           setItem([...items, uniqueId]);
-          setTest((prev) => {
-            if (prev === [] || prev.color || prev.quantity || prev.media === [])
-              return;
-            else return [...prev, productVariables.at(-1)];
-          });
         }}
       >
         Yana qo'shish
@@ -70,12 +89,13 @@ const ProductVariablesTab = () => {
 
 export default ProductVariablesTab;
 
-const VariableItem = ({ colors, deleteItem, getItemValue }) => {
+const VariableItem = ({ colors, deleteItem, saveItem }) => {
   const [file, setFile] = useState([]);
   const [colorAndQuantity, setColorAndQuantity] = useState({
     color: "",
-    qunatity: "",
+    quantity: 0,
   });
+  const [isAddedItem, setIsAddedItem] = useState(false);
 
   const handleFile = (e) => {
     const file = e.target.files[0];
@@ -87,7 +107,8 @@ const VariableItem = ({ colors, deleteItem, getItemValue }) => {
       poster(
         "write_file/",
         fm,
-        ({ data }) => setFile((prev) => [...prev, { is_main: false, file: data?.msg }]),
+        ({ data }) =>
+          setFile((prev) => [...prev, { is_main: false, file: data?.msg }]),
         () => alert("Nomalum xatolik")
       );
     } else {
@@ -95,12 +116,12 @@ const VariableItem = ({ colors, deleteItem, getItemValue }) => {
     }
   };
 
-  useEffect(() => {
-    getItemValue({ file, colorAndQuantity });
-  }, [file, colorAndQuantity]);
-
   return (
-    <li className=" py-10 shadow-md rounded-md px-14 flex justify-between gap-20 mb-20">
+    <li
+      className={`py-10 shadow-md rounded-md px-14 flex justify-between gap-20 mb-20 ${
+        isAddedItem ? "opacity-60" : ""
+      }`}
+    >
       <select
         value={colorAndQuantity.color}
         onChange={(e) =>
@@ -108,7 +129,7 @@ const VariableItem = ({ colors, deleteItem, getItemValue }) => {
         }
       >
         <option value="" hidden>
-          Rang tanlang
+          Maxsulot rangi
         </option>
         {!colors?.loading &&
           colors?.data?.results?.map((item) => (
@@ -116,22 +137,41 @@ const VariableItem = ({ colors, deleteItem, getItemValue }) => {
           ))}
       </select>
       <label htmlFor="product-quantity">
+        Maxsulot nechta?
+        <br />
         <input
           type="number"
           className="border p-5 rounded-sm"
-          value={colorAndQuantity.qunatity}
+          value={colorAndQuantity.quantity}
           onChange={(e) =>
             setColorAndQuantity((prev) => ({
               ...prev,
-              qunatity: e.target.value,
+              quantity: +e.target.value,
             }))
           }
         />
       </label>
       <label htmlFor="product-image">
+        Maxsulot uchun rasm yuklang({file.length} ta rasm)
+        <br />
         <input type="file" name="file" onChange={handleFile} />
       </label>
-      <button onClick={() => deleteItem()}>X</button>
+      <button onClick={() => deleteItem(colorAndQuantity.color)}>
+        <FuseSvgIcon>heroicons-outline:trash</FuseSvgIcon>
+      </button>
+      <button
+        disabled={isAddedItem}
+        onClick={() => {
+          if (file !== [] && colorAndQuantity.color) {
+            setIsAddedItem(true);
+            saveItem({ colorAndQuantity, file });
+          } else {
+            alert("BARCHA MAYDONLAR TOLDIRILISHI SHART");
+          }
+        }}
+      >
+        <FuseSvgIcon>heroicons-outline:save</FuseSvgIcon>
+      </button>
     </li>
   );
 };

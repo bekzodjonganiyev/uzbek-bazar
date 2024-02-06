@@ -43,8 +43,6 @@ function BasicInfoTab(props) {
     getter("materials/", setMaterials, false);
   }, []);
 
-  console.log(materials)
-
   function handleTabChange(event, value) {
     setTabValue(value);
   }

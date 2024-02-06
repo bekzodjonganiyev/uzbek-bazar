@@ -67,6 +67,8 @@ function ProductHeader(props) {
     delete prevProduct.descUz;
     delete prevProduct.descRu;
     delete prevProduct.descEn;
+    delete prevProduct.id
+    delete prevProduct.variables
 
     const reCreatedSize = prevProduct.size.map((item) => item.id);
     const nextProduct = {
