@@ -43,7 +43,7 @@ export function ProductCartModal(props: IProductCartModal) {
     const productById = useFetch<AxiosResponse, AxiosError>(["product-cart-modal", props.id], `products/${props.id ?? ""}`, false, false);
     const productCartMutation = usePost("post", onSuccessCartPost,)
     const { width } = useWindowSize();
-    const machineId = getMachineId()
+    const { isLoading, machineId, isError, userData } = getMachineId()
     const dispatch = useAppDispatch()
     const { toast } = useToast()
 
@@ -53,13 +53,13 @@ export function ProductCartModal(props: IProductCartModal) {
     const [validateErrMsg, setValidateErrMsg] = useState<{ color: string, size: string }>();
 
     const onPostCart = () => {
-        if (!props.isCartItem) {
+        if (!props.isCartItem && !isLoading) {
             const obj = {
                 url: "carts/",
                 data: {
                     quantity: 1,
                     product: props.id,
-                    session_id: machineId, // TODO - login qilinganda user_id ketadi
+                    session_id: isError ? machineId : userData?.data.id, // TODO - login qilinganda user_id ketadi
                     product_variable: productVariables?.id,
                     size: size?.id
                 }

@@ -1,35 +1,15 @@
-// import { useEffect, useState } from "react";
+import { AxiosError, AxiosResponse } from "axios";
+import { useFetch } from "./api";
 
-// import { http } from "./api";
+let machineId = localStorage.getItem("MachineId");
+
+if (!machineId) {
+  machineId = crypto.randomUUID();
+  localStorage.setItem("MachineId", machineId);
+}
 
 export function getMachineId() {
-  let machineId = localStorage.getItem("MachineId");
-  // let token = localStorage.getItem("token");
+  const { data, isSuccess, isError, isLoading } = useFetch<AxiosResponse, AxiosError>(["user-profile-data"], "/clients/profile/", true, true)
 
-  // const [userId, setUserId] = useState(null);
-  // const [truthlyToken, setTruthlyToken] = useState<boolean>(false);
-
-  // MachineId is recreated if not found in localStorage
-  if (!machineId) {
-    machineId = crypto.randomUUID();
-    localStorage.setItem("MachineId", machineId);
-  }
-
-  // Token checked for correct
-  // useEffect(() => {
-  //   (async function () {
-  //     const res = await http(true).get("/clients/profile/");
-  //     if (res.status === 200) {
-  //       setTruthlyToken(true);
-  //       setUserId(res.data.id);
-  //     }
-  //   })();
-  // }, [token]);
-
-  // If token is correct or has in localStorage return userId else machineId
-  // if (truthlyToken) {
-  //   return userId;
-  // } else {
-    return machineId;
-  // }
+  return { isLoading, isSuccess, isError, userData: data, machineId }
 }

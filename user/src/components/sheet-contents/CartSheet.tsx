@@ -20,9 +20,10 @@ export const CartSheet = (/*props: Props*/): ReactElement => {
     const navigate = useNavigate()
     const cart = useSelector((state: RootState) => state.cart)
 
-    const machineId = getMachineId()
+    // const machineId = getMachineId()
+    const { isLoading, machineId, isError, userData } = getMachineId()
 
-    const userCarts = useFetch<AxiosResponse, AxiosError>(["user-carts"], `carts/?session_id=${machineId}`, false)
+    const userCarts = useFetch<AxiosResponse, AxiosError>(["user-carts"], `carts/?session_id=${isError ? machineId : userData?.data.id}`, false, !isLoading)
 
     const totalPrice = () => {
         let summ: number = 0

@@ -28,7 +28,8 @@ export const ProductView = (/*props: Props*/): ReactElement => {
   const wishlist = useSelector((state: RootState) => state.wishlist)
   const dispatch = useAppDispatch()
 
-  const machineId = getMachineId()
+  const { machineId, isError, userData } = getMachineId()
+
 
   const productById = useFetch<AxiosResponse, AxiosError>(["product-by-id", id], `products/${id ?? ""}`, false);
   const sameProducts = useFetch<AxiosResponse, AxiosError>(["same-products", id], `products/?type=${productById.data?.data.type}&season=${productById.data?.data.season}`, false, productById.isSuccess);
@@ -67,7 +68,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
       const obj = {
         url: "carts/",
         data: {
-          session_id: machineId, // TODO - login qilinganda null ketadi
+          session_id: isError ? machineId : userData?.data.id, // TODO - login qilinganda null ketadi
           quantity: 1,
           product: productById.data?.data.id,
           product_variable: productVariables?.id,

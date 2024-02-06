@@ -41,10 +41,3 @@ export function usePost(
   return mutate;
 }
 
-// export function useMutate<T, A>(keys: (string | number | null | undefined)[], mutateFn: Promise<any>, data: any) {
-//   const obj = useMutation<T, A>({
-//     mutationKey: keys,
-//     mutationFn: (data) => mutateFn
-//   })
-//   return obj
-// }

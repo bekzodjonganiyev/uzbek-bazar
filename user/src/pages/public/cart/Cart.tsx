@@ -15,12 +15,15 @@ import { getMachineId } from '@/utils/getSeesionId'
 
 // }
 export const Cart = (/*props: Props*/): ReactElement => {
-  const machineId = getMachineId()
+  const { isLoading, machineId, isError, userData } = getMachineId()
 
   const carts = useFetch<AxiosResponse, AxiosError>(
     [`user-carts`],
-    `carts/?session_id=${machineId}`,
-    false
+    `carts/?session_id=${isError ? machineId : userData?.data.id}`,
+    
+    false,
+    !isLoading
+    
   )
   return (
     <CustomSuspanse
