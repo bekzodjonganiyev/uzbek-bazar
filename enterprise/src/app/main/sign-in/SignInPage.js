@@ -20,13 +20,7 @@ import jwtService from '../../auth/services/jwtService';
 /**
  * Form Validation Schema
  */
-const schema = yup.object().shape({
-  email: yup.string().email('You must enter a valid email').required('You must enter a email'),
-  password: yup
-    .string()
-    .required('Please enter your password.')
-    .min(4, 'Password is too short - must be at least 4 chars.'),
-});
+const schema = yup.object().shape({});
 
 const defaultValues = {
   email: '',
@@ -44,8 +38,9 @@ function SignInPage() {
   const { isValid, dirtyFields, errors } = formState;
 
   useEffect(() => {
-    setValue('email', 'admin@fusetheme.com', { shouldDirty: true, shouldValidate: true });
-    setValue('password', 'admin', { shouldDirty: true, shouldValidate: true });
+    setValue('email', 'admin', { shouldDirty: true, shouldValidate: true });
+    setValue('password', '123', { shouldDirty: true, shouldValidate: true });
+
   }, [setValue]);
 
   function onSubmit({ email, password }) {
