@@ -4,12 +4,14 @@ import Typography from "@mui/material/Typography";
 import { motion } from "framer-motion";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import _ from "@lodash";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
-import { removeProduct, saveProduct } from "../store/productSlice";
+import { removeProduct, saveProduct, updateProduct } from "../store/productSlice";
 
 function ProductHeader(props) {
+  const pk = useParams()
+  console.log(pk, "pk")
   const dispatch = useDispatch();
   const methods = useFormContext();
   const { formState, watch, getValues, setValue } = methods;
@@ -46,6 +48,36 @@ function ProductHeader(props) {
 
     dispatch(saveProduct(nextProduct));
   }
+
+  //update function
+
+  function handleUpdateProduct () {
+    const { nameUz, nameRu, nameEn, descUz, descRu, descEn } = watch();
+    const prevProduct = getValues();
+
+    const translations = {
+      uz: { name: nameUz, desc: descUz },
+      ru: { name: nameRu, desc: descRu },
+      en: { name: nameEn, desc: descEn },
+    };
+
+    delete prevProduct.nameUz;
+    delete prevProduct.nameRu;
+    delete prevProduct.nameEn;
+    delete prevProduct.descUz;
+    delete prevProduct.descRu;
+    delete prevProduct.descEn;
+
+    const reCreatedSize = prevProduct.size.map((item) => item.id);
+    const nextProduct = {
+      ...prevProduct,
+      translations: translations,
+      size: reCreatedSize,
+    };
+
+    dispatch(updateProduct({productData: nextProduct, id: pk.productId}));
+  }
+
 
   function handleRemoveProduct() {
     dispatch(removeProduct()).then(() => {
@@ -102,7 +134,37 @@ function ProductHeader(props) {
           </motion.div>
         </div>
       </div>
-      <motion.div
+      {pk.productId==="new" ? (
+        <motion.div
+        className="flex"
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
+      >
+        {/* <Button
+          className="whitespace-nowrap mx-4"
+          variant="contained"
+          color="secondary"
+          onClick={handleRemoveProduct}
+          startIcon={
+            <FuseSvgIcon className="hidden sm:flex">
+              heroicons-outline:trash
+            </FuseSvgIcon>
+          }
+        >
+          Remove
+        </Button> */}
+        <Button
+          className="whitespace-nowrap mx-4"
+          variant="contained"
+          color="secondary"
+          disabled={_.isEmpty(dirtyFields) || !isValid}
+          onClick={handleSaveProduct}
+        >
+          Save
+        </Button>
+      </motion.div>
+      ) : (
+        <motion.div
         className="flex"
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
@@ -125,11 +187,13 @@ function ProductHeader(props) {
           variant="contained"
           color="secondary"
           disabled={_.isEmpty(dirtyFields) || !isValid}
-          onClick={handleSaveProduct}
+          onClick={handleUpdateProduct}
         >
-          Save
+          Update
         </Button>
       </motion.div>
+      )}
+      
     </div>
   );
 }

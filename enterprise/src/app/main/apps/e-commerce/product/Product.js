@@ -128,10 +128,7 @@ function Product(props) {
    * Wait while product data is loading and form is setted
    */
   if (
-    _.isEmpty(form) ||
-    (product &&
-      routeParams.productId !== product.id &&
-      routeParams.productId !== "new")
+    _.isEmpty(form)
   ) {
     return <FuseLoading />;
   }

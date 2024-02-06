@@ -3,8 +3,9 @@ import axios from 'axios';
 import { http } from 'src/app/api/http';
 import FuseUtils from '@fuse/utils';
 
+
 export const getProduct = createAsyncThunk('eCommerceApp/product/getProduct', async (productId) => {
-  const response = await axios.get(`/api/ecommerce/products/${productId}`);
+  const response = await http(false).get(`/products/${productId}/`);
   const data = await response.data;
 
   return data === undefined ? null : data;
@@ -23,6 +24,20 @@ export const saveProduct = createAsyncThunk(
   'eCommerceApp/product/saveProduct',
   async (productData) => {
     const response = await http(true).post(`/products/`, productData);
+
+    const data = await response.data;
+
+    return data;
+  }
+);
+
+//update function
+
+export const updateProduct = createAsyncThunk(
+  'eCommerceApp/product/updateProduct',
+  async ({productData, id}) => {
+    console.log(id, "id")
+    const response = await http(true).put(`/products/${id}/`, productData);
 
     const data = await response.data;
 
