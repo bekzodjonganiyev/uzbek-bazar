@@ -1,9 +1,11 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
-export const API_URL = import.meta.env.PROD
-  ? import.meta.env.VITE_PRODUCTION_API_URL
-  : import.meta.env.VITE_STAGING_API_URL; // 'development' and 'staging' mode both makes requests to staging API
+// export const API_URL = import.meta.env.PROD
+//   ? import.meta.env.VITE_PRODUCTION_API_URL
+//   : import.meta.env.VITE_STAGING_API_URL; // 'development' and 'staging' mode both makes requests to staging API
+
+export const API_URL = "https://api.uzbekbazar.uz/api/v1/web"
 
 export const http = (withToken?: boolean) => axios.create({
   baseURL: API_URL,
