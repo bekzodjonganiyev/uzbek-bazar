@@ -1,26 +1,11 @@
 import { Fragment, useMemo, useState } from "react"
+import { redirect } from "react-router-dom"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { AxiosError, AxiosResponse } from "axios"
 
 import { Button } from "@/components/ui/button"
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger
-} from "@/components/ui/sheet"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { ToastAction } from "@/components/ui/toast"
 
 import { useAppDispatch } from "@/redux"
@@ -41,7 +26,7 @@ type IProductCartModal = {
 
 export function ProductCartModal(props: IProductCartModal) {
     const productById = useFetch<AxiosResponse, AxiosError>(["product-cart-modal", props.id], `products/${props.id ?? ""}`, false, false);
-    const productCartMutation = usePost("post", onSuccessCartPost,)
+    const productCartMutation = usePost("post", onSuccessCartPost, () => {}, true)
     const { width } = useWindowSize();
     const { isLoading, machineId, isError, userData } = getMachineId()
     const dispatch = useAppDispatch()
@@ -53,13 +38,14 @@ export function ProductCartModal(props: IProductCartModal) {
     const [validateErrMsg, setValidateErrMsg] = useState<{ color: string, size: string }>();
 
     const onPostCart = () => {
-        if (!props.isCartItem && !isLoading) {
+        if (!props.isCartItem) {
             const obj = {
                 url: "carts/",
                 data: {
                     quantity: 1,
                     product: props.id,
-                    session_id: isError ? machineId : userData?.data.id, // TODO - login qilinganda user_id ketadi
+                    // session_id: isError ? machineId : userData?.data.id, // TODO - login qilinganda user_id ketadi
+                    // user: userData?.data.id,
                     product_variable: productVariables?.id,
                     size: size?.id
                 }
@@ -91,8 +77,8 @@ export function ProductCartModal(props: IProductCartModal) {
     }, [size, productVariables])
 
     function onSuccessCartPost(e: AxiosResponse) {
-        const { data } = e
-        dispatch(setCartId(props.id, data.id, ""))
+        // const { data } = e
+        // dispatch(setCartId(props.id, data.id, ""))
 
         setTimeout(() => {
             setOpen(false)
@@ -183,57 +169,69 @@ export function ProductCartModal(props: IProductCartModal) {
             </div>
         </div>
 
-    if (width <= 640) return <div className="max-sm:block hidden">
-        <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-                <Button variant="outline" size={"icon"}onClick={() => productById.refetch()}  className="rounded-none border-none p-0">
-                    <CartIcon
-                        width={25}
-                        height={25}
-                        color={"#fff"}
-                        type={props.isCartItem ? "in" : "add"}
-                    />
-                </Button>
-            </SheetTrigger>
-            <SheetContent side={"bottom"}>
-                <SheetHeader>
-                    <SheetTitle>Edit profile</SheetTitle>
-                    <SheetDescription>
-                        Make changes to your profile here. Click save when you're done.
-                    </SheetDescription>
-                </SheetHeader>
-                {modalContent}
-                <SheetFooter className="mt-5">
-                    <Button onClick={onPostCart} type="submit">Save changes</Button>
-                </SheetFooter>
-            </SheetContent>
-        </Sheet>
-    </div>
-    else return <div className="sm:block hidden">
-        <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-                <Button variant="outline" size={"icon"} onClick={() => productById.refetch()} className="rounded-none border-none p-0">
-                    <CartIcon
-                        width={25}
-                        height={25}
-                        color={"#121212"}
-                        type={props.isCartItem ? "in" : "add"}
-                    />
-                </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                    <DialogTitle>Maxsulot nomi</DialogTitle>
-                    <DialogDescription>
-                        Savatga qo'shish uchun bazi parametrlarni tanlang
-                    </DialogDescription>
-                </DialogHeader>
-                {modalContent}
-                <DialogFooter className="mt-5">
-                    <Button onClick={onPostCart} type="submit" disabled={productCartMutation.isLoading}>Savatga qo'shish</Button>
-                </DialogFooter>
+    if (width <= 640) return (
+        <div className="max-sm:block hidden">
+            <Sheet open={open} onOpenChange={setOpen}>
+                <SheetTrigger asChild>
+                    <Button variant="outline" size={"icon"} onClick={() => productById.refetch()} className="rounded-none border-none p-0">
+                        <CartIcon
+                            width={25}
+                            height={25}
+                            color={"#fff"}
+                            type={props.isCartItem ? "in" : "add"}
+                        />
+                    </Button>
+                </SheetTrigger>
+                <SheetContent side={"bottom"}>
+                    <SheetHeader>
+                        <SheetTitle>Edit profile</SheetTitle>
+                        <SheetDescription>
+                            Make changes to your profile here. Click save when you're done.
+                        </SheetDescription>
+                    </SheetHeader>
+                    {modalContent}
+                    <SheetFooter className="mt-5">
+                        <Button
+                            onClick={() => {
+                                isError ? window.location.href = "/auth/login" : onPostCart()
+                            }}
+                            type="submit">Save changes</Button>
+                    </SheetFooter>
+                </SheetContent>
+            </Sheet>
+        </div>
+    )
+    else return (
+        <div className="sm:block hidden">
+            <Dialog open={open} onOpenChange={setOpen}>
+                <DialogTrigger asChild>
+                    <Button variant="outline" size={"icon"} onClick={() => productById.refetch()} className="rounded-none border-none p-0">
+                        <CartIcon
+                            width={25}
+                            height={25}
+                            color={"#121212"}
+                            type={props.isCartItem ? "in" : "add"}
+                        />
+                    </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                        <DialogTitle>Maxsulot nomi</DialogTitle>
+                        <DialogDescription>
+                            Savatga qo'shish uchun bazi parametrlarni tanlang
+                        </DialogDescription>
+                    </DialogHeader>
+                    {modalContent}
+                    <DialogFooter className="mt-5">
+                        <Button
+                            onClick={() => {
+                                isError ? window.location.href = "/auth/login" : onPostCart()
+                            }}
+                            type="submit" disabled={productCartMutation.isLoading}>Savatga qo'shish</Button>
+                    </DialogFooter>
 
-            </DialogContent>
-        </Dialog>
-    </div>
+                </DialogContent>
+            </Dialog>
+        </div>
+    )
 }

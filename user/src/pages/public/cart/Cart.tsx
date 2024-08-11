@@ -15,16 +15,9 @@ import { getMachineId } from '@/utils/getSeesionId'
 
 // }
 export const Cart = (/*props: Props*/): ReactElement => {
-  const { isLoading, machineId, isError, userData } = getMachineId()
+  const { isLoading, userData } = getMachineId()
 
-  const carts = useFetch<AxiosResponse, AxiosError>(
-    [`user-carts`],
-    `carts/?session_id=${isError ? machineId : userData?.data.id}`,
-    
-    false,
-    !isLoading
-    
-  )
+  const carts = useFetch<AxiosResponse, AxiosError>([`user-carts`], `carts/`, true, !isLoading)
   return (
     <CustomSuspanse
       loading={carts.isLoading}
@@ -66,11 +59,19 @@ const TableItem = (props: TableItemProps) => {
   const queryClient = useQueryClient()
   const dispatch = useAppDispatch()
 
-  const cartMutate = usePost("patch", () => queryClient.invalidateQueries({ queryKey: ["user-carts"] }))
-  const cartDelete = usePost("delete", () => {
-    queryClient.invalidateQueries({ queryKey: ["user-carts"] })
-    dispatch(deleteCartId(props.item.product.id, props.item.id, ""))
-  })
+  const cartMutate = usePost(
+    "patch",
+    () => queryClient.invalidateQueries({ queryKey: ["user-carts"] }),
+    () => { },
+    true
+  )
+
+  const cartDelete = usePost(
+    "delete",
+    () => queryClient.invalidateQueries({ queryKey: ["user-carts"] }),
+    () => { },
+    true
+  )
 
   return (
     <tr className={`text-left border-b ${cartDelete.isLoading ? "opacity-60 pointer-events-none cursor-not-allowed" : ""}`}>

@@ -32,11 +32,12 @@ export function useFetch<T, A>(
 export function usePost(
   method: "post" | "patch" | "delete",
   onSuccessFn?: (data: AxiosResponse) => void,
-  onErrorFn?: (data: AxiosError) => void
+  onErrorFn?: (data: AxiosError) => void,
+  withToken?: boolean,
 ) {
   const mutate = useMutation({
     mutationFn: (variables: { url: string; data: any }) =>
-      http()[`${method}`](variables.url, variables.data),
+      http(withToken)[`${method}`](variables.url, variables.data),
     onSuccess: (data) => (onSuccessFn ? onSuccessFn(data) : null),
     onError: (data: AxiosError) => (onErrorFn ? onErrorFn(data) : null),
   });

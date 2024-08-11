@@ -4,15 +4,7 @@ import { AxiosError, AxiosResponse } from "axios";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
@@ -44,8 +36,6 @@ export const UserProfileSettings = (/*props: Props*/) => {
 
     userMutation.mutate({url: "clients/profile/", data: fm })
   }
-
-  console.log(data)
 
   if (isLoading) return <div className="w-100 h-100 flex items-center justify-center">Loading</div>
 

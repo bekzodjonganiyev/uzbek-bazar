@@ -10,7 +10,6 @@ import { CustomSuspanse } from "@/components/common";
 import { ProductCarusel, ProductsListCarusel, ProductReview } from "@/components";
 
 import { RootState, useAppDispatch } from "@/redux"
-import { setCartId } from "@/redux/actions/cart-action"
 import { setWishlistId, deleteWishlistId } from "@/redux/actions/wishlist-action"
 import { useFetch, usePost } from "@/utils/api";
 import { cn } from "@/lib/utils";
@@ -28,8 +27,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
   const wishlist = useSelector((state: RootState) => state.wishlist)
   const dispatch = useAppDispatch()
 
-  const { machineId, isError, userData } = getMachineId()
-
+  const { isError, userData } = getMachineId()
 
   const productById = useFetch<AxiosResponse, AxiosError>(["product-by-id", id], `products/${id ?? ""}`, false);
   const sameProducts = useFetch<AxiosResponse, AxiosError>(["same-products", id], `products/?type=${productById.data?.data.type}&season=${productById.data?.data.season}`, false, productById.isSuccess);
@@ -37,7 +35,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
   const questions = useFetch<AxiosResponse, AxiosError>(["ions"], "questions/", false);
   const reviews = useFetch<AxiosResponse, AxiosError>(["product_reviews"], "reviews/", false);
 
-  const cartMutationPost = usePost("post", onSuccessCartPost, () => { })
+  const cartMutationPost = usePost("post", onSuccessCartPost, () => { }, true)
 
   const [defaultImgs] = useState<productMedia[]>([]);
   const [activeColor, setActiveColor] = useState<number>(0);
@@ -68,7 +66,8 @@ export const ProductView = (/*props: Props*/): ReactElement => {
       const obj = {
         url: "carts/",
         data: {
-          session_id: isError ? machineId : userData?.data.id, // TODO - login qilinganda null ketadi
+          // session_id: isError ? machineId : userData?.data.id, // TODO - login qilinganda null ketadi
+          // user: userData?.data.id,
           quantity: 1,
           product: productById.data?.data.id,
           product_variable: productVariables?.id,
@@ -88,7 +87,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
   }
 
   function onSuccessCartPost(res: AxiosResponse) {
-    dispatch(setCartId(productById.data?.data.id, res.data.id, ""))
+    // dispatch(setCartId(productById.data?.data.id, res.data.id, ""))
 
     setTimeout(() => {
       toast({
@@ -125,7 +124,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
   // GET SELLER DATA
   useEffect(() => {
     const sellerData = seller.isFetched && seller.data?.data?.results.filter((item: any) => item.id === productById.data?.data.organization)
-    setSellerData(sellerData[0])
+    setSellerData(sellerData?.[0])
   }, [seller.isFetched])
 
   // GET DEFAULT IMAGES
@@ -259,7 +258,9 @@ export const ProductView = (/*props: Props*/): ReactElement => {
             <Button
               variant={"default"}
               className={cn("rounded-none py-5")}
-              onClick={() => addToCart()}
+              onClick={() => {
+                isError ? window.location.href = "/auth/login" : addToCart()
+              }}
             >
               {isCart ? "Savatga o'tish" : "Savatga qo’shish"}
             </Button>

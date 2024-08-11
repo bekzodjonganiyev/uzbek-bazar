@@ -21,11 +21,19 @@ export const ProductCartItem = (props: Props): ReactElement => {
     const queryClient = useQueryClient()
     const dispatch = useAppDispatch()
 
-    const cartMutate = usePost("patch", () => queryClient.invalidateQueries({ queryKey: ["user-carts"] }))
-    const cartDelete = usePost("delete", () => {
-        queryClient.invalidateQueries({ queryKey: ["user-carts"] })
-        dispatch(deleteCartId(props.productId, props.id, ""))
-    })
+    const cartMutate = usePost(
+        "patch",
+        () => queryClient.invalidateQueries({ queryKey: ["user-carts"] }),
+        () => { },
+        true
+    )
+
+    const cartDelete = usePost(
+        "delete",
+        () => queryClient.invalidateQueries({ queryKey: ["user-carts"] }),
+        () => { },
+        true
+    )
 
     return (
         <div className={`flex items-end justify-between mb-3 pb-3 border-b ${cartDelete.isLoading ? "opacity-60 pointer-events-none cursor-not-allowed" : ""}`}>
