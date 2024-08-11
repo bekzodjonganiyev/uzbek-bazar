@@ -1,6 +1,6 @@
 import { lazy} from "react"
 
-// TODO - make one function for lazy import 
+// TODO - make one function for lazy import  
 const Home = lazy(() => import("./public/Home").then(module => ({default: module.Home})))
 
 const TopProducts = lazy(() => import("./public/product/TopProducts").then(module => ({default: module.TopProducts})))
