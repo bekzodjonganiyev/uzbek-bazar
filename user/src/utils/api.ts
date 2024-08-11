@@ -30,7 +30,7 @@ export function useFetch<T, A>(
 }
 
 export function usePost(
-  method: "post" | "patch" | "delete",
+  method: "post" | "patch" | "delete" | "put",
   onSuccessFn?: (data: AxiosResponse) => void,
   onErrorFn?: (data: AxiosError) => void,
   withToken?: boolean,

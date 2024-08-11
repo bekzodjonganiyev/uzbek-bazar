@@ -8,12 +8,18 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
-import { useFetch, usePost } from "@/utils/api"; 
+import { useFetch, usePost } from "@/utils/api";
+import { useState } from "react";
 
 // type Props = {}
 export const UserProfileSettings = (/*props: Props*/) => {
+  const [regionCode, setRegionCode] = useState<any>()
+
   const { data, isLoading, error } = useFetch<AxiosResponse, AxiosError>(["user-profile-data"], "clients/profile/", true)
-  const userMutation = usePost("post", (e) => onSuccess(e), (e) => onError(e))
+  const userMutation = usePost("put", (e) => onSuccess(e), (e) => onError(e))
+  const fetchRegions = useFetch<AxiosResponse, AxiosError>(["regions"], "/regions/", false, true)
+  const fetchDistricts = useFetch<AxiosResponse, AxiosError>(["regions", regionCode], `/regions/${regionCode}`, false, fetchRegions.isFetched)
+
 
   function onSuccess(e: AxiosResponse) {
     alert(e.statusText)
@@ -34,12 +40,18 @@ export const UserProfileSettings = (/*props: Props*/) => {
 
     const fm = new FormData(e.currentTarget)
 
+    let obj: { [key: string]: any } = {};
+
+    for (const [key, value] of fm.entries()) {
+      obj[key] = value;
+    }
+
     userMutation.mutate({url: "clients/profile/", data: fm })
   }
 
   if (isLoading) return <div className="w-100 h-100 flex items-center justify-center">Loading</div>
 
-  if (error) return <Navigate to={"/login"} replace/>
+  if (error) return <Navigate to={"/login"} replace />
 
   return (
     <div className="border-2 p-3 rounded-sm">
@@ -53,7 +65,6 @@ export const UserProfileSettings = (/*props: Props*/) => {
               name="first_name"
               type="text"
               placeholder="Ism"
-              // defaultValue={user.data.data.first_name}
               required
             />
           </div>
@@ -66,7 +77,6 @@ export const UserProfileSettings = (/*props: Props*/) => {
               name="last_name"
               type="text"
               placeholder="Familiya"
-              // defaultValue={user.data.data.last_name}
               required
             />
           </div>
@@ -75,6 +85,7 @@ export const UserProfileSettings = (/*props: Props*/) => {
           <div className="md:w-1/3">
             <Label>Telefon</Label>
             <InputMask
+              name="phone"
               defaultValue={data.data.phone}
               className={cn(
                 "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -91,19 +102,16 @@ export const UserProfileSettings = (/*props: Props*/) => {
           {/* Region */}
           <div className="md:w-1/3">
             <Label>Viloyat</Label>
-            <Select name="region">
+            <Select name="region" required onValueChange={(e) => setRegionCode(e)}>
               <SelectTrigger className="border">
                 <SelectValue placeholder="Viloyatni tanlang" />
               </SelectTrigger>
               <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Viloyatlar</SelectLabel>
-                  <SelectItem value="apple">Andijon</SelectItem>
-                  <SelectItem value="banana">Samarqand</SelectItem>
-                  <SelectItem value="blueberry">Buxoro</SelectItem>
-                  <SelectItem value="grapes">Surxondaryo</SelectItem>
-                  <SelectItem value="pineapple">Qashqadaryo</SelectItem>
-                </SelectGroup>
+                {
+                  fetchRegions.data?.data?.results.map((region: any) => (
+                    <SelectItem value={region.code}>{region.name}</SelectItem>
+                  ))
+                }
               </SelectContent>
             </Select>
           </div>
@@ -111,19 +119,16 @@ export const UserProfileSettings = (/*props: Props*/) => {
           {/* District */}
           <div className="md:w-1/3">
             <Label>Tuman</Label>
-            <Select name="district">
+            <Select name="district" required>
               <SelectTrigger className="border">
                 <SelectValue placeholder="Tumanni tanlang" />
               </SelectTrigger>
               <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Tumanlar</SelectLabel>
-                  <SelectItem value="apple">Baliqchi</SelectItem>
-                  <SelectItem value="banana">Xatirchi</SelectItem>
-                  <SelectItem value="blueberry">Katta Qo'rg'on</SelectItem>
-                  <SelectItem value="grapes">Kitob</SelectItem>
-                  <SelectItem value="pineapple">Sherobod</SelectItem>
-                </SelectGroup>
+                {
+                  fetchDistricts.data?.data.districts.map((district: any) => (
+                    <SelectItem value={district.code}>{district.name}</SelectItem>
+                  ))
+                }
               </SelectContent>
             </Select>
           </div>
@@ -132,11 +137,9 @@ export const UserProfileSettings = (/*props: Props*/) => {
           <div className="md:w-1/3">
             <Label>Manzil</Label>
             <Input
-              defaultValue={"Nomalum manzil"}
               name="address"
               type="text"
-              placeholder="Manzil"
-              // defaultValue={user.data.data.address}
+              placeholder="Manzil kiriting"
               required
             />
           </div>
