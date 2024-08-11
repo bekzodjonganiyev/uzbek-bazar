@@ -1,5 +1,5 @@
-import { ReactElement, useState } from 'react'
-import { useSelector } from "react-redux"
+import { ReactElement } from 'react'
+// import { useSelector } from "react-redux"
 import { Link, useNavigate } from 'react-router-dom'
 import { AxiosResponse, AxiosError } from 'axios'
 
@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 
 import { CartSkeleton, ProductCartItem } from "@/components"
 
-import { RootState, /* useAppDispatch*/ } from "@/redux"
+// import { RootState, /* useAppDispatch*/ } from "@/redux"
 // import { ProductCardActions } from "@/redux/actions"
 // const { deleteCartId } = new ProductCardActions()
 
@@ -18,10 +18,9 @@ import { CustomSuspanse } from '../common'
 
 export const CartSheet = (/*props: Props*/): ReactElement => {
     const navigate = useNavigate()
-    const [ open, setOpen ] = useState(false)
 
     // const machineId = getMachineId()
-    const { isLoading, machineId, isError, userData } = getMachineId()
+    const { isLoading } = getMachineId()
 
     const userCarts = useFetch<AxiosResponse, AxiosError>(["user-carts", `${isLoading}`], `carts/`, true, !isLoading)
 

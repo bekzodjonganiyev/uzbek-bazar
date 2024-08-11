@@ -27,7 +27,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
   const wishlist = useSelector((state: RootState) => state.wishlist)
   const dispatch = useAppDispatch()
 
-  const { isError, userData } = getMachineId()
+  const { isError, } = getMachineId()
 
   const productById = useFetch<AxiosResponse, AxiosError>(["product-by-id", id], `products/${id ?? ""}`, false);
   const sameProducts = useFetch<AxiosResponse, AxiosError>(["same-products", id], `products/?type=${productById.data?.data.type}&season=${productById.data?.data.season}`, false, productById.isSuccess);
@@ -86,7 +86,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
     }
   }
 
-  function onSuccessCartPost(res: AxiosResponse) {
+  function onSuccessCartPost() {
     // dispatch(setCartId(productById.data?.data.id, res.data.id, ""))
 
     setTimeout(() => {

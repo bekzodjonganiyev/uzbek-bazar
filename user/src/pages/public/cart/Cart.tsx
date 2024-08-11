@@ -6,8 +6,8 @@ import { Button } from '@/components/ui/button'
 import { DeleteIcon } from '@/assets/icons'
 import { CustomSuspanse } from '@/components/common'
 
-import { useAppDispatch } from '@/redux'
-import { deleteCartId } from '@/redux/actions/cart-action'
+// import { useAppDispatch } from '@/redux'
+// import { deleteCartId } from '@/redux/actions/cart-action'
 import { usePost, useFetch } from '@/utils/api'
 import { getMachineId } from '@/utils/getSeesionId'
 
@@ -15,7 +15,7 @@ import { getMachineId } from '@/utils/getSeesionId'
 
 // }
 export const Cart = (/*props: Props*/): ReactElement => {
-  const { isLoading, userData } = getMachineId()
+  const { isLoading } = getMachineId()
 
   const carts = useFetch<AxiosResponse, AxiosError>([`user-carts`], `carts/`, true, !isLoading)
   return (
@@ -57,7 +57,7 @@ type TableItemProps = {
 
 const TableItem = (props: TableItemProps) => {
   const queryClient = useQueryClient()
-  const dispatch = useAppDispatch()
+  // const dispatch = useAppDispatch()
 
   const cartMutate = usePost(
     "patch",

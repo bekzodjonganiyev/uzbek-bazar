@@ -18,7 +18,7 @@ import { toast } from '@/components/ui/use-toast'
 // type Props = {}
 
 export const Checkout = (/*props: Props*/): ReactElement => {
-  const { isLoading, machineId, isError, userData } = getMachineId()
+  const { isLoading } = getMachineId()
   const userCarts = useFetch<AxiosResponse, AxiosError>(["user-carts"], `carts/`, true, !isLoading)
   const orderMudation = usePost("post", () => {
     toast({

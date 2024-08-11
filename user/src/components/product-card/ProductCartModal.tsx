@@ -1,5 +1,5 @@
 import { Fragment, useMemo, useState } from "react"
-import { redirect } from "react-router-dom"
+// import { redirect } from "react-router-dom"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { AxiosError, AxiosResponse } from "axios"
 
@@ -8,14 +8,14 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { ToastAction } from "@/components/ui/toast"
 
-import { useAppDispatch } from "@/redux"
+// import { useAppDispatch } from "@/redux"
 import { productVariable, productSize } from "@/interfaces/product"
 import { CartIcon } from '@/assets/icons'
 import { useFetch, usePost } from "@/utils/api"
 import { useWindowSize } from "@/utils/Hooks"
 import { getMachineId } from "@/utils/getSeesionId"
 import { cn } from "@/lib/utils"
-import { setCartId } from "@/redux/actions/cart-action"
+// import { setCartId } from "@/redux/actions/cart-action"
 import { useToast } from "@/components/ui/use-toast"
 
 type IProductCartModal = {
@@ -28,8 +28,8 @@ export function ProductCartModal(props: IProductCartModal) {
     const productById = useFetch<AxiosResponse, AxiosError>(["product-cart-modal", props.id], `products/${props.id ?? ""}`, false, false);
     const productCartMutation = usePost("post", onSuccessCartPost, () => {}, true)
     const { width } = useWindowSize();
-    const { isLoading, machineId, isError, userData } = getMachineId()
-    const dispatch = useAppDispatch()
+    const { isError } = getMachineId()
+    // const dispatch = useAppDispatch()
     const { toast } = useToast()
 
     const [open, setOpen] = useState<boolean>(false)
@@ -76,7 +76,7 @@ export function ProductCartModal(props: IProductCartModal) {
         setValidateErrMsg({ color: "", size: "" })
     }, [size, productVariables])
 
-    function onSuccessCartPost(e: AxiosResponse) {
+    function onSuccessCartPost() {
         // const { data } = e
         // dispatch(setCartId(props.id, data.id, ""))
 
