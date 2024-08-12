@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
 
 import { cn } from "@/lib/utils";
+import { API_URL } from "@/utils/api";
 
 type UserSignIn = {
   username: string,
@@ -33,7 +34,8 @@ export const Login = (/*props: Props*/) => {
       })
 
       try {
-        const baseUrl = import.meta.env.VITE_PRODUCTION_API_URL.split("web")[0]
+        const baseUrl = API_URL.split("web")[0]
+        console.log(baseUrl)
         const res = await axios.post(`${baseUrl}auth/`, user)
 
         if (res.status === 201) {
