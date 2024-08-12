@@ -19,7 +19,7 @@ function FreshOrdersHeader(props) {
         delay={300}
         className="flex text-24 md:text-32 font-extrabold tracking-tight"
       >
-        Fresh Orders
+        Yangi buyurtmalar
       </Typography>
 
       <div className="flex flex-1 items-center justify-end space-x-8 w-full sm:w-auto">
@@ -32,7 +32,7 @@ function FreshOrdersHeader(props) {
           <FuseSvgIcon color="disabled">heroicons-solid:search</FuseSvgIcon>
 
           <Input
-            placeholder="Search orders"
+            placeholder="Yangi buyurtmalarni qidirish"
             className="flex flex-1"
             disableUnderline
             fullWidth

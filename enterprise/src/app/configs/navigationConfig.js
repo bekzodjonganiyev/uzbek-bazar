@@ -1,23 +1,23 @@
-import i18next from 'i18next';
-import DocumentationNavigation from '../main/documentation/DocumentationNavigation';
+import i18next from "i18next";
+import DocumentationNavigation from "../main/documentation/DocumentationNavigation";
 
-import ar from './navigation-i18n/ar';
-import en from './navigation-i18n/en';
-import tr from './navigation-i18n/tr';
-import authRoles from '../auth/authRoles';
+import ar from "./navigation-i18n/ar";
+import en from "./navigation-i18n/en";
+import tr from "./navigation-i18n/tr";
+import authRoles from "../auth/authRoles";
 
-i18next.addResourceBundle('en', 'navigation', en);
-i18next.addResourceBundle('tr', 'navigation', tr);
-i18next.addResourceBundle('ar', 'navigation', ar);
+i18next.addResourceBundle("en", "navigation", en);
+i18next.addResourceBundle("tr", "navigation", tr);
+i18next.addResourceBundle("ar", "navigation", ar);
 
 const navigationConfig = [
   {
-    id: 'dashboards',
-    title: 'Dashboards',
-    subtitle: 'Unique dashboard designs',
-    type: 'group',
-    icon: 'heroicons-outline:home',
-    translate: 'DASHBOARDS',
+    id: "dashboards",
+    // title: "Dashboards",
+    // subtitle: "Unique dashboard designs",
+    type: "group",
+    icon: "heroicons-outline:home",
+    translate: "DASHBOARDS",
     children: [
       // {
       //   id: 'dashboards.project',
@@ -27,64 +27,57 @@ const navigationConfig = [
       //   url: '/dashboards/project',
       // },
       {
-        id: 'dashboards.analytics',
-        title: 'Analytics',
-        type: 'item',
-        icon: 'heroicons-outline:chart-pie',
-        url: '/dashboards/analytics',
+        id: "dashboards.analytics",
+        title: "Statistika",
+        type: "item",
+        icon: "heroicons-outline:chart-pie",
+        url: "/dashboards/analytics",
       },
       {
-        id: 'e-commerce-products',
-        title: 'Products',
-        type: 'item',
-        icon: 'heroicons-outline:hashtag',
-        url: 'apps/e-commerce/products',
+        id: "e-commerce-products",
+        title: "Mahsulotlar",
+        type: "item",
+        icon: "heroicons-outline:hashtag",
+        url: "apps/e-commerce/products",
+        // end: true,
+      },
+      // {
+      //   id: 'e-commerce-products-variables',
+      //   title: 'Products variables',
+      //   type: 'item',
+      //   icon: 'heroicons-outline:hashtag',
+      //   url: 'apps/e-commerce/product/variables',
+      //   // end: true,
+      // },
+      {
+        id: "e-commerce-orders",
+        title: "Buyurtmalar",
+        type: "item",
+        icon: "heroicons-outline:hashtag",
+        url: "apps/e-commerce/orders",
         // end: true,
       },
       {
-        id: 'e-commerce-products-variables',
-        title: 'Products variables',
-        type: 'item',
-        icon: 'heroicons-outline:hashtag',
-        url: 'apps/e-commerce/product/variables',
+        id: "e-commerce-fresh-orders",
+        title: "Yangi Buyurtmalar",
+        type: "item",
+        icon: "heroicons-outline:hashtag",
+        url: "apps/e-commerce/fresh-orders",
         // end: true,
       },
       {
-        id: 'e-commerce-orders',
-        title: 'Orders',
-        type: 'item',
-        icon: 'heroicons-outline:hashtag',
-        url: 'apps/e-commerce/orders',
-        // end: true,
+        id: "pages.invoice.printable.compact",
+        title: "Shartnoma",
+        type: "item",
+        icon: "heroicons-outline:hashtag",
+        url: "/pages/invoice/printable/compact",
       },
       {
-        id: 'e-commerce-fresh-orders',
-        title: 'Fresh Orders',
-        type: 'item',
-        icon: 'heroicons-outline:hashtag',
-        url: 'apps/e-commerce/fresh-orders',
-        // end: true,
-      },
-      {
-        id: 'pages.invoice.printable.compact',
-        title: 'Shartnoma 1',
-        type: 'item',
-        icon: 'heroicons-outline:hashtag',
-        url: '/pages/invoice/printable/compact',
-      },
-      {
-        id: 'pages.invoice.printable.modern',
-        title: 'Shartnoma 2',
-        type: 'item',
-        icon: 'heroicons-outline:hashtag',
-        url: '/pages/invoice/printable/modern',
-      },
-      {
-        id: 'pages.pricing.table',
-        title: 'Upgrade',
-        type: 'item',
-        icon: 'heroicons-outline:hashtag',
-        url: '/pages/pricing/table',
+        id: "pages.pricing.table",
+        title: "Ta’riflar",
+        type: "item",
+        icon: "heroicons-outline:hashtag",
+        url: "/pages/pricing/table",
       },
       // {
       //   id: 'dashboards.finance',
@@ -1034,8 +1027,8 @@ const navigationConfig = [
   //   ],
   // },
   {
-    id: 'divider-1',
-    type: 'divider',
+    id: "divider-1",
+    type: "divider",
   },
   // DocumentationNavigation,
   // {

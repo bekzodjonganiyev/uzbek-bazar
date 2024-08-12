@@ -17,10 +17,10 @@ const ECommerceAppConfig = {
       path: 'apps/e-commerce/products',
       element: <Products />,
     },
-    {
-      path: 'apps/e-commerce/product/variables',
-      element: <ProductVariablesForm />,
-    },
+    // {
+    //   path: 'apps/e-commerce/product/variables',
+    //   element: <ProductVariablesForm />,
+    // },
     {
       path: 'apps/e-commerce/products/:productId/*',
       element: <Product />,

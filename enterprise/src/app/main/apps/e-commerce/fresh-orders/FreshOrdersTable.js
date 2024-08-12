@@ -1,21 +1,25 @@
-import FuseScrollbars from '@fuse/core/FuseScrollbars';
-import FuseUtils from '@fuse/utils';
-import _ from '@lodash';
-import Checkbox from '@mui/material/Checkbox';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import withRouter from '@fuse/core/withRouter';
-import FuseLoading from '@fuse/core/FuseLoading';
-import OrdersStatus from '../order/OrdersStatus';
-import { getOrders, selectOrders, selectOrdersSearchText } from '../store/ordersSlice';
-import OrdersTableHead from './FreshOrdersTableHead';
+import FuseScrollbars from "@fuse/core/FuseScrollbars";
+import FuseUtils from "@fuse/utils";
+import _ from "@lodash";
+import Checkbox from "@mui/material/Checkbox";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import withRouter from "@fuse/core/withRouter";
+import FuseLoading from "@fuse/core/FuseLoading";
+import OrdersStatus from "../order/OrdersStatus";
+import {
+  getOrders,
+  selectOrders,
+  selectOrdersSearchText,
+} from "../store/ordersSlice";
+import OrdersTableHead from "./FreshOrdersTableHead";
 
 function FreshOrdersTable(props) {
   const dispatch = useDispatch();
@@ -28,7 +32,7 @@ function FreshOrdersTable(props) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState({
-    direction: 'asc',
+    direction: "asc",
     id: null,
   });
 
@@ -47,10 +51,10 @@ function FreshOrdersTable(props) {
 
   function handleRequestSort(event, property) {
     const id = property;
-    let direction = 'desc';
+    let direction = "desc";
 
-    if (order.id === property && order.direction === 'desc') {
-      direction = 'asc';
+    if (order.id === property && order.direction === "desc") {
+      direction = "asc";
     }
 
     setOrder({
@@ -144,16 +148,16 @@ function FreshOrdersTable(props) {
               [
                 (o) => {
                   switch (order.id) {
-                    case 'id': {
+                    case "id": {
                       return parseInt(o.id, 10);
                     }
-                    case 'customer': {
+                    case "customer": {
                       return o.customer.firstName;
                     }
-                    case 'payment': {
+                    case "payment": {
                       return o.payment.method;
                     }
-                    case 'status': {
+                    case "status": {
                       return o.status[0].name;
                     }
                     default: {
@@ -178,7 +182,10 @@ function FreshOrdersTable(props) {
                     selected={isSelected}
                     onClick={(event) => handleClick(n)}
                   >
-                    <TableCell className="w-40 md:w-64 text-center" padding="none">
+                    <TableCell
+                      className="w-40 md:w-64 text-center"
+                      padding="none"
+                    >
                       <Checkbox
                         checked={isSelected}
                         onClick={(event) => event.stopPropagation()}
@@ -186,33 +193,54 @@ function FreshOrdersTable(props) {
                       />
                     </TableCell>
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row">
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                    >
                       {n.id}
                     </TableCell>
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      {n.reference}
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                    >
+                      {n.user.full_name}
                     </TableCell>
 
-                    <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">
-                      {`${n.customer.firstName} ${n.customer.lastName}`}
-                    </TableCell>
-
-                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                    <TableCell
+                      className="p-4 md:p-16 truncate"
+                      component="th"
+                      scope="row"
+                    >
                       <span>$</span>
-                      {n.total}
+                      {`${n.price}`}
                     </TableCell>
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      {n.payment.method}
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                      align="right"
+                    >
+                      {n.quantity}
                     </TableCell>
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      <OrdersStatus name={n.status[0].name} />
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                    >
+                      {n.price * n.quantity}
                     </TableCell>
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      {n.date}
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                    >
+                      {FuseUtils.time(n.created_at)}
                     </TableCell>
                   </TableRow>
                 );
@@ -228,10 +256,10 @@ function FreshOrdersTable(props) {
         rowsPerPage={rowsPerPage}
         page={page}
         backIconButtonProps={{
-          'aria-label': 'Previous Page',
+          "aria-label": "Previous Page",
         }}
         nextIconButtonProps={{
-          'aria-label': 'Next Page',
+          "aria-label": "Next Page",
         }}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}

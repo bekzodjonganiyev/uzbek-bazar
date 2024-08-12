@@ -8,8 +8,8 @@ import { http } from "../../../../api/http";
 export const getProducts = createAsyncThunk(
   "eCommerceApp/products/getProducts",
   async () => {
-    const response = await http(false).get("/products/");
-    console.log(response)
+    const response = await http(true).get("/products/");
+    console.log(response)         
     const data = await response.data?.results;
 
     return data;

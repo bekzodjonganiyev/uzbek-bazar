@@ -125,7 +125,7 @@ function OrdersTable(props) {
         className="flex flex-1 items-center justify-center h-full"
       >
         <Typography color="text.secondary" variant="h5">
-          There are no orders!
+          Buyurtmalar mavjud emas!
         </Typography>
       </motion.div>
     );
@@ -174,25 +174,34 @@ function OrdersTable(props) {
                   </TableCell>
 
                   <TableCell className="p-4 md:p-16" component="th" scope="row">
-                    {n.user}
+                    {n.user.full_name}
                   </TableCell>
 
-                  <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">
-                      <span>$</span>
-                      {`${n.total}`}
-                    </TableCell>
+                  <TableCell
+                    className="p-4 md:p-16 truncate"
+                    component="th"
+                    scope="row"
+                  >
+                    <span>$</span>
+                    {`${n.subtotal}`}
+                  </TableCell>
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      {n.total_quantity}
-                    </TableCell>
-                    
-                    <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      {n.status}
-                    </TableCell>
+                  <TableCell
+                    className="p-4 md:p-16"
+                    component="th"
+                    scope="row"
+                    align="right"
+                  >
+                    {n.quantity}
+                  </TableCell>
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      {n.created_at}
-                    </TableCell>
+                  <TableCell className="p-4 md:p-16" component="th" scope="row">
+                    {n.price * n.quantity}
+                  </TableCell>
+
+                  <TableCell className="p-4 md:p-16" component="th" scope="row">
+                    {FuseUtils.time(n.created_at)}
+                  </TableCell>
                 </TableRow>
               );
             })}
