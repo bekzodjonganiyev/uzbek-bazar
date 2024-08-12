@@ -208,8 +208,8 @@ class JwtService extends FuseUtils.EventEmitter {
                 role: authRoles.admin,
                 data: {
                   displayName: "Admin",
-                  photoURL: "assets/images/avatars/brian-hughes.jpg",
-                  email: "admin@fusetheme.com",
+                  photoURL: "https://surgassociates.com/wp-content/uploads/610-6104451_image-placeholder-png-user-profile-placeholder-image-png-1.jpg",
+                  email: "admin@uzbekbazar.uz",
                   settings: {
                     layout: {},
                     theme: {}
@@ -247,8 +247,8 @@ class JwtService extends FuseUtils.EventEmitter {
           role: authRoles.admin,
           data: {
             displayName: "Admin",
-            photoURL: "assets/images/avatars/brian-hughes.jpg",
-            email: "admin@fusetheme.com",
+            photoURL: "https://surgassociates.com/wp-content/uploads/610-6104451_image-placeholder-png-user-profile-placeholder-image-png-1.jpg",
+            email: "admin@uzbekbazar.uz",
             settings: {
               layout: {},
               theme: {}
