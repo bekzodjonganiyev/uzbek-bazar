@@ -18,7 +18,7 @@ import {
   getOrders,
   selectOrders,
   selectOrdersSearchText,
-} from "../store/ordersSlice";
+} from "../store/freshOrders";
 import OrdersTableHead from "./FreshOrdersTableHead";
 
 function FreshOrdersTable(props) {

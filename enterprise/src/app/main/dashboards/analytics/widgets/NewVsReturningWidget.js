@@ -38,7 +38,6 @@ function NewVsReturningWidget(props) {
       .catch((err) => console.log(err));
   }, []);
 
-
   const chartOptions = {
     chart: {
       animations: {
@@ -106,10 +105,10 @@ function NewVsReturningWidget(props) {
     <Paper className="flex flex-col flex-auto shadow rounded-2xl overflow-hidden p-24">
       <div className="flex flex-col sm:flex-row items-start justify-between">
         <Typography className="text-lg font-medium tracking-tight leading-6 truncate">
-          get_statistics_by_status
+          Status bo’yicha
         </Typography>
         <div className="ml-8">
-          <Chip size="small" className="font-medium text-sm" label=" 30 days" />
+          <Chip size="small" className="font-medium text-sm" label=" 30 kun" />
         </div>
       </div>
 

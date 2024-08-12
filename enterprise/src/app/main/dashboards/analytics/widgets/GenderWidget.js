@@ -91,7 +91,7 @@ function GenderWidget(props) {
         </div>`,
     },
   };
-  
+
   useEffect(() => {
     setAwaitRender(false);
   }, []);
@@ -103,10 +103,10 @@ function GenderWidget(props) {
     <Paper className="flex flex-col flex-auto shadow rounded-2xl overflow-hidden p-24">
       <div className="flex flex-col sm:flex-row items-start justify-between">
         <Typography className="text-lg font-medium tracking-tight leading-6 truncate">
-          products/statistics_by_gender/
+          Gender bo’yicha
         </Typography>
         <div className="ml-8">
-          <Chip size="small" className="font-medium text-sm" label=" 30 days" />
+          <Chip size="small" className="font-medium text-sm" label=" 30 kun" />
         </div>
       </div>
 
@@ -128,7 +128,9 @@ function GenderWidget(props) {
                   className="flex-0 w-8 h-8 rounded-full"
                   sx={{ backgroundColor: chartOptions.colors[i] }}
                 />
-                <Typography className="ml-12 truncate">{monthlyStatByGender.labels[i]}</Typography>
+                <Typography className="ml-12 truncate">
+                  {monthlyStatByGender.labels[i]}
+                </Typography>
               </div>
               <Typography className="font-medium text-right">
                 {monthlyStatByGender.counts[i]}

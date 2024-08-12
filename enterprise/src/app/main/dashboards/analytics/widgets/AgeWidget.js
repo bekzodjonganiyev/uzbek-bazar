@@ -1,19 +1,19 @@
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import { memo, useEffect, useState } from 'react';
-import ReactApexChart from 'react-apexcharts';
-import { useSelector } from 'react-redux';
-import Chip from '@mui/material/Chip';
-import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
-import { selectWidgets } from '../store/widgetsSlice';
-import { http } from 'src/app/api/http';
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import { memo, useEffect, useState } from "react";
+import ReactApexChart from "react-apexcharts";
+import { useSelector } from "react-redux";
+import Chip from "@mui/material/Chip";
+import Box from "@mui/material/Box";
+import { useTheme } from "@mui/material/styles";
+import { selectWidgets } from "../store/widgetsSlice";
+import { http } from "src/app/api/http";
 
 function AgeWidget(props) {
   const widgets = useSelector(selectWidgets);
   const { series, labels, uniqueVisitors } = widgets?.age;
   const theme = useTheme();
-  
+
   const [awaitRender, setAwaitRender] = useState(true);
   const [monthlyStatBySeason, setMonthlyStatBySeason] = useState({
     isFetched: false,
@@ -44,22 +44,22 @@ function AgeWidget(props) {
           enabled: false,
         },
       },
-      fontFamily: 'inherit',
-      foreColor: 'inherit',
-      height: '100%',
-      type: 'donut',
+      fontFamily: "inherit",
+      foreColor: "inherit",
+      height: "100%",
+      type: "donut",
       sparkline: {
         enabled: true,
       },
     },
-    colors: ['#DD6B20', '#F6AD55'],
+    colors: ["#DD6B20", "#F6AD55"],
     labels: monthlyStatBySeason?.labels,
     plotOptions: {
       pie: {
         customScale: 0.9,
         expandOnClick: false,
         donut: {
-          size: '70%',
+          size: "70%",
         },
       },
     },
@@ -70,19 +70,19 @@ function AgeWidget(props) {
     states: {
       hover: {
         filter: {
-          type: 'none',
+          type: "none",
         },
       },
       active: {
         filter: {
-          type: 'none',
+          type: "none",
         },
       },
     },
     tooltip: {
       enabled: true,
       fillSeriesColor: false,
-      theme: 'dark',
+      theme: "dark",
       custom: ({ seriesIndex, w }) =>
         `<div class="flex items-center h-32 min-h-32 max-h-23 px-12">
             <div class="w-12 h-12 rounded-full" style="background-color: ${w.config.colors[seriesIndex]};"></div>
@@ -92,7 +92,7 @@ function AgeWidget(props) {
     },
   };
 
-  console.log(monthlyStatBySeason)
+  console.log(monthlyStatBySeason);
 
   useEffect(() => {
     setAwaitRender(false);
@@ -105,10 +105,10 @@ function AgeWidget(props) {
     <Paper className="flex flex-col flex-auto shadow rounded-2xl overflow-hidden p-24">
       <div className="flex flex-col sm:flex-row items-start justify-between">
         <Typography className="text-lg font-medium tracking-tight leading-6 truncate">
-          products/statistics_by_sezon/
+          Mavsum bo’yicha
         </Typography>
         <div className="ml-8">
-          <Chip size="small" className="font-medium text-sm" label=" 30 days" />
+          <Chip size="small" className="font-medium text-sm" label=" 30 kun" />
         </div>
       </div>
 
@@ -130,7 +130,9 @@ function AgeWidget(props) {
                   className="flex-0 w-8 h-8 rounded-full"
                   sx={{ backgroundColor: chartOptions.colors[i] }}
                 />
-                <Typography className="ml-12 truncate">{monthlyStatBySeason?.labels[i]}</Typography>
+                <Typography className="ml-12 truncate">
+                  {monthlyStatBySeason?.labels[i]}
+                </Typography>
               </div>
               <Typography className="font-medium text-right">
                 {monthlyStatBySeason.counts[i]}

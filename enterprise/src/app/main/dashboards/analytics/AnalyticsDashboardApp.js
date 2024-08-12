@@ -1,22 +1,22 @@
-import withReducer from 'app/store/withReducer';
-import { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import _ from '@lodash';
-import FusePageSimple from '@fuse/core/FusePageSimple';
-import { motion } from 'framer-motion';
-import Typography from '@mui/material/Typography';
-import reducer from './store';
-import { getWidgets, selectWidgets } from './store/widgetsSlice';
-import AnalyticsDashboardAppHeader from './AnalyticsDashboardAppHeader';
-import VisitorsOverviewWidget from './widgets/VisitorsOverviewWidget';
-import ConversionsWidget from './widgets/ConversionsWidget';
-import ImpressionsWidget from './widgets/ImpressionsWidget';
-import VisitsWidget from './widgets/VisitsWidget';
-import VisitorsVsPageViewsWidget from './widgets/VisitorsVsPageViewsWidget';
-import NewVsReturningWidget from './widgets/NewVsReturningWidget';
-import AgeWidget from './widgets/AgeWidget';
-import LanguageWidget from './widgets/LanguageWidget';
-import GenderWidget from './widgets/GenderWidget';
+import withReducer from "app/store/withReducer";
+import { useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import _ from "@lodash";
+import FusePageSimple from "@fuse/core/FusePageSimple";
+import { motion } from "framer-motion";
+import Typography from "@mui/material/Typography";
+import reducer from "./store";
+import { getWidgets, selectWidgets } from "./store/widgetsSlice";
+import AnalyticsDashboardAppHeader from "./AnalyticsDashboardAppHeader";
+import VisitorsOverviewWidget from "./widgets/VisitorsOverviewWidget";
+import ConversionsWidget from "./widgets/ConversionsWidget";
+import ImpressionsWidget from "./widgets/ImpressionsWidget";
+import VisitsWidget from "./widgets/VisitsWidget";
+import VisitorsVsPageViewsWidget from "./widgets/VisitorsVsPageViewsWidget";
+import NewVsReturningWidget from "./widgets/NewVsReturningWidget";
+import AgeWidget from "./widgets/AgeWidget";
+import LanguageWidget from "./widgets/LanguageWidget";
+import GenderWidget from "./widgets/GenderWidget";
 
 function AnalyticsDashboardApp() {
   const dispatch = useDispatch();
@@ -53,19 +53,31 @@ function AnalyticsDashboardApp() {
                   initial="hidden"
                   animate="show"
                 >
-                  <motion.div variants={item} className="sm:col-span-2 lg:col-span-3">
+                  <motion.div
+                    variants={item}
+                    className="sm:col-span-2 lg:col-span-3"
+                  >
                     <VisitorsOverviewWidget />
                   </motion.div>
 
-                  <motion.div variants={item} className="sm:col-span-2 lg:col-span-1 ">
+                  <motion.div
+                    variants={item}
+                    className="sm:col-span-2 lg:col-span-1 "
+                  >
                     <ConversionsWidget />
                   </motion.div>
 
-                  <motion.div variants={item} className="sm:col-span-2 lg:col-span-1 ">
+                  <motion.div
+                    variants={item}
+                    className="sm:col-span-2 lg:col-span-1 "
+                  >
                     <ImpressionsWidget />
                   </motion.div>
 
-                  <motion.div variants={item} className="sm:col-span-2 lg:col-span-1 ">
+                  <motion.div
+                    variants={item}
+                    className="sm:col-span-2 lg:col-span-1 "
+                  >
                     <VisitsWidget />
                   </motion.div>
 
@@ -75,10 +87,13 @@ function AnalyticsDashboardApp() {
 
                   <div className="w-full mt-16 sm:col-span-3">
                     <Typography className="text-2xl font-semibold tracking-tight leading-6">
-                      Your Audience
+                      Sizning Auditoriyangiz
                     </Typography>
-                    <Typography className="font-medium tracking-tight" color="text.secondary">
-                      Demographic properties of your users
+                    <Typography
+                      className="font-medium tracking-tight"
+                      color="text.secondary"
+                    >
+                      Foydalanuvchilaringiz statistikasi
                     </Typography>
                   </div>
 
@@ -106,4 +121,7 @@ function AnalyticsDashboardApp() {
   );
 }
 
-export default withReducer('analyticsDashboardApp', reducer)(AnalyticsDashboardApp);
+export default withReducer(
+  "analyticsDashboardApp",
+  reducer
+)(AnalyticsDashboardApp);
