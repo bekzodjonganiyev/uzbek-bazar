@@ -77,7 +77,7 @@ const navigationConfig = [
         title: "Ta’riflar",
         type: "item",
         icon: "heroicons-outline:hashtag",
-        url: "/pages/pricing/table",
+        url: "/pages/pricing/simple",
       },
       // {
       //   id: 'dashboards.finance',
