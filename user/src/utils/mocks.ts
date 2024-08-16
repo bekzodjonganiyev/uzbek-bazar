@@ -66,9 +66,9 @@ export const products = [
 ];
 
 export const showCase = [
-  { title: "Coats", type: "coats", link: { label: "Explore", href: "kun.uz" }, img: img3 },
-  { title: "Coats", type: "purses", link: { label: "Explore", href: "kun.uz" }, img: img1 },
-  { title: "Coats", type: "accessories", link: { label: "Explore", href: "kun.uz" }, img: img2 },
+  { title: "Ayollar kiyimlari", type: "coats", link: { label: "Ko'rish", href: "kun.uz" }, img: img3 },
+  { title: "Sumkalar", type: "purses", link: { label: "Ko'rish", href: "kun.uz" }, img: img1 },
+  { title: "Aksessuarlar", type: "accessories", link: { label: "Ko'rish", href: "kun.uz" }, img: img2 },
 ];
 export const categories = [
   {

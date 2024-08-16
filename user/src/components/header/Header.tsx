@@ -8,7 +8,7 @@ import { CustomSelect, CustomSheetContent } from "@/components/common"
 import { CartSheet, MobileMenuSheet, SearchSheet } from "@/components/sheet-contents"
 
 import { Menu } from "./header-elements"
-
+import logo from '../../assets/images/logo.jpg'
 import { useAppDispatch, RootState } from "@/redux"
 import { setSheetContent } from "@/redux/actions"
 
@@ -123,7 +123,11 @@ export const Header = (): JSX.Element => {
           //  suggestMobile === "true" && "max-md:mt-20"
            )}>
             {/* |---LOGO---| */}
-            <div><Link to="/">Logo</Link></div>
+            <div><Link to="/">
+                <img src={logo} alt="logotip" style={{
+                  width: "70px"
+                }}/>
+              </Link></div>
 
             {/* |---MENU---| */}
             <div className="md:block hidden">

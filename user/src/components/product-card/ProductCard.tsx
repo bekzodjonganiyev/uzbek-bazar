@@ -142,7 +142,7 @@ export const ProductCard = (props: productListType): ReactElement => {
                     }
                     <div className='flex flex-col'>
                         <div className='h-[12px]'><b className='text-xs'>Material:</b><span className='ml-1 text-xs'>{props.material}</span></div>
-                        <div className='h-[12px]'><b className='text-xs'>Minimum sold:</b><span className='ml-1 text-xs'>{props.minimum_order_count}</span></div>
+                        <div className='h-[12px] my-[7px]'><b className='text-xs'>Minimum sold:</b><span className='ml-1 text-xs'>{props.minimum_order_count}</span></div>
                         <div className='h-[12px]'><b className='text-xs'>Season:</b><span className='ml-1 text-xs'>{props.season}</span></div>
                     </div>
                 </div>
