@@ -23,7 +23,7 @@ export const Cart = (/*props: Props*/): ReactElement => {
       loading={carts.isLoading}
       loadingFallback={"Loading"}
       error={carts.isError}
-      errorFallback={carts.error?.message}
+      errorFallback={"Savatingizda hech narsa yo'q"}
     >
       <>
         <h1 className='text-3xl font-medium text-center my-5'>Savatcha</h1>
@@ -90,7 +90,7 @@ const TableItem = (props: TableItemProps) => {
             {/*product name and info */}
             <div className='flex flex-col gap-1'>
               <h3 className='sm:text-base text-sm font-semibold line-clamp-2 w-64'>{props.item.product.name}</h3>
-              <p className='sm:text-sm text-xs'>Color: {props.item.product.color?.name ?? '|color|'}, Size: {props.item.size.name ?? "|size|"}</p>
+              <p className='sm:text-sm text-xs'>Color: {props.item.product.color?.name ?? '|color|'}, Size: {props.item.size?.name ?? "|size|"}</p>
             </div>
 
             {/* delete */}
@@ -139,7 +139,7 @@ const TableItem = (props: TableItemProps) => {
       </td>
 
       {/* -----<TD>PRICE</TD>----- */}
-      <td className='py-5 px-3'>${props.item.product.price}</td>
+      <td className='py-5 px-3'>${props.item.product.price}so'm</td>
 
       {/* -----<TD>TOTAL PRICE</TD>----- */}
       <td className='py-5 px-3'>${props.item.quantity * props.item.product.price}</td>

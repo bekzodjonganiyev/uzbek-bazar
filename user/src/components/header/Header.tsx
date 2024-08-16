@@ -3,7 +3,7 @@ import { Link, /*useLocation*/ } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
-import { EnFlagIcon, HamburgerIcon, HumanIcon, PhoneIcon, RuFlagIcon, SearchIcon, ShopCardIcon, UzFlagIcon } from "@/assets/icons"
+import { HamburgerIcon, HumanIcon, LogoIcon, PhoneIcon,  SearchIcon, ShopCardIcon, UzFlagIcon } from "@/assets/icons"
 import { CustomSelect, CustomSheetContent } from "@/components/common"
 import { CartSheet, MobileMenuSheet, SearchSheet } from "@/components/sheet-contents"
 
@@ -12,7 +12,7 @@ import logo from '../../assets/images/logo.jpg'
 import { useAppDispatch, RootState } from "@/redux"
 import { setSheetContent } from "@/redux/actions"
 
-import { currencys } from "@/utils/mocks"
+// import { currencys } from "@/utils/mocks"
 // import { seacrFc } from "@/utils/searchFn"
 // import { Input } from "../ui/input"
 import { cn } from "@/lib/utils"
@@ -22,8 +22,8 @@ import { cn } from "@/lib/utils"
 
 export const languages = [
   { label: "UZB", value: "uz", icon: <UzFlagIcon /> },
-  { label: "RUS", value: "ru", icon: <RuFlagIcon /> },
-  { label: "ENG", value: "en", icon: <EnFlagIcon /> }
+  // { label: "RUS", value: "ru", icon: <RuFlagIcon /> },
+  // { label: "ENG", value: "en", icon: <EnFlagIcon /> }
 ]
 
 export const Header = (): JSX.Element => {
@@ -71,15 +71,10 @@ export const Header = (): JSX.Element => {
           {/* begin::TOP HEADER */}
           <div className="md:flex hidden justify-between items-center">
             <div className="flex gap-2"><PhoneIcon /> Call Markaz +998 (90) 123-45-67</div>
-            <div className="flex gap-5">
+            <div className="flex items-center gap-5">
 
               {/* |---SELL WITH US---| */}
-              <CustomSelect
-                width="w-32"
-                items={[]}
-                changeHandler={(e) => console.log(e)}
-                placeholderValue="Biz bilan soting"
-              />
+              <Link to="/sell-with-us">Biz bilan soting</Link>
 
               {/* |---LANG---| */}
               <CustomSelect
@@ -90,12 +85,12 @@ export const Header = (): JSX.Element => {
               />
 
               {/* |---CURRENCY--- */}
-              <CustomSelect
+              {/* <CustomSelect
                 items={currencys}
                 changeHandler={(e) => console.log(e)}
                 placeholderValue="Tilni tanlang"
                 defaultValue="usz"
-              />
+              /> */}
             </div>
           </div>
           {/* end::TOP HEADER */}
@@ -123,11 +118,7 @@ export const Header = (): JSX.Element => {
           //  suggestMobile === "true" && "max-md:mt-20"
            )}>
             {/* |---LOGO---| */}
-            <div><Link to="/">
-                <img src={logo} alt="logotip" style={{
-                  width: "70px"
-                }}/>
-              </Link></div>
+            <div><Link to="/"><LogoIcon /></Link></div>
 
             {/* |---MENU---| */}
             <div className="md:block hidden">

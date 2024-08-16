@@ -128,7 +128,7 @@ const TableItem = (props: TableItemProps) => {
             </td>
 
             {/* -----<TD>PRICE</TD>----- */}
-            <td className='py-5 px-3'>${props.item.product.price}</td>
+            <td className='py-5 px-3'>${props.item.product.price}so'm</td>
 
             {/* -----<TD>TOTAL PRICE</TD>----- */}
             <td className='py-5 px-3'>

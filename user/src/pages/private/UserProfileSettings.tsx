@@ -13,7 +13,7 @@ import { useState } from "react";
 
 // type Props = {}
 export const UserProfileSettings = (/*props: Props*/) => {
-  const [regionCode, setRegionCode] = useState<any>()
+  const [regionCode, setRegionCode] = useState<any>("1703")
 
   const { data, isLoading, error } = useFetch<AxiosResponse, AxiosError>(["user-profile-data"], "clients/profile/", true)
   const userMutation = usePost("put", (e) => onSuccess(e), (e) => onError(e))
@@ -102,7 +102,10 @@ export const UserProfileSettings = (/*props: Props*/) => {
           {/* Region */}
           <div className="md:w-1/3">
             <Label>Viloyat</Label>
-            <Select name="region" required onValueChange={(e) => setRegionCode(e)}>
+            <Select name="region" required onValueChange={(e) => {
+              setRegionCode(e)
+              // fetchDistricts.refetch()
+            }}>
               <SelectTrigger className="border">
                 <SelectValue placeholder="Viloyatni tanlang" />
               </SelectTrigger>

@@ -15,7 +15,7 @@ import { useFetch, usePost } from "@/utils/api";
 import { cn } from "@/lib/utils";
 import { productVariable, productMedia, productSize } from "@/interfaces/product";
 import { review } from "@/interfaces/review";
-import { question } from "@/interfaces/question";
+// import { question } from "@/interfaces/question";
 import { getMachineId } from "@/utils/getSeesionId";
 import { toast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
@@ -177,10 +177,10 @@ export const ProductView = (/*props: Props*/): ReactElement => {
 
             {/* Price */}
             <p className="flex gap-2">
-              <span>{productById.data?.data.price}$</span>
+              <span>{productById.data?.data.price}so'm</span>
               {productById.data?.data.discount > 0 && (
                 <span className="line-through">
-                  {productById.data?.data.price}$
+                  {productById.data?.data.price}so'm
                 </span>
               )}
             </p>
@@ -312,7 +312,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
       <div>
         <div className="border-b flex flex-wrap md:gap-10 gap-4 ">
           {/* -----Description----- */}
-          <button
+          {/* <button
             className={`${tabs.id === 1 ? "border-b-2 border-black" : ""}  pb-1`}
             onClick={() =>
               setTabs({
@@ -326,7 +326,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
             }
           >
             Description
-          </button>
+          </button> */}
 
           {/* -----Additional Info----- */}
           <button
@@ -357,7 +357,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
           </button>
 
           {/* -----Questions----- */}
-          <button
+          {/* <button
             className={`${tabs.id === 4 ? "border-b-2 border-black" : ""}  pb-1`}
             onClick={() =>
               setTabs({
@@ -369,7 +369,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
             }
           >
             Questions
-          </button>
+          </button> */}
         </div>
         <div className="py-10">
           {
@@ -396,12 +396,12 @@ export const ProductView = (/*props: Props*/): ReactElement => {
   )
 }
 
-type DescriptionProps = {
-  data: string;
-};
-function ProductView_Description(props: DescriptionProps) {
-  return <div dangerouslySetInnerHTML={{ __html: props.data }} />;
-}
+// type DescriptionProps = {
+//   data: string;
+// };
+// function ProductView_Description(props: DescriptionProps) {
+//   return <div dangerouslySetInnerHTML={{ __html: props.data }} />;
+// }
 
 type InfoProps = {
   data: string;
@@ -433,30 +433,30 @@ function ProductView_Review(props: ReviewProps) {
   );
 }
 
-type QuestionProps = {
-  arr: question[];
-};
-function ProductView_Question({ arr }: QuestionProps) {
-  return (
-    <div>
-      {arr &&
-        arr.map((i: question, ind: number) => (
-          <div className="flex flex-col mt-10 pb-5 border-b clgr" key={ind}>
-            <div className="flex gap-5">
-              <p className="">Question</p>
-              <p className="font-bold">{i.question}</p>
-            </div>
-            <div className="flex gap-5">
-              <p className="">Answer</p>
-              <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                  <p className="font-medium">{i.question}</p>
-                  <span className="text-stone-300 text-sm">{i.answer}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-    </div>
-  );
-}
+// type QuestionProps = {
+//   arr: question[];
+// };
+// function ProductView_Question({ arr }: QuestionProps) {
+//   return (
+//     <div>
+//       {arr &&
+//         arr.map((i: question, ind: number) => (
+//           <div className="flex flex-col mt-10 pb-5 border-b clgr" key={ind}>
+//             <div className="flex gap-5">
+//               <p className="">Question</p>
+//               <p className="font-bold">{i.question}</p>
+//             </div>
+//             <div className="flex gap-5">
+//               <p className="">Answer</p>
+//               <div className="flex flex-col gap-3">
+//                 <div className="flex flex-col gap-2">
+//                   <p className="font-medium">{i.question}</p>
+//                   <span className="text-stone-300 text-sm">{i.answer}</span>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         ))}
+//     </div>
+//   );
+// }

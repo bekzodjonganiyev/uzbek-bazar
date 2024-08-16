@@ -59,7 +59,7 @@ export const ProductCarusel = ({ images }: Props) => {
            * @direction => horizontal bo'lganda @SwiperSlide larni
            * o'rab turgan wrapperga @width berilishi shart
            */
-          className="product-image h-full w-full"
+          className="product-image h-full xl:w-[90%] lg:w-[85%] md:w-[80%] w-[90%]"
           direction="horizontal"
         >
           {
