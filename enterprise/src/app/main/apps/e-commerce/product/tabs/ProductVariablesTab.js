@@ -114,7 +114,7 @@ const VariableItem = ({ colors, deleteItem, saveItem }) => {
         "write_file/",
         fm,
         ({ data }) =>
-          setFile((prev) => [...prev, { is_main: false, file: baseUrl + data?.msg }]),
+          setFile((prev) => [...prev, { is_main: true, file: data?.msg }]),
         () => alert("Nomalum xatolik")
       );
     } else {
