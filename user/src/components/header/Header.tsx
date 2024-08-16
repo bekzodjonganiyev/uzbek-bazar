@@ -3,7 +3,7 @@ import { Link, /*useLocation*/ } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
-import { EnFlagIcon, HamburgerIcon, HumanIcon, LogoIcon, PhoneIcon, RuFlagIcon, SearchIcon, ShopCardIcon, UzFlagIcon } from "@/assets/icons"
+import { HamburgerIcon, HumanIcon, LogoIcon, PhoneIcon,  SearchIcon, ShopCardIcon, UzFlagIcon } from "@/assets/icons"
 import { CustomSelect, CustomSheetContent } from "@/components/common"
 import { CartSheet, MobileMenuSheet, SearchSheet } from "@/components/sheet-contents"
 
@@ -12,7 +12,7 @@ import { Menu } from "./header-elements"
 import { useAppDispatch, RootState } from "@/redux"
 import { setSheetContent } from "@/redux/actions"
 
-import { currencys } from "@/utils/mocks"
+// import { currencys } from "@/utils/mocks"
 // import { seacrFc } from "@/utils/searchFn"
 // import { Input } from "../ui/input"
 import { cn } from "@/lib/utils"
