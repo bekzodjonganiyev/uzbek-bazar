@@ -3,7 +3,7 @@ import { Link, /*useLocation*/ } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 import { Sheet, SheetTrigger } from "@/components/ui/sheet"
-import { EnFlagIcon, HamburgerIcon, HumanIcon, PhoneIcon, RuFlagIcon, SearchIcon, ShopCardIcon, UzFlagIcon } from "@/assets/icons"
+import { EnFlagIcon, HamburgerIcon, HumanIcon, LogoIcon, PhoneIcon, RuFlagIcon, SearchIcon, ShopCardIcon, UzFlagIcon } from "@/assets/icons"
 import { CustomSelect, CustomSheetContent } from "@/components/common"
 import { CartSheet, MobileMenuSheet, SearchSheet } from "@/components/sheet-contents"
 
@@ -123,7 +123,7 @@ export const Header = (): JSX.Element => {
           //  suggestMobile === "true" && "max-md:mt-20"
            )}>
             {/* |---LOGO---| */}
-            <div><Link to="/">Logo</Link></div>
+            <div><Link to="/"><LogoIcon /></Link></div>
 
             {/* |---MENU---| */}
             <div className="md:block hidden">
