@@ -81,7 +81,7 @@ export const ProductCartItem = (props: Props): ReactElement => {
                     <div className='flex items-center gap-2 min-[400px]:hidden'>
                         {/* PRICE */}
                         <div>
-                            <p className='font-bold'>${props.price}</p>
+                            <p className='font-bold'>${props.price}so'm</p>
                         </div>
 
                         {/* DELETE */}
@@ -100,7 +100,7 @@ export const ProductCartItem = (props: Props): ReactElement => {
             <div className='min-[400px]:flex items-center gap-2 hidden'>
                 {/* PRICE */}
                 <div>
-                    <p className='font-bold'>${props.price}</p>
+                    <p className='font-bold'>${props.price}so'm</p>
                 </div>
 
                 {/* DELETE */}

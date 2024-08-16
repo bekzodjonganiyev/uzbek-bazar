@@ -150,7 +150,7 @@ export const ProductCard = (props: productListType): ReactElement => {
                 {/* PRICE, BUTTONS */}
                 <div className='w-3/12 h-full flex justify-end'>
                     <div className='flex flex-col justify-between items-end gap-5'>
-                        <p className='md:text-sm text-xs'>{props.price}$</p>
+                        <p className='md:text-sm text-xs'>{props.price}so'm</p>
                         <div className='flex'>
                             <button className={`rounded-none border-none`} onClick={() => onLike()}><LikeIcon color={`${isWishlist ? "#121212" : "white"}`} /></button>
                             <button className={"rounded-none border-none"}> <Link to={`/product/details/${props.id}`} className='w-full h-full flex items-center justify-center'><EyeIcon /></Link></button>
@@ -226,10 +226,10 @@ export const ProductCard = (props: productListType): ReactElement => {
                         }
                         <h3 className={`md:text-sm text-xs ${props.rating ? "text-left" : "text-center"} line-clamp-1`}>{props.name}</h3>
                         <div className={`${props.rating ? "" : "justify-center"} flex gap-2`}>
-                            <p className='md:text-sm text-xs'>{props.price}$</p>
+                            <p className='md:text-sm text-xs'>{props.price}so'm</p>
                             {
                                 props.discount > 0
-                                    ? <del className='text-stone-300 font-thin md:text-sm text-xs'>{props.price}$</del>
+                                    ? <del className='text-stone-300 font-thin md:text-sm text-xs'>{props.price}so'm</del>
                                     : null
                             }
                         </div>

@@ -177,10 +177,10 @@ export const ProductView = (/*props: Props*/): ReactElement => {
 
             {/* Price */}
             <p className="flex gap-2">
-              <span>{productById.data?.data.price}$</span>
+              <span>{productById.data?.data.price}so'm</span>
               {productById.data?.data.discount > 0 && (
                 <span className="line-through">
-                  {productById.data?.data.price}$
+                  {productById.data?.data.price}so'm
                 </span>
               )}
             </p>
@@ -312,7 +312,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
       <div>
         <div className="border-b flex flex-wrap md:gap-10 gap-4 ">
           {/* -----Description----- */}
-          <button
+          {/* <button
             className={`${tabs.id === 1 ? "border-b-2 border-black" : ""}  pb-1`}
             onClick={() =>
               setTabs({
@@ -326,7 +326,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
             }
           >
             Description
-          </button>
+          </button> */}
 
           {/* -----Additional Info----- */}
           <button
@@ -357,7 +357,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
           </button>
 
           {/* -----Questions----- */}
-          <button
+          {/* <button
             className={`${tabs.id === 4 ? "border-b-2 border-black" : ""}  pb-1`}
             onClick={() =>
               setTabs({
@@ -369,7 +369,7 @@ export const ProductView = (/*props: Props*/): ReactElement => {
             }
           >
             Questions
-          </button>
+          </button> */}
         </div>
         <div className="py-10">
           {

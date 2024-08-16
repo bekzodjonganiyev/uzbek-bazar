@@ -22,8 +22,8 @@ import { cn } from "@/lib/utils"
 
 export const languages = [
   { label: "UZB", value: "uz", icon: <UzFlagIcon /> },
-  { label: "RUS", value: "ru", icon: <RuFlagIcon /> },
-  { label: "ENG", value: "en", icon: <EnFlagIcon /> }
+  // { label: "RUS", value: "ru", icon: <RuFlagIcon /> },
+  // { label: "ENG", value: "en", icon: <EnFlagIcon /> }
 ]
 
 export const Header = (): JSX.Element => {
@@ -71,15 +71,10 @@ export const Header = (): JSX.Element => {
           {/* begin::TOP HEADER */}
           <div className="md:flex hidden justify-between items-center">
             <div className="flex gap-2"><PhoneIcon /> Call Markaz +998 (90) 123-45-67</div>
-            <div className="flex gap-5">
+            <div className="flex items-center gap-5">
 
               {/* |---SELL WITH US---| */}
-              <CustomSelect
-                width="w-32"
-                items={[]}
-                changeHandler={(e) => console.log(e)}
-                placeholderValue="Biz bilan soting"
-              />
+              <Link to="/sell-with-us">Biz bilan soting</Link>
 
               {/* |---LANG---| */}
               <CustomSelect
@@ -90,12 +85,12 @@ export const Header = (): JSX.Element => {
               />
 
               {/* |---CURRENCY--- */}
-              <CustomSelect
+              {/* <CustomSelect
                 items={currencys}
                 changeHandler={(e) => console.log(e)}
                 placeholderValue="Tilni tanlang"
                 defaultValue="usz"
-              />
+              /> */}
             </div>
           </div>
           {/* end::TOP HEADER */}
